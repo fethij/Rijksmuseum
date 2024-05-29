@@ -68,8 +68,8 @@ you can use appropriate Android Studio/Fleet to import the project.
 }%%
 
 graph LR
-  :composeApp --> :core:domain
   :composeApp --> :core:designsystem
+  :composeApp --> :core:network
   :composeApp --> :feature:arts
   :core:network --> :core:model
   :core:data --> :core:common
