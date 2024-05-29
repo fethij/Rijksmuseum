@@ -33,29 +33,10 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 ### Desktop
 <img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9b25b3f4-e82d-4468-bc65-62b84d19c691">
 
+### Wasm
+<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/4ae963f0-3a1a-4c4c-ba32-c67e8259603a">
+
 ## Modularization
-<img alt="Multi-modular" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/408ed42c-fdd0-4366-9e24-6c55c3fdef99">
-
-## Tech Stack 📚
-
-- [Kotlin Multiplatform](https://kotlinlang.org/lp/multiplatform/)
-- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
-- [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
-- [Koin](https://insert-koin.io/)
-- [Coil](https://coil-kt.github.io/coil/)
-- [Ktor](https://ktor.io/)
-- [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)
-- [Jetpack Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle)
-- [Jetpack ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
-
-## Development 🛠️
-
-You can just clone the repo and build it locally without requiring any changes. 
-
-Get your own Api Key from [Rijksmuseum.nl](https://data.rijksmuseum.nl/object-metadata/api/).
-Project requires JDK 17+, and based on the AGP version defined in [`libs.versions.toml`](/gradle/libs.versions.toml) file, 
-you can use appropriate Android Studio/Fleet to import the project.
-
 ### Module Graph
 
 ```mermaid
@@ -82,3 +63,23 @@ graph LR
   :feature:arts --> :core:domain
   :feature:arts --> :core:designsystem
 ```
+
+## Tech Stack 📚
+
+- [Kotlin Multiplatform](https://kotlinlang.org/lp/multiplatform/)
+- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
+- [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+- [Koin](https://insert-koin.io/)
+- [Coil](https://coil-kt.github.io/coil/)
+- [Ktor](https://ktor.io/)
+- [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)
+- [Jetpack Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle)
+- [Jetpack ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+
+## Development 🛠️
+
+You can just clone the repo and build it locally without requiring any changes. 
+
+Get your own Api Key from [Rijksmuseum.nl](https://data.rijksmuseum.nl/object-metadata/api/).
+Project requires JDK 17+, and based on the AGP version defined in [`libs.versions.toml`](/gradle/libs.versions.toml) file, 
+you can use appropriate Android Studio/Fleet to import the project.
