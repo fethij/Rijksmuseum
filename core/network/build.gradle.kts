@@ -17,6 +17,7 @@ kotlin {
     }
     jvm("desktop")
     listOf(iosArm64(), iosSimulatorArm64())
+    wasmJs { browser() }
 
     sourceSets {
         val desktopMain by getting
