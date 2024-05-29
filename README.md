@@ -1,7 +1,5 @@
 # Rijksmuseum
 
-![banner](./readme_images/banner.png)
-
 Rijksmuseum is a multiplatform app using the Rijksmuseum [rich and freely accessible content](https://www.rijksmuseum.nl/en/data/policy) api. 
 You can filter arts based on production places.
 
