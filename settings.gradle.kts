@@ -27,4 +27,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "Rijksmuseum"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":composeApp")
+
+include(":core:common")
+include(":core:data")
+include(":core:designsystem")
+include(":core:domain")
+include(":core:model")
+include(":core:network")
+
+include(":feature:arts")

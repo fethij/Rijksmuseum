@@ -1,0 +1,13 @@
+<resources>
+    <string name="loading">Loading</string>
+    <string name="error">Error</string>
+    <string name="something_went_wrong">Something went wrong, try again later.</string>
+
+    <string name="arts_screen">ArtsScreen</string>
+    <string name="detail_screen">ArtsScreen</string>
+    <string name="arts_list">ArtsList</string>
+    <string name="arts_loading">ArtsLoading</string>
+    <string name="no_arts">No Arts for now!</string>
+    <string name="art_item">ArtItem</string>
+    <string name="collection">Collection</string>
+</resources>
