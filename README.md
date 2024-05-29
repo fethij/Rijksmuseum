@@ -84,3 +84,30 @@ You can just clone the repo and build it locally without requiring any changes.
 Get your own Api Key from [Rijksmuseum.nl](https://data.rijksmuseum.nl/object-metadata/api/).
 Project requires JDK 17+, and based on the AGP version defined in [`libs.versions.toml`](/gradle/libs.versions.toml) file, 
 you can use appropriate Android Studio/Fleet to import the project.
+
+### Module Graph
+
+```mermaid
+%%{
+  init: {
+    'theme': 'neutral'
+  }
+}%%
+
+graph LR
+  :composeApp --> :core:domain
+  :composeApp --> :core:designsystem
+  :composeApp --> :feature:arts
+  :core:network --> :core:model
+  :core:data --> :core:common
+  :core:data --> :core:model
+  :core:data --> :core:network
+  :core:domain --> :core:common
+  :core:domain --> :core:model
+  :core:domain --> :core:data
+  :core:designsystem --> :core:common
+  :feature:arts --> :core:common
+  :feature:arts --> :core:model
+  :feature:arts --> :core:domain
+  :feature:arts --> :core:designsystem
+```
