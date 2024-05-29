@@ -18,12 +18,9 @@ kotlin {
     }
     jvm("desktop")
     listOf(iosArm64(), iosSimulatorArm64())
+    wasmJs { browser() }
 
     sourceSets {
-        val desktopMain by getting
-
-        androidMain.dependencies {
-        }
         commonMain.dependencies {
             api(projects.core.common)
 
@@ -36,10 +33,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             implementation(libs.coil.compose)
-        }
-        desktopMain.dependencies {
-        }
-        iosMain.dependencies {
         }
     }
 }

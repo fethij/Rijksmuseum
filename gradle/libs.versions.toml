@@ -14,22 +14,22 @@ coil = "3.0.0-alpha06"
 compose-plugin = "1.6.10"
 junit = "4.13.2"
 kotlin = "2.0.0"
-koin = "3.5.3"
+koin = "3.6.0-Beta4"
 koinComposeMultiplatform = "1.2.0-Beta4"
-ktor = "2.3.11"
-lifecycleViewModel = "2.8.0"
+ktor = "3.0.0-wasm2"
 lifecycle = "2.8.0"
-navigationCompose = "2.8.0-alpha02"
+navigationCompose = "2.7.0-alpha07"
 kotlinx_serialization_json = "1.6.3"
 coroutines = "1.8.1"
 modulegraph = "0.10.0"
 
 [libraries]
-androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
+androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil" }
 coil_compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil_compose_core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

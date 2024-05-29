@@ -20,6 +20,11 @@ kotlin {
     }
     
     jvm("desktop")
+
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
     
     listOf(
         iosArm64(),
@@ -59,6 +64,7 @@ kotlin {
             api(libs.koin.core)
             implementation(libs.koin.compose)
 
+            implementation(libs.ktor.client.core)
             implementation(libs.coil.network.ktor)
         }
 

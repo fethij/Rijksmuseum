@@ -3,7 +3,6 @@ package com.tewelde.rijksmuseum.core.common.di
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.dsl.withOptions
 import org.koin.core.qualifier.named
@@ -26,7 +25,7 @@ val commonModule = module {
 
 }
 
-fun provideIoDispatcher() = Dispatchers.IO
+expect fun provideIoDispatcher(): CoroutineDispatcher
 fun provideDefaultDispatcher() = Dispatchers.Default
 fun provideApplicationScope(dispatcher: CoroutineDispatcher): CoroutineScope =
     CoroutineScope(SupervisorJob() + dispatcher)
