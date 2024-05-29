@@ -97,11 +97,12 @@ internal fun ArtsScreen(
                 ) {
                     HorizontalPager(
                         state = pagerState,
+                        beyondBoundsPageCount = 2,
                         modifier = Modifier.fillMaxSize()
                     ) {
                         RijksmuseumImage(
                             imageUrl = uiState.arts[it].webImage.url,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
                         )
                     }
 

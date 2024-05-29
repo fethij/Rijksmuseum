@@ -28,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,6 +40,8 @@ import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailUiState
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.detail_screen
+import com.tewelde.rijksmuseum.resources.lugrasimo_regular
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -116,9 +120,14 @@ fun DetailScreen(
                 ) {
                     Text(
                         text = uiState.art.title,
-//                        style = MaterialTheme.typography.headlineLarge,
-//                        textAlign = TextAlign.Start,
-//                        fontFamily = FontFamily(Font(R.font.lugrasimo_regular)),
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Start,
+                        fontFamily = FontFamily(
+                            Font(
+                                Res.font.lugrasimo_regular,
+                                weight = FontWeight.Normal
+                            )
+                        ),
                         modifier = Modifier
                             .padding(bottom = 2.dp)
                     )
