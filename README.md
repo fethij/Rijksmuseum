@@ -52,6 +52,6 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 
 You can just clone the repo and build it locally without requiring any changes. 
 
-Get your own Api Key from [Rijksmuseum.nl](https://data.rijksmuseum.nl/object-metadata/api/)
+Get your own Api Key from [Rijksmuseum.nl](https://data.rijksmuseum.nl/object-metadata/api/).
 Project requires JDK 17+, and based on the AGP version defined in [`libs.versions.toml`](/gradle/libs.versions.toml) file, 
 you can use appropriate Android Studio/Fleet to import the project.
