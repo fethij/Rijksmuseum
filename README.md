@@ -44,7 +44,6 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 - [Koin](https://insert-koin.io/)
 - [Coil](https://coil-kt.github.io/coil/)
 - [Ktor](https://ktor.io/)
-- [Koin](https://insert-koin.io/)
 - [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)
 - [Jetpack Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle)
 - [Jetpack ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
