@@ -22,6 +22,7 @@ lifecycle = "2.8.0"
 navigationCompose = "2.8.0-alpha02"
 kotlinx_serialization_json = "1.6.3"
 coroutines = "1.8.1"
+modulegraph = "0.10.0"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
@@ -71,3 +72,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
