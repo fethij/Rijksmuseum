@@ -42,7 +42,9 @@ fun CollectionScreenRoute(
     onBackClick: () -> Unit,
     onArtClick: (String) -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
     CollectionScreen(
         uiState = uiState,
         onBackClick = onBackClick,

@@ -50,7 +50,9 @@ fun DetailScreenRoute(
     viewModel: DetailViewModel,
     onBackClick: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
     DetailScreen(uiState) {
         onBackClick()
     }
@@ -112,7 +114,7 @@ fun DetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 16.dp, vertical = 16.dp)
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp)
                         .padding(contentPadding)
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(36.dp)

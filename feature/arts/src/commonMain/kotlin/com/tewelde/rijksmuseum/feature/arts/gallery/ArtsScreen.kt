@@ -38,7 +38,9 @@ fun ArtsScreenRoute(
     viewModel: GalleryViewModel,
     onNavigateToCollection: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
     ArtsScreen(
         uiState = uiState,
         onNavigateToCollection = onNavigateToCollection

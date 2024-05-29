@@ -19,11 +19,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tewelde.rijksmuseum.core.model.Art
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.collection
+import com.tewelde.rijksmuseum.resources.lugrasimo_regular
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -43,6 +47,12 @@ fun ImageDescription(
             text = art.title,
             style = MaterialTheme.typography.headlineLarge,
             textAlign = TextAlign.Start,
+            fontFamily = FontFamily(
+                Font(
+                    Res.font.lugrasimo_regular,
+                    weight = FontWeight.Normal
+                )
+            ),
             color = Color.White,
             modifier = Modifier
                 .padding(bottom = 2.dp)

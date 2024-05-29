@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -18,14 +19,15 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     jvm("desktop")
 
+    @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
         binaries.executable()
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -35,10 +37,10 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -51,20 +53,21 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(projects.core.domain)
             implementation(projects.core.designsystem)
+            implementation(projects.core.network)
             implementation(projects.feature.arts)
 
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            implementation (libs.navigation.compose)
+            implementation(libs.navigation.compose)
 
             api(libs.koin.core)
             implementation(libs.koin.compose)
 
             implementation(libs.ktor.client.core)
+            implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
         }
 
@@ -80,7 +83,7 @@ kotlin {
     }
 }
 
-composeCompiler{
+composeCompiler {
     enableStrongSkippingMode = true
 }
 
