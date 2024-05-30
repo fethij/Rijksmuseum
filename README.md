@@ -1,8 +1,5 @@
 # Rijksmuseum
 
-Rijksmuseum is a multiplatform app using the Rijksmuseum [rich and freely accessible content](https://www.rijksmuseum.nl/en/data/policy) api. 
-You can filter arts based on location.
-
 Rijksmuseum is a multiplatform app built using Kotlin and Compose Multiplatform. It features an nice
 user interface and experience to browse through arts.
 
