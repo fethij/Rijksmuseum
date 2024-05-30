@@ -7,7 +7,7 @@ import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.disk.DiskCache
 import coil3.memory.MemoryCache
-import coil3.network.NetworkFetcher
+import coil3.network.ktor.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.request.crossfade
 import coil3.util.DebugLogger
@@ -16,7 +16,6 @@ import com.tewelde.rijksmuseum.theme.RijksmuseumTheme
 import okio.FileSystem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
-import org.koin.compose.koinInject
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -24,11 +23,9 @@ import org.koin.compose.koinInject
 fun App(disableDiskCache: Boolean = false) {
     RijksmuseumTheme {
         KoinContext {
-            val fetcher = koinInject<NetworkFetcher.Factory>()
-
             setSingletonImageLoaderFactory { context ->
-                if (disableDiskCache) context.asyncImageLoader(fetcher) else
-                    context.asyncImageLoader(fetcher).enableDiskCache()
+                if (disableDiskCache) context.asyncImageLoader() else
+                    context.asyncImageLoader().enableDiskCache()
             }
 
             RijksmuseumNavGraph()
@@ -40,10 +37,10 @@ fun App(disableDiskCache: Boolean = false) {
 /**
  * Create a new [ImageLoader] with the [PlatformContext].
  */
-fun PlatformContext.asyncImageLoader(fetcher: NetworkFetcher.Factory) =
+fun PlatformContext.asyncImageLoader() =
     ImageLoader
         .Builder(this)
-        .components { add(fetcher) }
+        .components { add(KtorNetworkFetcherFactory()) }
         .crossfade(true)
         .networkCachePolicy(CachePolicy.ENABLED)
         .diskCachePolicy(CachePolicy.ENABLED)
