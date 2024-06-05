@@ -13,8 +13,8 @@ data class NetworkArtObject(
 
 fun NetworkArtObject.asArtObject(): ArtObject = ArtObject(
     objectNumber = objectNumber,
-    title = label.title,
-    description = label.description,
+    title = label.title ?: "",
+    description = label.description ?: "",
     url = webImage.url,
     webImage = webImage.asWebImage()
 )

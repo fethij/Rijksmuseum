@@ -1,5 +1,6 @@
 package com.tewelde.rijksmuseum.core.network.di
 
+import com.tewelde.rijksmuseum.BuildConfig
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
 import com.tewelde.rijksmuseum.core.network.ktor.KtorRijksMuseumNetwork
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_HOST
@@ -23,7 +24,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 const val KEY = "key"
-const val RijksmuseumApiKey = "..." // TODO: apply your api key
 
 @OptIn(ExperimentalSerializationApi::class)
 val networkModule = module {
@@ -49,7 +49,7 @@ val networkModule = module {
                     protocol = URLProtocol.HTTPS
                     host = RIJKSMUSEUM_HOST
                     path(RIJKSMUSEUM_PATH)
-                    parameters.append(KEY, RijksmuseumApiKey)
+                    parameters.append(KEY, BuildConfig.RIJKSMUSEUM_API_KEY)
                 }
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }

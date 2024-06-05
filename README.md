@@ -46,14 +46,20 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 - [Jetpack Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle)
 - [Jetpack ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 
-## Development 🛠️
 
-You can just clone the repo and build it locally without requiring any changes. 
+## Development :gear:
 
-Get your own Api Key from [Rijksmuseum.nl](https://data.rijksmuseum.nl/object-metadata/api/).
+The app uses Rijksmuseum API, hence you need to get your own API key from [here](https://data.rijksmuseum.nl/object-metadata/api/).
+Make sure to add your key to `secrets.properties` file.
+In order to sign your builds generate `rijksmuseum.jks` keystore and add keystore password, alias and store password in `secrets.properties`.
 
-Project requires JDK 17+, and based on the AGP version defined in [`libs.versions.toml`](/gradle/libs.versions.toml) file, 
-you can use appropriate Android Studio/Fleet to import the project.
+secrets.properties would look like this:
+```
+rijksmuseum.access.key=#Add your Rijksmuseum api key
+rijksmuseum.keystore.password=#Add your keystore password
+rijksmuseum.key.alias=#Add your key alias
+rijksmuseum.key.password=#Add your key password
+```
 
 ### Module Graph
 

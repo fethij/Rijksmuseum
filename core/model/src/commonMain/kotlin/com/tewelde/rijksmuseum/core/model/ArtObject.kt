@@ -5,5 +5,5 @@ data class ArtObject(
     var title: String,
     var description: String,
     var url: String,
-    var webImage: WebImage,
+    var webImage: WebImage?,
 )

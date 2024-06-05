@@ -2,6 +2,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -10,6 +11,11 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+}
+
+val secretKeyProperties: Properties by lazy {
+    val secretKeyPropertiesFile = rootProject.file("secrets.properties")
+    Properties().apply { secretKeyPropertiesFile.inputStream().use { secret -> load(secret) } }
 }
 
 kotlin {
@@ -99,17 +105,42 @@ android {
         applicationId = "com.tewelde.rijksmuseum"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs {
+        create("release") {
+            storeFile = file("rijksmuseum.jks")
+            storePassword = "rijksmuseum"
+            keyAlias = "rijksmuseum"
+            keyPassword = "rijksmuseum"
+            storeFile = file("$rootDir/keystore/rijksmuseum.jks")
+            storePassword = "${secretKeyProperties["rijksmuseum.keystore.password"]}"
+            keyAlias = "${secretKeyProperties["rijksmuseum.key.alias"]}"
+            keyPassword = "${secretKeyProperties["rijksmuseum.key.password"]}"
+        }
+    }
     buildTypes {
-        getByName("release") {
+        debug {
             isMinifyEnabled = false
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+        }
+
+        release {
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

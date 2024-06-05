@@ -27,3 +27,6 @@ androidApp/release
 .idea/appInsightsSettings.xml
 gradle.xml
 *.iml
+
+*yarn.lock
+secrets.properties
