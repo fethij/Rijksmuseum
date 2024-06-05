@@ -139,14 +139,12 @@ internal fun CollectionScreen(
                             items = uiState.filteredArts,
                             key = { art -> "key-${art.objectNumber}" }
                         ) { art ->
-                            art.webImage?.url?.let {
-                                ArtItem(
-                                    url = it,
-                                    title = art.title,
-                                    onClick = { onArtClick(art.objectNumber) },
-                                    modifier = modifier.padding(horizontal = 8.dp, vertical = 6.dp)
-                                )
-                            }
+                            ArtItem(
+                                url = art.webImage.url,
+                                title = art.title,
+                                onClick = { onArtClick(art.objectNumber) },
+                                modifier = modifier.padding(horizontal = 8.dp, vertical = 6.dp)
+                            )
                         }
                     }
                 }

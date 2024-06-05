@@ -20,7 +20,11 @@ class ArtRepositoryImpl(
     override suspend fun getCollection(page: Int): Result<List<Art>> =
         try {
             val collection = rijksmuseumDataSource.getCollection(page)
-            Success(collection.map(NetworkArt::asArtObject))
+            Success(
+                collection.filter {
+                    it.networkWebImage != null
+                }.map(NetworkArt::asArtObject)
+            )
         } catch (e: Exception) {
             e.printStackTrace()
             Error(e)
