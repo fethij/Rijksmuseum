@@ -102,10 +102,12 @@ internal fun ArtsScreen(
                         beyondBoundsPageCount = 2,
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        RijksmuseumImage(
-                            imageUrl = uiState.arts[it].webImage.url,
-                            modifier = Modifier.fillMaxSize(),
-                        )
+                        uiState.arts[it].webImage?.url?.let { url ->
+                            RijksmuseumImage(
+                                imageUrl = url,
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        }
                     }
 
                     ImageDescription(
