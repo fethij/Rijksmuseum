@@ -1,0 +1,43 @@
+name: Deploy Compose Web App
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  test-and-build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Retrieve the secret and decode it to a file
+        env:
+          SECRETS_BASE64: ${{ secrets.SECRETS_BASE64 }}
+        run: |
+          echo $SECRETS_BASE64 | base64 --decode > secrets.properties
+
+      - name: Build
+        run: |
+          ./gradlew wasmJsBrowserDistribution --no-configuration-cache
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: composeApp/build/dist/wasmJs/productionExecutable
