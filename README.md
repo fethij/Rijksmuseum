@@ -1,7 +1,6 @@
 # Rijksmuseum
 
-Rijksmuseum is a multiplatform app built using Kotlin and Compose Multiplatform. It features an nice
-user interface and experience to browse through arts.
+Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
 
 
 ## Design
