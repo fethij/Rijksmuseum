@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.1"
+agp = "8.4.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -75,3 +75,8 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
+
+
+# Plugins defined by this project
+rijksmuseum-composeMultiplatform = { id = "com.tewelde.rijksmuseum.composeMultiplatform", version = "unspecified" }
+rijksmuseum-kotlinMultiplatform = { id = "com.tewelde.rijksmuseum.kotlinMultiplatform", version = "unspecified" }
