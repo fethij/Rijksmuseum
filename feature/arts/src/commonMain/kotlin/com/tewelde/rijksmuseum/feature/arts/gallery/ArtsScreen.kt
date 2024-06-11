@@ -31,7 +31,6 @@ import com.tewelde.rijksmuseum.resources.arts_screen
 import com.tewelde.rijksmuseum.resources.no_arts
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.random.Random
 
 @Composable
 fun ArtsScreenRoute(
@@ -85,10 +84,9 @@ internal fun ArtsScreen(
             }
 
             is ArtsUiState.Success -> {
-                val initPage: Int = Random.nextInt(0, uiState.arts.size - 4)
                 val pagerState = rememberPagerState(
                     pageCount = { uiState.arts.size },
-                    initialPage = initPage,
+                    initialPage = 0,
                 )
                 val currentPage = pagerState.currentPage
 
