@@ -3,6 +3,11 @@
 Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
 
 
+## Download
+
+<a href='https://play.google.com/store/apps/details?id=com.tewelde.rijksmuseum&utm_source=github'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200px"/></a>
+
+
 ## Design
 Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gallery-of-art-App).
 
