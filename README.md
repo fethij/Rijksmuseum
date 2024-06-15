@@ -4,7 +4,7 @@
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
 ![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
 ![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
-![badge-js](http://img.shields.io/badge/platform-js%2Fwasm-FDD835.svg?style=flat)
+![badge-js](http://img.shields.io/badge/platform-wasm-FDD835.svg?style=flat)
 
 # Rijksmuseum
 
