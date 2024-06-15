@@ -105,8 +105,8 @@ android {
         applicationId = "com.tewelde.rijksmuseum"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.0.3"
     }
     packaging {
         resources {
