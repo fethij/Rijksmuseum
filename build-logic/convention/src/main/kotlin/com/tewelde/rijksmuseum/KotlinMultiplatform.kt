@@ -21,20 +21,9 @@ internal fun Project.configureKotlinMultiplatform(
     jvm("desktop")
 
     @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-        binaries.executable()
-    }
+    wasmJs { browser() }
 
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
+    listOf(iosArm64(), iosSimulatorArm64())
 
     applyDefaultHierarchyTemplate()
 
