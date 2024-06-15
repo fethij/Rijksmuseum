@@ -2,7 +2,7 @@ name: Deploy Compose Web App
 
 on:
   push:
-    branches: [main]
+    branches: [main, update_app_icon]
 
 permissions:
   contents: write
