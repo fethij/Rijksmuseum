@@ -41,6 +41,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            optimized = true
         }
     }
 
