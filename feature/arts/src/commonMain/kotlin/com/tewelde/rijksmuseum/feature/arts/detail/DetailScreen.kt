@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -103,7 +104,7 @@ fun DetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                        .padding(16.dp)
                         .padding(contentPadding)
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(36.dp)
@@ -138,9 +139,9 @@ fun DetailScreen(
                     }
                     RijksmuseumImage(
                         imageUrl = uiState.art.url,
+                        contentScale = ContentScale.Fit,
                         modifier = modifier
-                            .fillMaxWidth()
-                            .height(400.dp)
+                            .fillMaxSize()
                             .clip(RoundedCornerShape(16.dp))
                     )
                 }

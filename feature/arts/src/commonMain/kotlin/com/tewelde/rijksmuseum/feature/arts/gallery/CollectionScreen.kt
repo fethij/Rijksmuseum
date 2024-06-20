@@ -4,10 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +22,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -53,7 +59,10 @@ fun CollectionScreenRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class
+)
 @Composable
 internal fun CollectionScreen(
     uiState: ArtsUiState,
@@ -90,8 +99,7 @@ internal fun CollectionScreen(
                 ) {
                     LazyRow(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -118,21 +126,24 @@ internal fun CollectionScreen(
                             )
                         }
                     }
-                    LazyColumn(
-                        modifier = Modifier
-                            .padding(top = 8.dp),
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally,
+
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Fixed(2)
                     ) {
                         items(
                             items = uiState.filteredArts,
-                            key = { art -> "key-${art.objectNumber}" }
+                            key = { art -> art.objectNumber }
                         ) { art ->
+                            val heights = listOf(415, 315, 375, 213, 275, 290)
+                            val height by remember { mutableStateOf(heights.random().dp) }
                             ArtItem(
                                 url = art.webImage.url,
-                                title = art.title,
-                                onClick = { onArtClick(art.objectNumber) },
-                                modifier = modifier.padding(horizontal = 8.dp, vertical = 6.dp)
+                                onArtClick = { onArtClick(art.objectNumber) },
+                                onLongPress = { },
+                                modifier = Modifier
+                                    .height(height)
+                                    .fillMaxWidth()
+                                    .padding(4.dp)
                             )
                         }
                     }

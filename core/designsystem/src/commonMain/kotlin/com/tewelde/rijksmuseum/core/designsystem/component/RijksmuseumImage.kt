@@ -1,9 +1,12 @@
 package com.tewelde.rijksmuseum.core.designsystem.component
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
 
 /**
  * [RijksmuseumImage] displays an image from a URL.
@@ -19,10 +22,16 @@ fun RijksmuseumImage(
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop
 ) {
+    val request = ImageRequest.Builder(LocalPlatformContext.current)
+        .data(imageUrl)
+        .memoryCacheKey(imageUrl)
+        .diskCacheKey(imageUrl)
+        .build()
     AsyncImage(
-        model = imageUrl,
+        model = request,
         contentDescription = contentDescription,
         contentScale = contentScale,
+        alignment = Alignment.Center,
         modifier = modifier
     )
 }
