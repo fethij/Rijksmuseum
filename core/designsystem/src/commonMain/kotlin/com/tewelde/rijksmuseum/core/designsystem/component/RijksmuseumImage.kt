@@ -20,7 +20,8 @@ fun RijksmuseumImage(
     modifier: Modifier = Modifier,
     imageUrl: String,
     contentDescription: String? = null,
-    contentScale: ContentScale = ContentScale.Crop
+    contentScale: ContentScale = ContentScale.Crop,
+    alignment: Alignment = Alignment.Center,
 ) {
     val request = ImageRequest.Builder(LocalPlatformContext.current)
         .data(imageUrl)
@@ -31,7 +32,7 @@ fun RijksmuseumImage(
         model = request,
         contentDescription = contentDescription,
         contentScale = contentScale,
-        alignment = Alignment.Center,
+        alignment = alignment,
         modifier = modifier
     )
 }

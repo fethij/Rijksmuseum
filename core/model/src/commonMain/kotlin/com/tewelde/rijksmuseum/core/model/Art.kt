@@ -5,5 +5,6 @@ data class Art(
     val title: String,
     val longTitle: String,
     val webImage: WebImage,
+    val headerImage: HeaderImage?,
     val productionPlaces: List<String>
 )

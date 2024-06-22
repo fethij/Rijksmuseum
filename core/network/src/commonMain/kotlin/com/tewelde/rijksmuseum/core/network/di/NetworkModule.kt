@@ -2,6 +2,7 @@ package com.tewelde.rijksmuseum.core.network.di
 
 import com.tewelde.rijksmuseum.BuildConfig
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
+import com.tewelde.rijksmuseum.core.network.ktor.HAS_IMAGE
 import com.tewelde.rijksmuseum.core.network.ktor.KtorRijksMuseumNetwork
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_HOST
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_PATH
@@ -50,6 +51,7 @@ val networkModule = module {
                     host = RIJKSMUSEUM_HOST
                     path(RIJKSMUSEUM_PATH)
                     parameters.append(KEY, BuildConfig.RIJKSMUSEUM_API_KEY)
+                    parameters.append(HAS_IMAGE, true.toString())
                 }
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }

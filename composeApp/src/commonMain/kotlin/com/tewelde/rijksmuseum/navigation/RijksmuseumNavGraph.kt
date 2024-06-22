@@ -27,7 +27,7 @@ fun RijksmuseumNavGraph(
     navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
-        modifier = Modifier.then(modifier),
+        modifier = modifier,
         startDestination = startDestination.route,
         navController = navController,
     ) {

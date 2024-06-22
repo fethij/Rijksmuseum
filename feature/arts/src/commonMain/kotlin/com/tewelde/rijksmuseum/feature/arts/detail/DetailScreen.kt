@@ -1,48 +1,44 @@
 package com.tewelde.rijksmuseum.feature.arts.detail
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.annotation.ColorInt
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumError
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
-import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
+import com.tewelde.rijksmuseum.feature.arts.components.ArtDetail
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailUiState
-import com.tewelde.rijksmuseum.resources.Res
-import com.tewelde.rijksmuseum.resources.detail_screen
-import com.tewelde.rijksmuseum.resources.lugrasimo_regular
-import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.stringResource
+import com.tewelde.rijksmuseum.feature.arts.gallery.components.BackButton
+import screenHeight
 
 @Composable
 fun DetailScreenRoute(
@@ -69,26 +65,79 @@ fun DetailScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
-    Scaffold(
-        modifier = modifier
-            .background(Color.Red)
-            .testTag(stringResource(Res.string.detail_screen)),
-        topBar = {
-            RijksmuseumTopBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(
-                        onClick = { onBackClick() },
+    val sheetState = rememberBottomSheetScaffoldState(
+        bottomSheetState = rememberStandardBottomSheetState(
+            initialValue = SheetValue.Hidden,
+            skipHiddenState = false,
+            confirmValueChange = { sheetValue ->
+                sheetValue != SheetValue.Hidden
+            }
+        )
+    )
+
+    LaunchedEffect(uiState) {
+        when (uiState) {
+            is DetailUiState.Success -> {
+                sheetState.bottomSheetState.partialExpand()
+            }
+
+            else -> Unit
+        }
+    }
+
+    BottomSheetScaffold(
+        scaffoldState = sheetState,
+        sheetShape =
+        MaterialTheme.shapes.medium.copy(
+            topStart = CornerSize(4),
+            topEnd = CornerSize(4),
+            bottomEnd = CornerSize(0),
+            bottomStart = CornerSize(0)
+        ),
+        sheetSwipeEnabled = true,
+        sheetContainerColor = MaterialTheme.colorScheme.surface,
+        sheetContentColor = MaterialTheme.colorScheme.onSurface,
+        sheetDragHandle = {
+            Surface(
+                modifier = Modifier.padding(top = 12.dp, bottom = 12.dp),
+                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f),
+                shape = CircleShape
+            ) {
+                Box(modifier = Modifier.size(height = 4.dp, width = 32.dp))
+            }
+        },
+        sheetPeekHeight = if (uiState is DetailUiState.Success) 190.dp else 0.dp,
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        sheetTonalElevation = 0.dp,
+        sheetContent = {
+            when (uiState) {
+                is DetailUiState.Loading,
+                is DetailUiState.Error -> Unit
+
+                is DetailUiState.Success -> {
+                    Box(
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                            .navigationBarsPadding()
+
                     ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                        var fav by remember { mutableStateOf(false) } // TODO implement room
+                        ArtDetail(
+                            art = uiState.art,
+                            color = uiState.art.colors?.firstOrNull()?.color()
+                                ?: MaterialTheme.colorScheme.primary,
+                            isFavourite = fav,
+                            onSetFavourite = { fav = true },
+                            onRemoveFavourite = { fav = false },
+                            onDownloadClicked = {},
+                            onApplyClicked = {}
                         )
                     }
                 }
-            )
+            }
         }
-    ) { contentPadding ->
+    ) {
         when (uiState) {
             is DetailUiState.Loading -> {
                 RijksmuseumLoading()
@@ -101,51 +150,60 @@ fun DetailScreen(
             }
 
             is DetailUiState.Success -> {
-                Column(
+                val heightPixels = screenHeight()
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                        .padding(contentPadding)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(36.dp)
-
-                ) {
-                    Text(
-                        text = uiState.art.title,
-                        style = MaterialTheme.typography.headlineLarge,
-                        textAlign = TextAlign.Start,
-                        fontFamily = FontFamily(
-                            Font(
-                                Res.font.lugrasimo_regular,
-                                weight = FontWeight.Normal
-                            )
-                        ),
-                        modifier = Modifier
-                            .padding(bottom = 2.dp)
-                    )
-                    Row(
-                        modifier = modifier,
-                        horizontalArrangement = Arrangement.spacedBy(36.dp),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Text(
-                            text = "--",
-                            style = MaterialTheme.typography.headlineLarge,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier
-                                .padding(bottom = 2.dp)
+                        .fillMaxWidth()
+                        .fillMaxHeight(
+                            ((sheetState.bottomSheetState.requireOffset() + 130) / (heightPixels))
+                                .let { if (it == 0f) 1f else it }
                         )
-                        Text(text = uiState.art.description)
-                    }
+                ) {
                     RijksmuseumImage(
                         imageUrl = uiState.art.url,
-                        contentScale = ContentScale.Fit,
                         modifier = modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(16.dp))
+                            .fillMaxSize(),
+                        alignment = Alignment.TopCenter,
                     )
                 }
             }
         }
+        BackButton(
+            modifier = Modifier.statusBarsPadding()
+        ) { onBackClick() }
     }
+}
+
+/**
+ * @return the first letter of first and last word in a string
+ */
+fun String.initials(): String =
+    this.trim()
+        .split(" ")
+        .mapNotNull { it.firstOrNull() }.joinToString(separator = "")
+        .getFirstAndLast()
+        .uppercase()
+
+fun String.getFirstAndLast() = buildAnnotatedString {
+    append(this@getFirstAndLast.first())
+    append(this@getFirstAndLast.last())
+}.toString()
+
+/**
+ * convert hex color [String] #000000 to [Color]
+ */
+@ColorInt
+fun String.color(): Color {
+    if ((this.length != 7 && this.length != 9) || !this.startsWith("#")) {
+        return Color.Transparent // Handle invalid format
+    }
+
+    val hexValue = this.substring(1).toLongOrNull(16) ?: return Color.Transparent
+
+    val alpha = if (this.length == 9) (hexValue shr 24 and 0xFF).toInt() else 255
+    val red = (hexValue shr 16 and 0xFF).toInt()
+    val green = (hexValue shr 8 and 0xFF).toInt()
+    val blue = (hexValue and 0xFF).toInt()
+
+    return Color(red, green, blue, alpha)
 }

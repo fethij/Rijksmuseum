@@ -13,7 +13,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBackIos
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,7 +22,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumFilterChip
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
 import com.tewelde.rijksmuseum.core.model.Art
+import com.tewelde.rijksmuseum.core.model.HeaderImage
 import com.tewelde.rijksmuseum.core.model.WebImage
 import com.tewelde.rijksmuseum.feature.arts.gallery.components.ArtItem
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.ArtsUiState
@@ -82,7 +82,7 @@ internal fun CollectionScreen(
                         onClick = { onBackClick() },
                     ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBackIos,
                             contentDescription = null
                         )
                     }
@@ -90,6 +90,7 @@ internal fun CollectionScreen(
             )
         }
     ) { contentPadding ->
+        val heights = listOf(415, 315, 375, 213, 275, 290)
         when (uiState) {
             is ArtsUiState.Success -> {
                 Column(
@@ -132,10 +133,9 @@ internal fun CollectionScreen(
                     ) {
                         items(
                             items = uiState.filteredArts,
-                            key = { art -> art.objectNumber }
+                            key = { it.objectNumber }
                         ) { art ->
-                            val heights = listOf(415, 315, 375, 213, 275, 290)
-                            val height by remember { mutableStateOf(heights.random().dp) }
+                            val height = remember { heights.random().dp }
                             ArtItem(
                                 url = art.webImage.url,
                                 onArtClick = { onArtClick(art.objectNumber) },
@@ -164,6 +164,14 @@ fun PreviewCollectionScreen() {
             Art(
                 title = "Title",
                 webImage = WebImage(
+                    url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
+                    width = 100,
+                    height = 100,
+                    offsetPercentageX = 0,
+                    offsetPercentageY = 0,
+                    guid = "1"
+                ),
+                headerImage = HeaderImage(
                     url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
                     width = 100,
                     height = 100,

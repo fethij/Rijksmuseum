@@ -83,8 +83,7 @@ fun ArtItem(
                 RijksmuseumImage(
                     imageUrl = url,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .align(Alignment.Center),
+                        .fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             }

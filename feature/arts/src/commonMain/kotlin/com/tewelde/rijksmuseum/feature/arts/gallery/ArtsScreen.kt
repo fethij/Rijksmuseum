@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.model.Art
+import com.tewelde.rijksmuseum.core.model.HeaderImage
 import com.tewelde.rijksmuseum.core.model.WebImage
 import com.tewelde.rijksmuseum.feature.arts.gallery.components.ImageDescription
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.ArtsUiState
@@ -130,6 +131,14 @@ fun PreviewArtsScreen() {
             Art(
                 title = "Title",
                 webImage = WebImage(
+                    url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
+                    width = 100,
+                    height = 100,
+                    offsetPercentageX = 0,
+                    offsetPercentageY = 0,
+                    guid = "1"
+                ),
+                headerImage = HeaderImage(
                     url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
                     width = 100,
                     height = 100,

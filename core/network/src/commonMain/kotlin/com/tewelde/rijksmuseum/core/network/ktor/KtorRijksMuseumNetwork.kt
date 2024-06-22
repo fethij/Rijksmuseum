@@ -16,6 +16,7 @@ const val RIJKSMUSEUM_HOST = "www.rijksmuseum.nl"
 const val RIJKSMUSEUM_PATH = "api/en/"
 const val COLLECTION = "collection"
 const val PAGE = "p"
+const val HAS_IMAGE = "hasImage"
 
 class KtorRijksMuseumNetwork(
     private val client: HttpClient,

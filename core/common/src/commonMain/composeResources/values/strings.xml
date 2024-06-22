@@ -10,4 +10,15 @@
     <string name="no_arts">No Arts for now!</string>
     <string name="art_item">ArtItem</string>
     <string name="collection">Collection</string>
+
+    <string name="unknown">Unknown</string>
+    <string name="save_to_photos">Save to Gallery</string>
+    <string name="details">Details</string>
+    <string name="description">Description</string>
+    <string name="size">Size</string>
+    <string name="title">Title</string>
+    <string name="color">Color</string>
+    <string name="show_more">Show More</string>
+    <string name="show_less">Show Less</string>
+    <string name="production_places">Production Places</string>
 </resources>
