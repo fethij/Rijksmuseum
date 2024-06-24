@@ -3,6 +3,7 @@ package com.tewelde.rijksmuseum.feature.arts.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults.filledTonalIconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
@@ -57,6 +59,7 @@ fun ArtDetail(
     onSetFavourite: () -> Unit,
     onRemoveFavourite: () -> Unit,
     onDownloadClicked: () -> Unit,
+    onMaker: () -> Unit
 ) {
     Column(
         modifier = Modifier.padding(16.dp).fillMaxWidth(),
@@ -67,7 +70,8 @@ fun ArtDetail(
             maker = art.principalMaker,
             isFavourite = isFavourite,
             onSetFavourite = onSetFavourite,
-            onRemoveFavourite = onRemoveFavourite
+            onRemoveFavourite = onRemoveFavourite,
+            onMaker = onMaker
         )
         SheetActionRow(
             isDownloading = isDownloading,
@@ -145,7 +149,7 @@ fun SheetActionRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Button(
-            onClick = { onDownloadClicked() },
+            onClick = { onDownloadClicked.invoke() },
             modifier = Modifier.fillMaxWidth().weight(1f),
             shape = RoundedCornerShape(8.dp),
             enabled = !isDownloading
@@ -154,7 +158,8 @@ fun SheetActionRow(
                 CircularProgressIndicator(
                     modifier = Modifier.size(16.dp),
                     color = MaterialTheme.colorScheme.onSurface,
-                    strokeWidth = 2.dp
+                    strokeWidth = 2.dp,
+                    progress = { downloadProgress / 100f }
                 )
             }
             Spacer(modifier = Modifier.size(8.dp))
@@ -162,7 +167,7 @@ fun SheetActionRow(
                 text = stringResource(Res.string.save_to_photos),
                 style =
                 MaterialTheme.typography.titleSmall.copy(
-//                        fontFamily = getLatoRegular(),
+//                    fontFamily = getLatoRegular(),
                     fontSize = 14.sp
                 )
             )
@@ -175,7 +180,8 @@ fun SheetProfileRow(
     maker: String,
     isFavourite: Boolean,
     onSetFavourite: () -> Unit,
-    onRemoveFavourite: () -> Unit
+    onRemoveFavourite: () -> Unit,
+    onMaker: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -183,14 +189,15 @@ fun SheetProfileRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth().weight(1f),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(color = Color.Transparent.copy(alpha = 0.3f))
-                ,
+                    .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+                    .clickable { onMaker() },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -206,6 +213,11 @@ fun SheetProfileRow(
         }
 
         FilledTonalIconButton(
+            colors = filledTonalIconButtonColors().copy(
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                containerColor = MaterialTheme.colorScheme.surface,
+
+                ),
             onClick = {
                 if (isFavourite) {
                     onRemoveFavourite()

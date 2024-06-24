@@ -22,7 +22,7 @@ kotlin {
             implementation(projects.core.model)
 
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.bundles.ktor.common)
+            api(libs.bundles.ktor.common)
         }
         desktopMain.dependencies {
             implementation(libs.ktor.client.java)

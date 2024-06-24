@@ -17,6 +17,8 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
@@ -32,12 +34,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.LocalPlatformContext
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumError
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.feature.arts.components.ArtDetail
-import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailUiState
+import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailEvent
+import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailState
+import com.tewelde.rijksmuseum.feature.arts.detail.model.State
 import com.tewelde.rijksmuseum.feature.arts.gallery.components.BackButton
+import com.tewelde.rijksmuseum.resources.Res
+import com.tewelde.rijksmuseum.resources.permission_denied
+import com.tewelde.rijksmuseum.resources.saving_failed
+import com.tewelde.rijksmuseum.resources.settings
+import org.jetbrains.compose.resources.getString
 import screenHeight
 
 @Composable
@@ -45,26 +55,43 @@ fun DetailScreenRoute(
     objectId: String,
     viewModel: DetailViewModel,
     onBackClick: () -> Unit,
+    onShowSnackbar: suspend (String, String?, SnackbarDuration) -> Boolean,
+    snackbarHostState: SnackbarHostState,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
     )
-    DetailScreen(uiState) {
-        onBackClick()
+    LaunchedEffect(Unit) {
+        viewModel.onEvent(DetailEvent.LoadDetail(objectId))
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.getDetail(objectId)
+    DetailScreen(uiState, snackbarHostState, onShowSnackbar) {
+        when (it) {
+            is DetailEvent.OnDownloadClick,
+            is DetailEvent.NavigateToSettings,
+            is DetailEvent.PermissionErrorMessageConsumed,
+            is DetailEvent.SaveFailureMessageConsumed,
+            is DetailEvent.LoadDetail -> {
+                viewModel.onEvent(it)
+            }
+
+            DetailEvent.OnBackClick -> {
+                onBackClick()
+            }
+        }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    uiState: DetailUiState,
+    uiState: DetailState,
+    snackbarHostState: SnackbarHostState,
+    onShowSnackbar: suspend (String, String?, SnackbarDuration) -> Boolean,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
+    onEvent: (DetailEvent) -> Unit
 ) {
+    val pfContext = LocalPlatformContext.current
     val sheetState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
             initialValue = SheetValue.Hidden,
@@ -72,12 +99,38 @@ fun DetailScreen(
             confirmValueChange = { sheetValue ->
                 sheetValue != SheetValue.Hidden
             }
-        )
+        ),
+        snackbarHostState = snackbarHostState
     )
 
-    LaunchedEffect(uiState) {
-        when (uiState) {
-            is DetailUiState.Success -> {
+    LaunchedEffect(uiState.showPermissionError) {
+        if (uiState.showPermissionError) {
+            onShowSnackbar(
+                getString(Res.string.permission_denied),
+                getString(Res.string.settings),
+                SnackbarDuration.Long
+            ).run {
+                onEvent(DetailEvent.NavigateToSettings)
+            }
+            onEvent(DetailEvent.PermissionErrorMessageConsumed)
+        }
+    }
+
+    LaunchedEffect(uiState.showSavingFailedMessage) {
+        if (uiState.showSavingFailedMessage) {
+            onShowSnackbar(
+                getString(Res.string.saving_failed),
+                null,
+                SnackbarDuration.Short
+            )
+            onEvent(DetailEvent.SaveFailureMessageConsumed)
+        }
+    }
+
+
+    LaunchedEffect(uiState.state) {
+        when (uiState.state) {
+            is State.Success -> {
                 sheetState.bottomSheetState.partialExpand()
             }
 
@@ -106,16 +159,16 @@ fun DetailScreen(
                 Box(modifier = Modifier.size(height = 4.dp, width = 32.dp))
             }
         },
-        sheetPeekHeight = if (uiState is DetailUiState.Success) 190.dp else 0.dp,
+        sheetPeekHeight = if (uiState.state is State.Success) 190.dp else 0.dp,
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         sheetTonalElevation = 0.dp,
         sheetContent = {
-            when (uiState) {
-                is DetailUiState.Loading,
-                is DetailUiState.Error -> Unit
+            when (uiState.state) {
+                is State.Loading,
+                is State.Error -> Unit
 
-                is DetailUiState.Success -> {
+                is State.Success -> {
                     Box(
                         modifier = Modifier
                             .verticalScroll(rememberScrollState())
@@ -124,53 +177,59 @@ fun DetailScreen(
                     ) {
                         var fav by remember { mutableStateOf(false) } // TODO implement room
                         ArtDetail(
-                            art = uiState.art,
-                            color = uiState.art.colors?.firstOrNull()?.color()
+                            art = uiState.state.art,
+                            color = uiState.state.art.colors?.firstOrNull()?.color()
                                 ?: MaterialTheme.colorScheme.primary,
+                            isDownloading = uiState.isDownloading,
+                            downloadProgress = uiState.downloadProgress,
                             isFavourite = fav,
                             onSetFavourite = { fav = true },
                             onRemoveFavourite = { fav = false },
-                            onDownloadClicked = {},
-                            onApplyClicked = {}
+                            onDownloadClicked = {
+                                onEvent(DetailEvent.OnDownloadClick(pfContext))
+                            },
+                            onMaker = {},
                         )
                     }
                 }
             }
         }
     ) {
-        when (uiState) {
-            is DetailUiState.Loading -> {
+        when (uiState.state) {
+            is State.Loading -> {
                 RijksmuseumLoading()
             }
 
-            is DetailUiState.Error -> {
+            is State.Error -> {
                 RijksmuseumError(
                     modifier = modifier.fillMaxSize(),
                 )
             }
 
-            is DetailUiState.Success -> {
-                val heightPixels = screenHeight()
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(
-                            ((sheetState.bottomSheetState.requireOffset() + 130) / (heightPixels))
-                                .let { if (it == 0f) 1f else it }
+            is State.Success -> {
+                if (sheetState.bottomSheetState.isVisible) {
+                    val heightPixels = screenHeight()
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(
+                                ((sheetState.bottomSheetState.requireOffset() + 130) / (heightPixels))
+                                    .let { if (it == 0f) 1f else it }
+                            )
+                    ) {
+                        RijksmuseumImage(
+                            imageUrl = uiState.state.art.url,
+                            modifier = modifier
+                                .fillMaxSize(),
+                            alignment = Alignment.TopCenter,
                         )
-                ) {
-                    RijksmuseumImage(
-                        imageUrl = uiState.art.url,
-                        modifier = modifier
-                            .fillMaxSize(),
-                        alignment = Alignment.TopCenter,
-                    )
+                    }
                 }
             }
         }
         BackButton(
             modifier = Modifier.statusBarsPadding()
-        ) { onBackClick() }
+        ) { onEvent(DetailEvent.OnBackClick) }
     }
 }
 

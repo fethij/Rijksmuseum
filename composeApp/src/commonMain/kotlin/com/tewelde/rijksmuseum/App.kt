@@ -1,6 +1,8 @@
 package com.tewelde.rijksmuseum
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.annotation.ExperimentalCoilApi
@@ -27,8 +29,7 @@ fun App(disableDiskCache: Boolean = false) {
                 if (disableDiskCache) context.asyncImageLoader() else
                     context.asyncImageLoader().enableDiskCache()
             }
-
-            RijksmuseumNavGraph()
+            RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
         }
     }
 }

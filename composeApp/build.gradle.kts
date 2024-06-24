@@ -76,6 +76,8 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+
+            implementation(libs.filekit.core)
         }
 
         desktopMain.dependencies {

@@ -9,7 +9,8 @@ kotlin {
         commonMain.dependencies {
             api(projects.core.common)
             implementation(projects.core.model)
-            implementation(projects.core.domain)
+            api(projects.core.domain)
+            implementation(projects.core.permissions)
             implementation(projects.core.designsystem)
 
             implementation(libs.koin.compose)
@@ -18,6 +19,10 @@ kotlin {
             implementation (libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(libs.filekit.core)
+
+            implementation(libs.coil.compose)
         }
     }
 }

@@ -8,6 +8,7 @@ import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
 import com.tewelde.rijksmuseum.core.network.model.asArtObject
+import io.ktor.utils.io.ByteReadChannel
 
 /**
  * Network backed implementation of the [ArtRepository].
@@ -38,4 +39,7 @@ class ArtRepositoryImpl(
             e.printStackTrace()
             Error(e)
         }
+
+    override suspend fun downloadImage(url: String, onDownload: (Long, Long?) -> Unit): ByteReadChannel =
+        rijksmuseumDataSource.downloadImage(url, onDownload)
 }

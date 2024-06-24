@@ -40,6 +40,7 @@ import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import artUrl
 
 @Composable
 fun CollectionScreenRoute(
@@ -137,7 +138,7 @@ internal fun CollectionScreen(
                         ) { art ->
                             val height = remember { heights.random().dp }
                             ArtItem(
-                                url = art.webImage.url,
+                                url = art.artUrl,
                                 onArtClick = { onArtClick(art.objectNumber) },
                                 onLongPress = { },
                                 modifier = Modifier

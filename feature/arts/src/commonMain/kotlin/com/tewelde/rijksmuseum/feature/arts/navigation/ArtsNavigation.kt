@@ -37,7 +37,7 @@ fun NavGraphBuilder.galleryGraph(
             val viewModel = entry.sharedViewModel<GalleryViewModel>(navController)
             CollectionScreenRoute(
                 viewModel = viewModel,
-                onBackClick = { navController.popBackStack() },
+                onBackClick = { navController.navigateUp() },
                 onArtClick = { id ->
                     navController.navigate("detail/$id")
                 }

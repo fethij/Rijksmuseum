@@ -1,5 +1,7 @@
 package com.tewelde.rijksmuseum.navigation
 
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
@@ -23,6 +25,7 @@ import org.koin.compose.currentKoinScope
 @Composable
 fun RijksmuseumNavGraph(
     modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState,
     startDestination: RijksmuseumDestination = RijksmuseumDestination.Gallery,
     navController: NavHostController = rememberNavController(),
 ) {
@@ -42,14 +45,22 @@ fun RijksmuseumNavGraph(
             DetailScreenRoute(
                 objectId = id,
                 viewModel = viewModel,
-                onBackClick = navController::popBackStack
+                onBackClick = navController::navigateUp,
+                snackbarHostState = snackbarHostState,
+                onShowSnackbar = { message, action, duration ->
+                    snackbarHostState.showSnackbar(
+                        message = message,
+                        actionLabel = action,
+                        duration = duration,
+                    ) == SnackbarResult.ActionPerformed
+                }
             )
         }
     }
 }
 
 @Composable
-inline fun <reified T: ViewModel> koinViewModel(): T {
+inline fun <reified T : ViewModel> koinViewModel(): T {
     val scope = currentKoinScope()
     return viewModel {
         scope.get<T>()

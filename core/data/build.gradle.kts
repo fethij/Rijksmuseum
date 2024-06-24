@@ -7,7 +7,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.core.common)
             implementation(projects.core.model)
-            implementation(projects.core.network)
+            api(projects.core.network)
         }
     }
 }

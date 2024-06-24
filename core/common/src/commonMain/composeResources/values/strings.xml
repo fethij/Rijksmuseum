@@ -21,4 +21,8 @@
     <string name="show_more">Show More</string>
     <string name="show_less">Show Less</string>
     <string name="production_places">Production Places</string>
+
+    <string name="permission_denied">Please grant storage permission.</string>
+    <string name="settings">Settings</string>
+    <string name="saving_failed">Image not saved, try again later.</string>
 </resources>
