@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Build
 import com.tewelde.rijksmuseum.core.permissions.model.Permission
 import com.tewelde.rijksmuseum.core.permissions.model.PermissionState
-import com.tewelde.rijksmuseum.core.permissions.util.PermissionRequestException
+import com.tewelde.rijksmuseum.core.permissions.util.DeniedException
 import com.tewelde.rijksmuseum.core.permissions.util.checkPermissions
 import com.tewelde.rijksmuseum.core.permissions.util.openAppSettingsPage
 import com.tewelde.rijksmuseum.core.permissions.util.providePermissions
@@ -20,8 +20,16 @@ internal class StoragePermissionDelegate(
     }
 
     override suspend fun providePermission() {
-        activity.value.providePermissions(storagePermissions) {
-            throw PermissionRequestException(Permission.WRITE_STORAGE.name)
+        when (getPermissionState()) {
+            PermissionState.GRANTED -> return
+            PermissionState.DENIED -> throw DeniedException(Permission.WRITE_STORAGE)
+            PermissionState.NOT_DETERMINED -> {
+                activity.value.providePermissions(storagePermissions) {
+                    throw Exception(
+                        it.localizedMessage ?: "Failed to request storage permission"
+                    )
+                }
+            }
         }
     }
 

@@ -9,4 +9,5 @@ sealed class DetailEvent {
     data object SaveFailureMessageConsumed : DetailEvent()
     class OnDownloadClick(val context: PlatformContext) : DetailEvent()
     class LoadDetail(val objectId: String) : DetailEvent()
+    data object SaveSuccessMessageConsumed : DetailEvent()
 }

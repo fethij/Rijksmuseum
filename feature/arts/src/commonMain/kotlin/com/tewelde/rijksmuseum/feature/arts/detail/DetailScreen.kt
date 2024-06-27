@@ -46,6 +46,7 @@ import com.tewelde.rijksmuseum.feature.arts.gallery.components.BackButton
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
 import com.tewelde.rijksmuseum.resources.saving_failed
+import com.tewelde.rijksmuseum.resources.saving_success
 import com.tewelde.rijksmuseum.resources.settings
 import org.jetbrains.compose.resources.getString
 import screenHeight
@@ -71,6 +72,7 @@ fun DetailScreenRoute(
             is DetailEvent.NavigateToSettings,
             is DetailEvent.PermissionErrorMessageConsumed,
             is DetailEvent.SaveFailureMessageConsumed,
+            is DetailEvent.SaveSuccessMessageConsumed,
             is DetailEvent.LoadDetail -> {
                 viewModel.onEvent(it)
             }
@@ -127,6 +129,16 @@ fun DetailScreen(
         }
     }
 
+    LaunchedEffect(uiState.showSavingSuccessMessage) {
+        if (uiState.showSavingSuccessMessage) {
+            onShowSnackbar(
+                getString(Res.string.saving_success),
+                null,
+                SnackbarDuration.Short
+            )
+            onEvent(DetailEvent.SaveSuccessMessageConsumed)
+        }
+    }
 
     LaunchedEffect(uiState.state) {
         when (uiState.state) {

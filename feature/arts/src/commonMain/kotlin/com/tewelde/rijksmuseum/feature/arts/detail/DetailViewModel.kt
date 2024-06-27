@@ -15,6 +15,7 @@ import com.tewelde.rijksmuseum.core.permissions.util.DeniedException
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailEvent
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailState
 import com.tewelde.rijksmuseum.feature.arts.detail.model.State
+import io.ktor.util.toByteArray
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import okio.use
-import io.ktor.util.toByteArray
 
 class DetailViewModel(
     val getArtDetail: GetArtDetailUseCase,
@@ -66,6 +66,12 @@ class DetailViewModel(
                 }
             }
 
+            is DetailEvent.SaveSuccessMessageConsumed -> {
+                _uiState.update { detailsState ->
+                    detailsState.copy(showSavingSuccessMessage = false)
+                }
+            }
+
             DetailEvent.OnBackClick -> Unit
         }
     }
@@ -76,66 +82,73 @@ class DetailViewModel(
                 isDownloading = true
             )
         }
-            val imageLoader = SingletonImageLoader.get(context)
-            val cache = imageLoader.diskCache?.openSnapshot(art.url)
-            if (cache == null) {
-                val bytes = downloadImageUseCase(art.url) { downloaded, total ->
-                    total?.let {
-                        _uiState.update { detailsState ->
-                            detailsState.copy(
-                                downloadProgress = (downloaded * 100 / total).toInt()
-                            )
-                        }
-                    }
-                }.toByteArray()
-                saveFile(
-                    bytes = bytes,
-                    baseName = art.title ?: "image",
-                    extension = "jpg", // TODO get extension from file metadata
-                    onFailure = {
-                        _uiState.update { detailsState ->
-                            detailsState.copy(
-                                isDownloading = false,
-                                showSavingFailedMessage = true
-                            )
-                        }
-
-                    },
-                    onSuccess = {
-                        _uiState.update { detailsState ->
-                            detailsState.copy(
-                                isDownloading = false
-                            )
-                        }
-                    }
-                )
-            } else {
-                cache.use { snapshot ->
-                    val data = snapshot.data
-                    val content = fileUtil.filesystem()?.read(data) {
-                        readByteArray()
-                    }
-                    if (content != null) {
-                        saveFile(
-                            bytes = content,
-                            baseName = art.title ?: "image",
-                            extension = "jpg", // TODO get extension from file metadata
-                            onFailure = {
-                                _uiState.update { detailsState ->
-                                    detailsState.copy(isDownloading = false)
-                                }
-
-                            },
-                            onSuccess = {
-                                _uiState.update { detailsState ->
-                                    detailsState.copy(isDownloading = false)
-                                }
-                            }
+        val imageLoader = SingletonImageLoader.get(context)
+        val cache = imageLoader.diskCache?.openSnapshot(art.url)
+        if (cache == null) {
+            val bytes = downloadImageUseCase(art.url) { downloaded, total ->
+                total?.let {
+                    _uiState.update { detailsState ->
+                        detailsState.copy(
+                            downloadProgress = (downloaded * 100 / total).toInt()
                         )
                     }
                 }
+            }.toByteArray()
+            saveFile(
+                bytes = bytes,
+                baseName = art.title ?: "image",
+                extension = "jpg", // TODO get extension from file metadata
+                onFailure = {
+                    _uiState.update { detailsState ->
+                        detailsState.copy(
+                            isDownloading = false,
+                            showSavingFailedMessage = true
+                        )
+                    }
+
+                },
+                onSuccess = {
+                    _uiState.update { detailsState ->
+                        detailsState.copy(
+                            isDownloading = false,
+                            showSavingSuccessMessage = true
+                        )
+                    }
+                }
+            )
+        } else {
+            cache.use { snapshot ->
+                val data = snapshot.data
+                val content = fileUtil.filesystem()?.read(data) {
+                    readByteArray()
+                }
+                if (content != null) {
+                    saveFile(
+                        bytes = content,
+                        baseName = art.title ?: "image",
+                        extension = "jpg", // TODO get extension from file metadata
+                        onFailure = {
+                            _uiState.update { detailsState ->
+                                detailsState.copy(
+                                    isDownloading = false,
+                                    showSavingFailedMessage = true
+                                )
+                            }
+
+                        },
+                        onSuccess = {
+                            _uiState.update { detailsState ->
+                                detailsState.copy(
+                                    isDownloading = false,
+                                    showSavingSuccessMessage = true
+                                )
+                            }
+                        }
+                    )
+                }
             }
         }
+    }
 
     private fun checkPermission(postPermissionGranted: () -> Unit) {
         viewModelScope.launch {
@@ -149,6 +162,11 @@ class DetailViewModel(
                     detailsState.copy(isDownloading = false, showPermissionError = true)
                 }
             } catch (denied: DeniedException) {
+                _uiState.update { detailsState ->
+                    detailsState.copy(isDownloading = false, showPermissionError = true)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 _uiState.update { detailsState ->
                     detailsState.copy(isDownloading = false, showPermissionError = true)
                 }

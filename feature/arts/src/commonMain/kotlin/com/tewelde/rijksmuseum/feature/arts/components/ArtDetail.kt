@@ -149,12 +149,12 @@ fun SheetActionRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Button(
-            onClick = { onDownloadClicked.invoke() },
+            onClick = { onDownloadClicked() },
             modifier = Modifier.fillMaxWidth().weight(1f),
             shape = RoundedCornerShape(8.dp),
             enabled = !isDownloading
         ) {
-            AnimatedVisibility(visible = isDownloading) {
+            AnimatedVisibility(visible = isDownloading && downloadProgress > 0) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(16.dp),
                     color = MaterialTheme.colorScheme.onSurface,

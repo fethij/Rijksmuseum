@@ -1,7 +1,6 @@
 import androidx.compose.runtime.Composable
 import com.tewelde.rijksmuseum.core.model.Art
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
-import io.github.vinceglb.filekit.core.PlatformFile
 import okio.FileSystem
 
 @Composable

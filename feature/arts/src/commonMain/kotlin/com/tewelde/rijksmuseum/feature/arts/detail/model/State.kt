@@ -7,6 +7,7 @@ data class DetailState(
     val downloadProgress: Int = 0,
     val showPermissionError: Boolean = false,
     val showSavingFailedMessage: Boolean = false,
+    val showSavingSuccessMessage: Boolean = false,
     val state: State = State.Loading
 )
 

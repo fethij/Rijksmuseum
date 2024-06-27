@@ -6,9 +6,10 @@ import coil3.network.NetworkFetcher
 import coil3.network.ktor.asNetworkClient
 import com.tewelde.rijksmuseum.feature.arts.di.artsModule
 import io.ktor.client.HttpClient
+import org.koin.dsl.module
 
 @OptIn(ExperimentalCoilApi::class)
-val appModule = org.koin.dsl.module {
+val appModule = module {
     includes(artsModule)
     single {
         NetworkFetcher.Factory(
