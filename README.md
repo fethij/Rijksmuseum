@@ -68,7 +68,7 @@ In order to sign your builds generate `rijksmuseum.jks` keystore and add keystor
 
 secrets.properties would look like this:
 ```
-rijksmuseum.access.key=#Add your Rijksmuseum api key
+rijksmuseum.api.key=#Add your Rijksmuseum api key
 rijksmuseum.keystore.password=#Add your keystore password
 rijksmuseum.key.alias=#Add your key alias
 rijksmuseum.key.password=#Add your key password
