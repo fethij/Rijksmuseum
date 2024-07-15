@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NetworkWebImage(
-    @SerialName("guid") var guid: String,
+    @SerialName("guid") var guid: String?,
     @SerialName("offsetPercentageX") var offsetPercentageX: Int,
     @SerialName("offsetPercentageY") var offsetPercentageY: Int,
     @SerialName("width") var width: Int,

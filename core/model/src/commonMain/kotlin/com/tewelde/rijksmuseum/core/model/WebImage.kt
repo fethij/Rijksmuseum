@@ -1,7 +1,7 @@
 package com.tewelde.rijksmuseum.core.model
 
 data class WebImage(
-    val guid: String,
+    val guid: String?,
     val offsetPercentageX: Int,
     val offsetPercentageY: Int,
     val width: Int,

@@ -10,6 +10,7 @@ data class NetworkArt(
     @SerialName("title") var title: String,
     @SerialName("longTitle") var longTitle: String,
     @SerialName("webImage") var networkWebImage: NetworkWebImage?,
+    @SerialName("headerImage") var networkHeaderImage: NetworkHeaderImage?,
     @SerialName("productionPlaces") var productionPlaces: List<String>
 )
 
@@ -18,5 +19,6 @@ fun NetworkArt.asArtObject(): Art = Art(
     title = title,
     longTitle = longTitle,
     webImage = networkWebImage!!.asWebImage(),
+    headerImage = networkHeaderImage?.asHeaderImage(),
     productionPlaces = productionPlaces
 )

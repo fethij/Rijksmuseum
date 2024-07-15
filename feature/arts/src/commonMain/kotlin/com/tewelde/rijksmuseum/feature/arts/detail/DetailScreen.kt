@@ -109,19 +109,21 @@ fun DetailScreen(
                     verticalArrangement = Arrangement.spacedBy(36.dp)
 
                 ) {
-                    Text(
-                        text = uiState.art.title,
-                        style = MaterialTheme.typography.headlineLarge,
-                        textAlign = TextAlign.Start,
-                        fontFamily = FontFamily(
-                            Font(
-                                Res.font.lugrasimo_regular,
-                                weight = FontWeight.Normal
-                            )
-                        ),
-                        modifier = Modifier
-                            .padding(bottom = 2.dp)
-                    )
+                    uiState.art.title?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.headlineLarge,
+                            textAlign = TextAlign.Start,
+                            fontFamily = FontFamily(
+                                Font(
+                                    Res.font.lugrasimo_regular,
+                                    weight = FontWeight.Normal
+                                )
+                            ),
+                            modifier = Modifier
+                                .padding(bottom = 2.dp)
+                        )
+                    }
                     Row(
                         modifier = modifier,
                         horizontalArrangement = Arrangement.spacedBy(36.dp),
@@ -134,7 +136,7 @@ fun DetailScreen(
                             modifier = Modifier
                                 .padding(bottom = 2.dp)
                         )
-                        Text(text = uiState.art.description)
+                        uiState.art.description?.let { Text(text = it) }
                     }
                     RijksmuseumImage(
                         imageUrl = uiState.art.url,
