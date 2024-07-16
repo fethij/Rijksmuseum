@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import artUrl
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumFilterChip
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
 import com.tewelde.rijksmuseum.core.model.Art
@@ -40,7 +41,6 @@ import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import artUrl
 
 @Composable
 fun CollectionScreenRoute(
@@ -134,7 +134,7 @@ internal fun CollectionScreen(
                     ) {
                         items(
                             items = uiState.filteredArts,
-                            key = { it.objectNumber }
+                            key = { it.artUrl }
                         ) { art ->
                             val height = remember { heights.random().dp }
                             ArtItem(
