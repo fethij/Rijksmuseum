@@ -85,7 +85,6 @@ rijksmuseum.key.password=#Add your key password
 
 graph LR
   :composeApp --> :core:designsystem
-  :composeApp --> :core:network
   :composeApp --> :feature:arts
   :core:network --> :core:model
   :core:data --> :core:common

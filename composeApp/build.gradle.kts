@@ -61,7 +61,6 @@ kotlin {
 
         commonMain.dependencies {
             implementation(projects.core.designsystem)
-            implementation(projects.core.network)
             implementation(projects.feature.arts)
 
             implementation(compose.material3)
