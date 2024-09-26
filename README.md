@@ -26,7 +26,7 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 <img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9f3de760-4856-4681-9ea2-b56d6553521c">
 
 <img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/eb25dbef-96e4-4602-b545-8d240f844485">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/69ed3a3d-b403-4200-af19-1b487f1b3654">
+<img width="240" alt="s1" src="https://github.com/user-attachments/assets/779e3d81-8dca-47c9-86c4-83fe20006943">
 <img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/813cf837-b4d6-4564-ad12-50461c3f2b35">
 
 
