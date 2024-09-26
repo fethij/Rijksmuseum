@@ -35,6 +35,7 @@ kotlin {
 
 buildConfig {
     packageName = "com.tewelde.rijksmuseum"
+    useKotlinOutput { internalVisibility = true }
     buildConfigField(
         "String",
         "RIJKSMUSEUM_API_KEY",
