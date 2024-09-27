@@ -8,8 +8,8 @@
 
 # Rijksmuseum
 
-<img alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/f4906a9b-678d-4fa5-a51c-ee94c9ef0147">
 ![banner](./assets/ios/Rijksmuseum_banner_2_ios.png)
+
 Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
 
 
