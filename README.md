@@ -22,13 +22,14 @@ Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an
 Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gallery-of-art-App).
 
 ### iOS
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/0b73f4a6-d446-4a2f-93dc-7b3aac9bc056">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/0351f79c-d1cf-466b-a5a3-7d9dd0c07120">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9f3de760-4856-4681-9ea2-b56d6553521c">
-
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/eb25dbef-96e4-4602-b545-8d240f844485">
-<img width="240" alt="s1" src="https://github.com/user-attachments/assets/82aa3b35-102e-4279-ad75-cde22e7147e4">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/813cf837-b4d6-4564-ad12-50461c3f2b35">
+<p style="text-align: center;">
+  <img src="assets/ios/ios_0.png" width="250"/>
+  <img src="assets/ios/ios_1.png" width="250"/>
+  <img src="assets/ios/ios_2.png" width="250"/>
+  <img src="assets/ios/ios_3.png" width="250"/>
+  <img src="assets/ios/ios_4.png" width="250"/>
+  <img src="assets/ios/ios_5.png" width="250"/>
+</p>
 
 
 ### Android
