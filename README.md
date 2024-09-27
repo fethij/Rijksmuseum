@@ -33,22 +33,27 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 
 
 ### Android
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/a46b7b5b-d2d3-4d27-a897-5c81ae6439c7">
-<img width="240" alt="s1" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/2056de1e-6841-4455-bc95-6ffbdaec1542">
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/241f9f7e-f926-4885-a448-b2a6769c7518">
+<p style="text-align: center;">
+  <img src="assets/android/android_0.png" width="250"/>
+  <img src="assets/android/android_1.png" width="250"/>
+  <img src="assets/android/android_2.png" width="250"/>
+  <img src="assets/android/android_3.png" width="250"/>
+  <img src="assets/android/android_4.png" width="250"/>
+  <img src="assets/android/android_5.png" width="250"/>
+</p>
 
-<img width="240" alt="s1" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/4cb65274-aa61-4c78-9439-874d655a2295">
-<img width="240" alt="s2" src="https://github.com/user-attachments/assets/5010271f-261b-4243-b42d-793ba57ab013">
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/0db53073-29bb-4cf8-8f4c-3dcf3fe64fb3">
 
 
 ### Desktop
-<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9b25b3f4-e82d-4468-bc65-62b84d19c691">
+<p style="text-align: center;">
+  <img src="assets/desktop/desktop.png" width="250"/>
+</p>
 
 
 ### Wasm
-<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/f0585d06-97fb-49c5-a014-ca03907c4a89">
-
+<p style="text-align: center;">
+  <img src="assets/wasm/wasm.png" width="250"/>
+</p>
 
 ## Tech Stack 📚
 - [Kotlin Multiplatform](https://kotlinlang.org/lp/multiplatform/)
