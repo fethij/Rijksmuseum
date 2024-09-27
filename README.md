@@ -45,12 +45,15 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 
 
 ### Desktop
-<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9b25b3f4-e82d-4468-bc65-62b84d19c691">
+<p style="text-align: center;">
+  <img src="assets/desktop/desktop.png" width="250"/>
+</p>
 
 
 ### Wasm
-<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/f0585d06-97fb-49c5-a014-ca03907c4a89">
-
+<p style="text-align: center;">
+  <img src="assets/wasm/wasm.png" width="250"/>
+</p>
 
 ## Tech Stack 📚
 - [Kotlin Multiplatform](https://kotlinlang.org/lp/multiplatform/)
