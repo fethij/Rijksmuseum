@@ -46,13 +46,13 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 
 ### Desktop
 <p style="text-align: center;">
-  <img src="assets/desktop/desktop.png" width="250"/>
+  <img src="assets/desktop/desktop.png" width="613"/>
 </p>
 
 
 ### Wasm
 <p style="text-align: center;">
-  <img src="assets/wasm/wasm.png" width="250"/>
+  <img src="assets/wasm/wasm.png" width="613"/>
 </p>
 
 ## Tech Stack 📚
