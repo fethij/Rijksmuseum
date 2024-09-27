@@ -13,7 +13,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal actual fun platformModule(): Module = module {
-    single<PermissionDelegate>(named(Permission.WRITE_STORAGE)) {
+    single<PermissionDelegate>(named(Permission.WRITE_STORAGE.name)) {
         StoragePermissionDelegate()
     }
 

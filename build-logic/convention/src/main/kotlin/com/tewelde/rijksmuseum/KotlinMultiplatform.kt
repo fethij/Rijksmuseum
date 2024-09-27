@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
+@OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
 internal fun Project.configureKotlinMultiplatform(
     extension: KotlinMultiplatformExtension
 ) = extension.apply {
@@ -20,7 +21,6 @@ internal fun Project.configureKotlinMultiplatform(
 
     jvm("desktop")
 
-    @OptIn(ExperimentalWasmDsl::class)
     wasmJs { browser() }
 
     listOf(iosArm64(), iosSimulatorArm64())
@@ -32,6 +32,7 @@ internal fun Project.configureKotlinMultiplatform(
             dependencies {
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 api(libs.findLibrary("koin.core").get())
+                implementation(libs.findLibrary("kermit").get())
             }
 
             androidMain {

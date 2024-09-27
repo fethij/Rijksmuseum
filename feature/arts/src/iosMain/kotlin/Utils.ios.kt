@@ -2,6 +2,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
+import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import io.github.vinceglb.filekit.core.PlatformFile
 import kotlinx.cinterop.BetaInteropApi
@@ -52,13 +53,14 @@ actual class FileUtil {
                 if (imageData != null) {
                     UIImageWriteToSavedPhotosAlbum(
                         image = imageData,
-                        completionTarget = { onSuccess() },
+                        completionTarget = null,
                         completionSelector = null,
                         contextInfo = null
                     )
                 } else {
                     onFailure(NullPointerException())
                 }
+            }.onSuccess {
                 onSuccess()
             }.onFailure {
                 it.printStackTrace()

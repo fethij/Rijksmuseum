@@ -31,12 +31,12 @@ internal class PermissionsServiceImpl : PermissionsService, KoinComponent {
     }
 
     override suspend fun providePermission(permission: Permission) {
-        try {
+//        try {
             getPermissionDelegate(permission).providePermission()
-        } catch (e: Exception) {
-            println("Failed to request permission $permission")
-            e.printStackTrace()
-        }
+//        } catch (e: Exception) {
+//            println("Failed to request permission $permission")
+//            e.printStackTrace()
+//        }
     }
 
     override fun openSettingPage(permission: Permission) {
