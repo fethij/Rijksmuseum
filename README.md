@@ -36,7 +36,7 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 <img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/241f9f7e-f926-4885-a448-b2a6769c7518">
 
 <img width="240" alt="s1" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/4cb65274-aa61-4c78-9439-874d655a2295">
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/c8a96798-e180-4902-aba7-58602167bde8">
+<img width="240" alt="s2" src="https://github.com/user-attachments/assets/5010271f-261b-4243-b42d-793ba57ab013">
 <img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/0db53073-29bb-4cf8-8f4c-3dcf3fe64fb3">
 
 
