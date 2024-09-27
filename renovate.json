@@ -3,12 +3,34 @@
   "extends": [
     "config:base"
   ],
-  "automergeType": "branch",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "automergeType": "pr",
+    "platformAutomerge": true
+  },
   "packageRules": [
     {
-      "description": "Automerge non-major updates",
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
       "automerge": true
+    },
+    {
+      "matchPackagePatterns": [
+        "androidx.compose.ui:ui",
+        "androidx.compose.ui:ui-tooling-preview"
+      ],
+      "groupName": "androidx compose ui updates"
+    },
+    {
+      "matchPackageNames": [
+        "org.jetbrains.kotlin.*",
+        "com.google.devtools.ksp"
+      ],
+      "enabled": false
     }
   ]
 }
