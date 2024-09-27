@@ -112,7 +112,7 @@ fun DetailScreen(
                 getString(Res.string.settings),
                 SnackbarDuration.Long
             ).run {
-                onEvent(DetailEvent.NavigateToSettings)
+                if (this) onEvent(DetailEvent.NavigateToSettings)
             }
             onEvent(DetailEvent.PermissionErrorMessageConsumed)
         }

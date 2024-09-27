@@ -1,5 +1,6 @@
 package com.tewelde.rijksmuseum.core.permissions.delegate
 
+import co.touchlab.kermit.Logger
 import com.tewelde.rijksmuseum.core.permissions.model.Permission
 import com.tewelde.rijksmuseum.core.permissions.model.PermissionState
 import com.tewelde.rijksmuseum.core.permissions.util.DeniedAlwaysException
@@ -52,9 +53,13 @@ internal class StoragePermissionDelegate : PermissionDelegate {
     }
 
     private fun requestGalleryAccess(callback: (PHAuthorizationStatus) -> Unit) {
-        PHPhotoLibrary.requestAuthorization(mainContinuation { status: PHAuthorizationStatus ->
-            callback(status)
-        })
+        val addOnly = 1L
+        PHPhotoLibrary.requestAuthorizationForAccessLevel(
+            addOnly,
+            mainContinuation { status: PHAuthorizationStatus ->
+                Logger.d { "#### StoragePermissionDelegate requestGalleryAccess: status = $status" }
+                callback(status)
+            })
     }
 }
 
