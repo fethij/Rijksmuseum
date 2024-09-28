@@ -23,7 +23,7 @@ kermit = "2.0.4"
 kotlinx_serialization_json = "1.7.1"
 coroutines = "1.9.0-RC.2"
 modulegraph = "0.10.1"
-buildConfig = "5.4.0"
+buildConfig = "5.5.0"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
