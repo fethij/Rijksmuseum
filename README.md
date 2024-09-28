@@ -1,4 +1,4 @@
-![kotlin-version](https://img.shields.io/badge/kotlin-2.0.20-blue?logo=kotlin)
+<img width="1696" alt="Rijksmuseum_banner_3" src="https://github.com/user-attachments/assets/00abc5a9-324e-4060-8052-a8dc16aa5759">![kotlin-version](https://img.shields.io/badge/kotlin-2.0.20-blue?logo=kotlin)
 [![Build](https://github.com/fethij/Rijksmuseum/actions/workflows/deploy.yaml/badge.svg)](https://github.com/fethij/Rijksmuseum/actions/workflows/deploy.yaml)
 
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
@@ -8,7 +8,7 @@
 
 # Rijksmuseum
 
-![banner](./assets/ios/Rijksmuseum_banner_2_ios.png)
+![banner](./assets/ios/Rijksmuseum_banner_3.png)
 
 Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
 
