@@ -57,7 +57,6 @@ internal class StoragePermissionDelegate : PermissionDelegate {
         PHPhotoLibrary.requestAuthorizationForAccessLevel(
             addOnly,
             mainContinuation { status: PHAuthorizationStatus ->
-                Logger.d { "#### StoragePermissionDelegate requestGalleryAccess: status = $status" }
                 callback(status)
             })
     }
