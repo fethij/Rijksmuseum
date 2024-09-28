@@ -2,7 +2,6 @@ package com.tewelde.rijksmuseum.feature.arts.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -91,16 +92,14 @@ fun ProductionPlaceDetailItem(places: List<String>) {
                 },
                 onClick = {},
                 shape = CircleShape,
-                colors =
-                SuggestionChipDefaults.suggestionChipColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    labelColor = MaterialTheme.colorScheme.secondary
+                colors = SuggestionChipDefaults.suggestionChipColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    labelColor = MaterialTheme.colorScheme.onBackground
                 ),
-                border =
-                SuggestionChipDefaults.suggestionChipBorder(
+                border = SuggestionChipDefaults.suggestionChipBorder(
                     enabled = true,
-                    borderColor = MaterialTheme.colorScheme.secondary
-                ),
+                    borderColor = MaterialTheme.colorScheme.onBackground,
+                )
             )
         }
     }
@@ -141,22 +140,21 @@ fun SheetActionRow(
             onClick = { onDownloadClicked() },
             modifier = Modifier.fillMaxWidth().weight(1f),
             shape = RoundedCornerShape(8.dp),
-            enabled = !isDownloading
+            enabled = !isDownloading,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.onSurface,
+            )
         ) {
             AnimatedVisibility(visible = isDownloading && downloadProgress > 0) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(16.dp),
+                CircularProgressIndicator(modifier = Modifier.size(16.dp),
                     color = MaterialTheme.colorScheme.onSurface,
                     strokeWidth = 2.dp,
-                    progress = { downloadProgress / 100f }
-                )
+                    progress = { downloadProgress / 100f })
             }
             Spacer(modifier = Modifier.size(8.dp))
             Text(
                 text = stringResource(Res.string.save_to_photos),
-                style =
-                MaterialTheme.typography.titleSmall.copy(
-//                    fontFamily = getLatoRegular(),
+                style = MaterialTheme.typography.titleSmall.copy(
                     fontSize = 14.sp
                 )
             )
@@ -172,31 +170,26 @@ fun SheetProfileRow(
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        Box(
+            modifier = Modifier
+                .clip(CircleShape)
+                .shadow(
+                    elevation = 8.dp, shape = CircleShape
+                ),
+//                    .clickable { onMaker() },
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
-                    .clickable { onMaker() },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = maker.initials(),
-                    modifier = Modifier.padding(12.dp),
-                )
-            }
-
             Text(
-                text = maker,
-                style = MaterialTheme.typography.bodyLarge
+                text = maker.initials(),
+                modifier = Modifier.padding(12.dp),
             )
         }
+
+        Text(
+            text = maker, style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 
@@ -224,8 +217,7 @@ fun SheetPhotoDetails(art: ArtObject, color: Color) {
             art.title?.let {
                 PhotoDetailItem(stringResource(Res.string.title)) {
                     Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp)
+                        text = it, style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp)
                     )
                 }
             }
@@ -249,9 +241,7 @@ fun SheetPhotoDetails(art: ArtObject, color: Color) {
 
             PhotoDetailItem(stringResource(Res.string.color)) {
                 Box(
-                    modifier =
-                    Modifier.size(18.dp)
-                        .background(color = color, shape = CircleShape)
+                    modifier = Modifier.size(18.dp).background(color = color, shape = CircleShape)
                 )
             }
 

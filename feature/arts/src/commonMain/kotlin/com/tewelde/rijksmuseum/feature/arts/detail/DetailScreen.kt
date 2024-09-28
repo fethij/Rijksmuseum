@@ -157,8 +157,8 @@ fun DetailScreen(
             bottomStart = CornerSize(0)
         ),
         sheetSwipeEnabled = true,
-        sheetContainerColor = MaterialTheme.colorScheme.surface,
-        sheetContentColor = MaterialTheme.colorScheme.onSurface,
+        sheetContainerColor = MaterialTheme.colorScheme.background,
+        sheetContentColor = MaterialTheme.colorScheme.onBackground,
         sheetDragHandle = {
             Surface(
                 modifier = Modifier.padding(top = 12.dp, bottom = 12.dp),
@@ -251,7 +251,9 @@ fun String.initials(): String =
 
 fun String.getFirstAndLast() = buildAnnotatedString {
     append(this@getFirstAndLast.first())
-    append(this@getFirstAndLast.last())
+    if (this@getFirstAndLast.length > 1) {
+        append(this@getFirstAndLast.last())
+    }
 }.toString()
 
 /**
