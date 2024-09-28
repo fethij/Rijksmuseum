@@ -18,7 +18,6 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
@@ -26,7 +25,6 @@ import org.koin.dsl.module
 
 const val KEY = "key"
 
-@OptIn(ExperimentalSerializationApi::class)
 val networkModule = module {
     singleOf(::KtorRijksMuseumNetwork) { bind<RijksMuseumNetworkDataSource>() }
     single {
