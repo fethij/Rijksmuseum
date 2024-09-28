@@ -41,6 +41,7 @@ import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import artUrl
 
 @Composable
 fun CollectionScreenRoute(
@@ -134,7 +135,7 @@ internal fun CollectionScreen(
                     ) {
                         items(
                             items = uiState.filteredArts,
-                            key = { it.artUrl }
+                            key = { it.objectNumber }
                         ) { art ->
                             val height = remember { heights.random().dp }
                             ArtItem(
@@ -152,6 +153,7 @@ internal fun CollectionScreen(
             }
 
             is ArtsUiState.Loading,
+            is ArtsUiState.Error,
             is ArtsUiState.Empty -> Unit
         }
     }

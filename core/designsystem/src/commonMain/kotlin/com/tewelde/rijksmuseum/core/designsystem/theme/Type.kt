@@ -1,4 +1,4 @@
-package com.tewelde.rijksmuseum.theme
+package com.tewelde.rijksmuseum.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

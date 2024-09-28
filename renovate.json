@@ -1,6 +1,36 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:base"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "automergeType": "pr",
+    "platformAutomerge": true
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": [
+        "androidx.compose.ui:ui",
+        "androidx.compose.ui:ui-tooling-preview"
+      ],
+      "groupName": "androidx compose ui updates"
+    },
+    {
+      "matchPackageNames": [
+        "org.jetbrains.kotlin.*",
+        "com.google.devtools.ksp"
+      ],
+      "enabled": false
+    }
   ]
 }

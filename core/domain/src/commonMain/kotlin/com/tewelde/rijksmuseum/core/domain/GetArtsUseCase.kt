@@ -1,6 +1,7 @@
 package com.tewelde.rijksmuseum.core.domain
 
-import com.tewelde.rijksmuseum.core.common.Result
+import arrow.core.Either
+import com.tewelde.rijksmuseum.core.common.ApiResponse
 import com.tewelde.rijksmuseum.core.data.ArtRepository
 import com.tewelde.rijksmuseum.core.model.Art
 
@@ -10,9 +11,15 @@ import com.tewelde.rijksmuseum.core.model.Art
 class GetArtsUseCase(
     private val artRepository: ArtRepository
 ) {
-    suspend operator fun invoke(page: Int = 1): List<Art> =
+    suspend operator fun invoke(page: Int = 1): Either<String, List<Art>> =
         when (val arts = artRepository.getCollection(page)) {
-            is Result.Success -> arts.data
-            is Result.Error -> emptyList() /* Could be handled in viewModel as well */
+            is Either.Left -> {
+                when (arts.value) {
+                    is ApiResponse.IOException -> Either.Left("Network unavailable")
+                    is ApiResponse.HttpError -> Either.Left("Error getting arts, try again later")
+                }
+            }
+
+            is Either.Right -> Either.Right(arts.value)
         }
 }

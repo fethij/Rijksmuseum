@@ -119,6 +119,23 @@ internal fun ArtsScreen(
                     )
                 }
             }
+
+            is ArtsUiState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = uiState.message,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                }
+            }
         }
     }
 }

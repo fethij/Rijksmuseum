@@ -6,4 +6,7 @@ data class ArtObject(
     var description: String?,
     var url: String,
     var webImage: WebImage?,
+    val principalMaker: String,
+    val colors: List<String>?,
+    val productionPlaces: List<String>?,
 )

@@ -1,4 +1,5 @@
 package com.tewelde.rijksmuseum.core.model
+
 data class HeaderImage(
     val guid: String?,
     val offsetPercentageX: Int?,
