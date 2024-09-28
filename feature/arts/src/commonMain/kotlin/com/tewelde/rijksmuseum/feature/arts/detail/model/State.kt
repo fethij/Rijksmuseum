@@ -14,5 +14,5 @@ data class DetailState(
 sealed interface State {
     data object Loading : State
     data class Success(val art: ArtObject) : State
-    data object Error : State
+    data class Error(val message: String) : State
 }

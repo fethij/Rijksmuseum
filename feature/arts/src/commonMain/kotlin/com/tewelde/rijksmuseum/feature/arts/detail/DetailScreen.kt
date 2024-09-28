@@ -200,7 +200,7 @@ fun DetailScreen(
             }
         }
     ) {
-        when (uiState.state) {
+        when (val state = uiState.state) {
             is State.Loading -> {
                 RijksmuseumLoading()
             }
@@ -208,6 +208,7 @@ fun DetailScreen(
             is State.Error -> {
                 RijksmuseumError(
                     modifier = modifier.fillMaxSize(),
+                    text = state.message
                 )
             }
 
@@ -223,7 +224,7 @@ fun DetailScreen(
                             )
                     ) {
                         RijksmuseumImage(
-                            imageUrl = uiState.state.art.url,
+                            imageUrl = state.art.url,
                             modifier = modifier
                                 .fillMaxSize(),
                             alignment = Alignment.TopCenter,

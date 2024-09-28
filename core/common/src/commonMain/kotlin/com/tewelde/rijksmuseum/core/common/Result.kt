@@ -15,6 +15,16 @@ sealed interface Result<out T> {
 }
 
 /**
+ * Sealed class to represent the different types of API responses.
+ * [ApiResponse.IOException] Represents an IO exception.
+ * [ApiResponse.HttpError] Represents an HTTP error.
+ */
+sealed interface ApiResponse {
+    data object HttpError : ApiResponse
+    data object IOException : ApiResponse
+}
+
+/**
  * Extension function to convert a Flow<T> to a Flow<Result<T>>
  */
 fun <T> Flow<T>.asResult(): Flow<Result<T>> {

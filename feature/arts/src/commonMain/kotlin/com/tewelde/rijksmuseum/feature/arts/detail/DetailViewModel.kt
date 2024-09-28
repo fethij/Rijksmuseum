@@ -3,6 +3,7 @@ package com.tewelde.rijksmuseum.feature.arts.detail
 import FileUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.Either
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
 import com.tewelde.rijksmuseum.core.domain.DownloadImageUseCase
@@ -178,13 +179,10 @@ class DetailViewModel(
 
     private fun getDetail(objectId: String) = viewModelScope.launch {
         val art = getArtDetail(objectId)
-        if (art != null) {
-            _uiState.update { detailsState ->
-                detailsState.copy(state = State.Success(art))
-            }
-        } else {
-            _uiState.update { detailState ->
-                detailState.copy(state = State.Error)
+        _uiState.update {
+            when (art) {
+                is Either.Left -> DetailState(state = State.Error(art.value))
+                is Either.Right -> DetailState(state = State.Success(art.value))
             }
         }
     }

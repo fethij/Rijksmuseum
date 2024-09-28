@@ -4,7 +4,6 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
 internal fun Project.configureKotlinMultiplatform(
@@ -33,6 +32,7 @@ internal fun Project.configureKotlinMultiplatform(
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 api(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kermit").get())
+                implementation(libs.findLibrary("arrow.core").get())
             }
 
             androidMain {

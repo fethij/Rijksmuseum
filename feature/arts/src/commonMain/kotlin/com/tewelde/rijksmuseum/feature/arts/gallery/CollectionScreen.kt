@@ -152,6 +152,7 @@ internal fun CollectionScreen(
             }
 
             is ArtsUiState.Loading,
+            is ArtsUiState.Error,
             is ArtsUiState.Empty -> Unit
         }
     }

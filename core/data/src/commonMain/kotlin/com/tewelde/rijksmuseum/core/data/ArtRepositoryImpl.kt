@@ -1,14 +1,15 @@
 package com.tewelde.rijksmuseum.core.data
 
-import com.tewelde.rijksmuseum.core.common.Result
-import com.tewelde.rijksmuseum.core.common.Result.Error
-import com.tewelde.rijksmuseum.core.common.Result.Success
+import arrow.core.Either
+import co.touchlab.kermit.Logger
+import com.tewelde.rijksmuseum.core.common.ApiResponse
 import com.tewelde.rijksmuseum.core.model.Art
 import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
 import com.tewelde.rijksmuseum.core.network.model.asArtObject
 import io.ktor.utils.io.ByteReadChannel
+import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -21,30 +22,37 @@ class ArtRepositoryImpl(
     private val rijksmuseumDataSource: RijksMuseumNetworkDataSource,
     private val ioSDispatcher: CoroutineDispatcher
 ) : ArtRepository {
+    val log = Logger.withTag(this::class.simpleName!!)
 
-    override suspend fun getCollection(page: Int): Result<List<Art>> =
+    override suspend fun getCollection(page: Int): Either<ApiResponse, List<Art>> =
         withContext(ioSDispatcher) {
             try {
                 val collection = rijksmuseumDataSource.getCollection(page)
-                Success(
+                Either.Right(
                     collection.filter {
                         it.networkWebImage != null
                     }.map(NetworkArt::asArtObject)
                 )
+            } catch (e: IOException) {
+                log.e(e) { "Error getting collection" }
+                Either.Left(ApiResponse.IOException)
             } catch (e: Exception) {
-                e.printStackTrace()
-                Error(e)
+                log.e(e) { "Error getting collection" }
+                Either.Left(ApiResponse.HttpError)
             }
         }
 
-    override suspend fun getArt(objectId: String): Result<ArtObject> =
+    override suspend fun getArt(objectId: String): Either<ApiResponse, ArtObject> =
         withContext(ioSDispatcher) {
             try {
                 val art = rijksmuseumDataSource.getDetail(objectId)
-                Success(art.asArtObject())
+                Either.Right(art.asArtObject())
+            } catch (e: IOException) {
+                log.e(e) { "Error getting art" }
+                Either.Left(ApiResponse.IOException)
             } catch (e: Exception) {
-                e.printStackTrace()
-                Error(e)
+                log.e(e) { "Error getting art" }
+                Either.Left(ApiResponse.HttpError)
             }
         }
 

@@ -2,6 +2,7 @@ package com.tewelde.rijksmuseum.feature.arts.gallery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.Either
 import com.tewelde.rijksmuseum.core.domain.GetArtsUseCase
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.ArtsUiState
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.GalleryEvent
@@ -28,10 +29,12 @@ class GalleryViewModel(
     init {
         viewModelScope.launch {
             val arts = getArts(Random.nextInt(1, 10))
-            if (arts.isEmpty())
-                _uiState.update { ArtsUiState.Empty }
-            else
-                _uiState.update { ArtsUiState.Success(arts) }
+            _uiState.update {
+                when (arts) {
+                    is Either.Left -> ArtsUiState.Error(arts.value)
+                    is Either.Right -> ArtsUiState.Success(arts.value)
+                }
+            }
         }
     }
 

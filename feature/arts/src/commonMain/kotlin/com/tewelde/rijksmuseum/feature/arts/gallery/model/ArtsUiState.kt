@@ -4,6 +4,7 @@ import com.tewelde.rijksmuseum.core.model.Art
 
 sealed interface ArtsUiState {
     data object Empty : ArtsUiState
+    data class Error(val message: String) : ArtsUiState
     data object Loading : ArtsUiState
     data class Success(
         val arts: List<Art>,
