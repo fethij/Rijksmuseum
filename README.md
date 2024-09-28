@@ -1,4 +1,4 @@
-![kotlin-version](https://img.shields.io/badge/kotlin-2.0.0-blue?logo=kotlin)
+![kotlin-version](https://img.shields.io/badge/kotlin-2.0.20-blue?logo=kotlin)
 [![Build](https://github.com/fethij/Rijksmuseum/actions/workflows/deploy.yaml/badge.svg)](https://github.com/fethij/Rijksmuseum/actions/workflows/deploy.yaml)
 
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
@@ -7,8 +7,8 @@
 ![badge-js](http://img.shields.io/badge/platform-web-FDD835.svg?style=flat)
 
 # Rijksmuseum
+![banner](./assets/ios/Rijksmuseum_banner_3.png)
 
-<img alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/f4906a9b-678d-4fa5-a51c-ee94c9ef0147">
 Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
 
 
@@ -21,32 +21,38 @@ Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an
 Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gallery-of-art-App).
 
 ### iOS
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/0b73f4a6-d446-4a2f-93dc-7b3aac9bc056">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/0351f79c-d1cf-466b-a5a3-7d9dd0c07120">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9f3de760-4856-4681-9ea2-b56d6553521c">
-
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/eb25dbef-96e4-4602-b545-8d240f844485">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/69ed3a3d-b403-4200-af19-1b487f1b3654">
-<img width="240" alt="s1" src="https://github.com/fethij/Rijksmuseum/assets/32542424/813cf837-b4d6-4564-ad12-50461c3f2b35">
+<p style="text-align: center;">
+  <img src="assets/ios/ios_0.png" width="250"/>
+  <img src="assets/ios/ios_1.png" width="250"/>
+  <img src="assets/ios/ios_2.png" width="250"/>
+  <img src="assets/ios/ios_3.png" width="250"/>
+  <img src="assets/ios/ios_4.png" width="250"/>
+  <img src="assets/ios/ios_5.png" width="250"/>
+</p>
 
 
 ### Android
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/a46b7b5b-d2d3-4d27-a897-5c81ae6439c7">
-<img width="240" alt="s1" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/2056de1e-6841-4455-bc95-6ffbdaec1542">
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/241f9f7e-f926-4885-a448-b2a6769c7518">
+<p style="text-align: center;">
+  <img src="assets/android/android_0.png" width="250"/>
+  <img src="assets/android/android_1.png" width="250"/>
+  <img src="assets/android/android_2.png" width="250"/>
+  <img src="assets/android/android_3.png" width="250"/>
+  <img src="assets/android/android_4.png" width="250"/>
+  <img src="assets/android/android_5.png" width="250"/>
+</p>
 
-<img width="240" alt="s1" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/4cb65274-aa61-4c78-9439-874d655a2295">
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/c8a96798-e180-4902-aba7-58602167bde8">
-<img width="240" alt="s2" src="https://github.com/fethij/ArtGalleryViewer/assets/32542424/0db53073-29bb-4cf8-8f4c-3dcf3fe64fb3">
 
 
 ### Desktop
-<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/9b25b3f4-e82d-4468-bc65-62b84d19c691">
+<p style="text-align: center;">
+  <img src="assets/desktop/desktop.png" width="613"/>
+</p>
 
 
 ### Wasm
-<img width="613" alt="s2" src="https://github.com/fethij/Rijksmuseum/assets/32542424/f0585d06-97fb-49c5-a014-ca03907c4a89">
-
+<p style="text-align: center;">
+  <img src="assets/wasm/wasm.png" width="613"/>
+</p>
 
 ## Tech Stack 📚
 - [Kotlin Multiplatform](https://kotlinlang.org/lp/multiplatform/)
@@ -68,7 +74,7 @@ In order to sign your builds generate `rijksmuseum.jks` keystore and add keystor
 
 secrets.properties would look like this:
 ```
-rijksmuseum.access.key=#Add your Rijksmuseum api key
+rijksmuseum.api.key=#Add your Rijksmuseum api key
 rijksmuseum.keystore.password=#Add your keystore password
 rijksmuseum.key.alias=#Add your key alias
 rijksmuseum.key.password=#Add your key password
@@ -85,7 +91,6 @@ rijksmuseum.key.password=#Add your key password
 
 graph LR
   :composeApp --> :core:designsystem
-  :composeApp --> :core:network
   :composeApp --> :feature:arts
   :core:network --> :core:model
   :core:data --> :core:common

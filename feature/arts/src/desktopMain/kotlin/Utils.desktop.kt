@@ -6,6 +6,7 @@ import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import io.github.vinceglb.filekit.core.PlatformFile
 import okio.FileSystem
+import com.tewelde.rijksmuseum.core.model.Art
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

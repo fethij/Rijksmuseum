@@ -37,6 +37,7 @@ coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilNetworkKtor" }
 coil_compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
+coil_compose_core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import artUrl
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumFilterChip
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
 import com.tewelde.rijksmuseum.core.model.Art
