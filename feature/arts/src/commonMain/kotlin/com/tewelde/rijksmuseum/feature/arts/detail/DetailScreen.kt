@@ -25,9 +25,6 @@ import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -187,16 +184,12 @@ fun DetailScreen(
                             .navigationBarsPadding()
 
                     ) {
-                        var fav by remember { mutableStateOf(false) } // TODO implement room
                         ArtDetail(
                             art = uiState.state.art,
                             color = uiState.state.art.colors?.firstOrNull()?.color()
                                 ?: MaterialTheme.colorScheme.primary,
                             isDownloading = uiState.isDownloading,
                             downloadProgress = uiState.downloadProgress,
-                            isFavourite = fav,
-                            onSetFavourite = { fav = true },
-                            onRemoveFavourite = { fav = false },
                             onDownloadClicked = {
                                 onEvent(DetailEvent.OnDownloadClick(pfContext))
                             },

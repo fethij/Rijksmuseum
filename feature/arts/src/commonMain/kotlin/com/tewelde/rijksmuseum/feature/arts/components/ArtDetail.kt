@@ -1,7 +1,6 @@
 package com.tewelde.rijksmuseum.feature.arts.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,14 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults.filledTonalIconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
@@ -53,11 +48,8 @@ import org.jetbrains.compose.resources.stringResource
 fun ArtDetail(
     art: ArtObject,
     color: Color,
-    isFavourite: Boolean,
     isDownloading: Boolean = false,
     downloadProgress: Int = 0,
-    onSetFavourite: () -> Unit,
-    onRemoveFavourite: () -> Unit,
     onDownloadClicked: () -> Unit,
     onMaker: () -> Unit
 ) {
@@ -68,9 +60,6 @@ fun ArtDetail(
     ) {
         SheetProfileRow(
             maker = art.principalMaker,
-            isFavourite = isFavourite,
-            onSetFavourite = onSetFavourite,
-            onRemoveFavourite = onRemoveFavourite,
             onMaker = onMaker
         )
         SheetActionRow(
@@ -178,9 +167,6 @@ fun SheetActionRow(
 @Composable
 fun SheetProfileRow(
     maker: String,
-    isFavourite: Boolean,
-    onSetFavourite: () -> Unit,
-    onRemoveFavourite: () -> Unit,
     onMaker: () -> Unit
 ) {
     Row(
@@ -210,32 +196,6 @@ fun SheetProfileRow(
                 text = maker,
                 style = MaterialTheme.typography.bodyLarge
             )
-        }
-
-        FilledTonalIconButton(
-            colors = filledTonalIconButtonColors().copy(
-                contentColor = MaterialTheme.colorScheme.onSurface,
-                containerColor = MaterialTheme.colorScheme.surface,
-
-                ),
-            onClick = {
-                if (isFavourite) {
-                    onRemoveFavourite()
-                } else {
-                    onSetFavourite()
-                }
-            }
-        ) {
-            Crossfade(targetState = isFavourite) { isFavourite ->
-                if (isFavourite) {
-                    Icon(imageVector = Icons.Filled.Favorite, contentDescription = "Favorite")
-                } else {
-                    Icon(
-                        imageVector = Icons.Outlined.FavoriteBorder,
-                        contentDescription = "Favorite"
-                    )
-                }
-            }
         }
     }
 }
