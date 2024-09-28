@@ -7,7 +7,6 @@
 ![badge-js](http://img.shields.io/badge/platform-web-FDD835.svg?style=flat)
 
 # Rijksmuseum
-
 ![banner](./assets/ios/Rijksmuseum_banner_3.png)
 
 Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
