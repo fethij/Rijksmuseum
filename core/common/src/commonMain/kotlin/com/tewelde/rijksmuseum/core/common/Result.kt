@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
-
 /**
  * A generic class that cal hold a value
  * @param <T>
@@ -12,6 +11,18 @@ import kotlinx.coroutines.flow.map
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
     data class Error(val exception: Throwable? = null) : Result<Nothing>
+}
+
+/**
+ * A generic class to represent different types of data.
+ * [Either.Left] Represents the left side of [Either] class which by convention is a "Failure".
+ * [Either.Right] Represents the right side of [Either] class which by convention is a "Success".
+ * @param A The type of the left side.
+ * @param B The type of the right side.
+ */
+sealed class Either<out A, out B>{
+    data class Left<out A>(val value: A): Either<A, Nothing>()
+    data class Right<out B>(val value: B): Either<Nothing, B>()
 }
 
 /**

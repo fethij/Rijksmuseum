@@ -32,7 +32,6 @@ internal fun Project.configureKotlinMultiplatform(
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 api(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kermit").get())
-                implementation(libs.findLibrary("arrow.core").get())
             }
 
             androidMain {

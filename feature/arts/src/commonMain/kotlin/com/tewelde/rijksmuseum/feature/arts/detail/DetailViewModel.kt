@@ -3,9 +3,9 @@ package com.tewelde.rijksmuseum.feature.arts.detail
 import FileUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import arrow.core.Either
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
+import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.domain.DownloadImageUseCase
 import com.tewelde.rijksmuseum.core.domain.GetArtDetailUseCase
 import com.tewelde.rijksmuseum.core.model.ArtObject

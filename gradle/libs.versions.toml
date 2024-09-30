@@ -10,7 +10,6 @@ androidx-core-ktx = "1.13.1"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-arrowCore = "1.2.4"
 coil = "3.0.0-alpha10"
 coilNetworkKtor = "3.0.0-alpha08"
 compose-plugin = "1.6.11"
@@ -32,7 +31,6 @@ kermit = "2.0.4"
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
-arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrowCore" }
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilNetworkKtor" }
 coil_compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }

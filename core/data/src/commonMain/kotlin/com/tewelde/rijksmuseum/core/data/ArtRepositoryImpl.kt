@@ -1,8 +1,8 @@
 package com.tewelde.rijksmuseum.core.data
 
-import arrow.core.Either
 import co.touchlab.kermit.Logger
 import com.tewelde.rijksmuseum.core.common.ApiResponse
+import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.model.Art
 import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource

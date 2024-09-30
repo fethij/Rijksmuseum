@@ -1,7 +1,7 @@
 package com.tewelde.rijksmuseum.core.data
 
-import arrow.core.Either
 import com.tewelde.rijksmuseum.core.common.ApiResponse
+import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.model.Art
 import com.tewelde.rijksmuseum.core.model.ArtObject
 import io.ktor.utils.io.ByteReadChannel

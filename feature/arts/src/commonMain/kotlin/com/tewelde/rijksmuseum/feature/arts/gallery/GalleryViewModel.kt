@@ -2,7 +2,7 @@ package com.tewelde.rijksmuseum.feature.arts.gallery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import arrow.core.Either
+import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.domain.GetArtsUseCase
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.ArtsUiState
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.GalleryEvent
