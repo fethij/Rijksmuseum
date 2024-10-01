@@ -15,7 +15,7 @@ string|permission_denied|UGxlYXNlIGdyYW50IHN0b3JhZ2UgcGVybWlzc2lvbi4=
 string|production_places|UHJvZHVjdGlvbiBQbGFjZXM=
 string|save_to_photos|U2F2ZQ==
 string|saving_failed|SW1hZ2Ugbm90IHNhdmVkLCB0cnkgYWdhaW4gbGF0ZXIu
-string|saving_success|SW1hZ2UgaXMgc2F2ZWQu
+string|saving_success|SW1hZ2Ugc2F2ZWQu
 string|settings|U2V0dGluZ3M=
 string|show_less|U2hvdyBMZXNz
 string|show_more|U2hvdyBNb3Jl
