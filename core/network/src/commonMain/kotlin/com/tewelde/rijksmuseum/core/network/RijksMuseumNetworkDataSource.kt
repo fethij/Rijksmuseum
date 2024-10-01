@@ -14,7 +14,7 @@ interface RijksMuseumNetworkDataSource {
 
     suspend fun downloadImage(url: String, onDownload: (Long, Long?) -> Unit): ByteReadChannel
 
-    // TODO search by maaker: search https://www.rijksmuseum.nl/api/nl/collection?key=qhMVwCto&involvedMaker=Rembrandt+van+Rijn
+    // TODO search by maker: search https://www.rijksmuseum.nl/api/nl/collection?key=qhMVwCto&involvedMaker=Rembrandt+van+Rijn
     // TODO search by color: search https://www.rijksmuseum.nl/api/nl/collection?key=qhMVwCto&f.normalized32Colors.hex=%23E5242B
     // TODO SEARCH BY TERM: search https://www.rijksmuseum.nl/api/nl/collection?key=qhMVwCto&q=Rembrandt
     // TODO search by production place: search https://www.rijksmuseum.nl/api/nl/collection?key=qhMVwCto&production.place=Amsterdam

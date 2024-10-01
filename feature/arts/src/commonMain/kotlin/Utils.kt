@@ -8,6 +8,8 @@ expect fun screenHeight(): Int
 
 expect val Art.artUrl: String
 
+expect val minGridSize: Int
+
 expect class FileUtil {
     fun filesystem(): FileSystem?
     suspend fun saveFile(

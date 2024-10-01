@@ -3,6 +3,7 @@ package com.tewelde.rijksmuseum.feature.arts.detail
 import FileUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
 import com.tewelde.rijksmuseum.core.common.Either
@@ -16,7 +17,7 @@ import com.tewelde.rijksmuseum.core.permissions.util.DeniedException
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailEvent
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailState
 import com.tewelde.rijksmuseum.feature.arts.detail.model.State
-import io.ktor.util.toByteArray
+import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,7 @@ class DetailViewModel(
     private val permissionsService: PermissionsService,
     private val downloadImageUseCase: DownloadImageUseCase
 ) : ViewModel() {
+    val logger = Logger.withTag(this::class.simpleName!!)
     private var _uiState = MutableStateFlow(DetailState())
     val uiState: StateFlow<DetailState> = _uiState
         .stateIn(
@@ -40,9 +42,9 @@ class DetailViewModel(
 
     fun onEvent(event: DetailEvent) {
         when (event) {
-            is DetailEvent.OnDownloadClick -> {
+            is DetailEvent.OnSave -> {
                 checkPermission {
-                    downloadImage(event.context)
+                    saveImage(event.context)
                 }
             }
 
@@ -76,7 +78,7 @@ class DetailViewModel(
         }
     }
 
-    private fun downloadImage(context: PlatformContext) = viewModelScope.launch {
+    private fun saveImage(context: PlatformContext) = viewModelScope.launch {
         _uiState.update { detailsState ->
             detailsState.copy(
                 isDownloading = true
@@ -85,11 +87,14 @@ class DetailViewModel(
         val imageLoader = SingletonImageLoader.get(context)
         val cache = imageLoader.diskCache?.openSnapshot(art.url)
         if (cache == null) {
+            logger.d { "#### image not found in cache, Downloading image" }
             val bytes = downloadImageUseCase(art.url) { downloaded, total ->
                 total?.let {
                     _uiState.update { detailsState ->
                         detailsState.copy(
-                            downloadProgress = (downloaded * 100 / total).toInt()
+                            downloadProgress = (downloaded * 100 / total).toInt().also {
+                                Logger.d { "#### download progress: $it" }
+                            }
                         )
                     }
                 }
@@ -117,6 +122,7 @@ class DetailViewModel(
                 }
             )
         } else {
+            logger.d { "#### image found in cache" }
             cache.use { snapshot ->
                 val data = snapshot.data
                 val content = fileUtil.filesystem()?.read(data) {

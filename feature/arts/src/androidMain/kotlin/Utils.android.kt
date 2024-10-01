@@ -64,3 +64,6 @@ actual class FileUtil(private val context: Context) {
 
 actual val Art.artUrl: String
     get() = this.webImage.url
+
+actual val minGridSize: Int
+    get() = 175

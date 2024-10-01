@@ -39,9 +39,9 @@ import com.tewelde.rijksmuseum.feature.arts.gallery.model.ArtsUiState
 import com.tewelde.rijksmuseum.feature.arts.gallery.model.GalleryEvent
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
+import minGridSize
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import artUrl
 
 @Composable
 fun CollectionScreenRoute(
@@ -131,7 +131,7 @@ internal fun CollectionScreen(
                     }
 
                     LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Fixed(2)
+                        columns = StaggeredGridCells.Adaptive(minGridSize.dp)
                     ) {
                         items(
                             items = uiState.filteredArts,

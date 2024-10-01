@@ -51,7 +51,7 @@ fun ArtDetail(
     color: Color,
     isDownloading: Boolean = false,
     downloadProgress: Int = 0,
-    onDownloadClicked: () -> Unit,
+    onSave: () -> Unit,
     onMaker: () -> Unit
 ) {
     Column(
@@ -66,7 +66,7 @@ fun ArtDetail(
         SheetActionRow(
             isDownloading = isDownloading,
             downloadProgress = downloadProgress,
-            onDownloadClicked = onDownloadClicked,
+            onSave = onSave,
         )
         SheetPhotoDetails(art, color)
     }
@@ -129,7 +129,7 @@ fun PhotoDetailItem(
 fun SheetActionRow(
     isDownloading: Boolean,
     downloadProgress: Int = 0,
-    onDownloadClicked: () -> Unit,
+    onSave: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -137,7 +137,7 @@ fun SheetActionRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Button(
-            onClick = { onDownloadClicked() },
+            onClick = { onSave() },
             modifier = Modifier.fillMaxWidth().weight(1f),
             shape = RoundedCornerShape(8.dp),
             enabled = !isDownloading,

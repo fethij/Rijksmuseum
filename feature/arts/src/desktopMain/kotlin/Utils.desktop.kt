@@ -22,14 +22,14 @@ actual class FileUtil {
         onSuccess: () -> Unit
     ) {
         try {
-            FileKit.saveFile(
+            val file = FileKit.saveFile(
                 bytes = bytes,
                 baseName = baseName,
                 extension = extension,
                 initialDirectory = initialDirectory,
                 platformSettings = platformSettings
             )
-            onSuccess()
+            file?.let { onSuccess() } ?: onFailure(Exception("File not saved"))
         } catch (e: Exception) {
             onFailure(e)
         }
@@ -40,3 +40,6 @@ actual class FileUtil {
 
 actual val Art.artUrl: String
     get() = this.headerImage?.url ?: this.webImage.url
+
+actual val minGridSize: Int
+    get() = 325

@@ -65,7 +65,7 @@ fun DetailScreenRoute(
 
     DetailScreen(uiState, snackbarHostState, onShowSnackbar) {
         when (it) {
-            is DetailEvent.OnDownloadClick,
+            is DetailEvent.OnSave,
             is DetailEvent.NavigateToSettings,
             is DetailEvent.PermissionErrorMessageConsumed,
             is DetailEvent.SaveFailureMessageConsumed,
@@ -172,6 +172,7 @@ fun DetailScreen(
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         sheetTonalElevation = 0.dp,
+        sheetMaxWidth = 100000.dp, // TODO get screen size per platform
         sheetContent = {
             when (uiState.state) {
                 is State.Loading,
@@ -190,8 +191,8 @@ fun DetailScreen(
                                 ?: MaterialTheme.colorScheme.primary,
                             isDownloading = uiState.isDownloading,
                             downloadProgress = uiState.downloadProgress,
-                            onDownloadClicked = {
-                                onEvent(DetailEvent.OnDownloadClick(pfContext))
+                            onSave = {
+                                onEvent(DetailEvent.OnSave(pfContext))
                             },
                             onMaker = {},
                         )

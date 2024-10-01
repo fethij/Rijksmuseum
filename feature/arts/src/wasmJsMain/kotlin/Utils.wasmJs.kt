@@ -4,7 +4,6 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
 import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
-import io.github.vinceglb.filekit.core.PlatformFile
 import okio.FileSystem
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -24,14 +23,14 @@ actual class FileUtil {
         onSuccess: () -> Unit
     ) {
         try {
-            FileKit.saveFile(
+            val file = FileKit.saveFile(
                 bytes = bytes,
                 baseName = baseName,
                 extension = extension,
                 initialDirectory = initialDirectory,
                 platformSettings = platformSettings
             )
-            onSuccess()
+            file?.let { onSuccess() } ?: onFailure(Exception("File not saved"))
         } catch (e: Exception) {
             onFailure(e)
         }
@@ -43,3 +42,6 @@ actual class FileUtil {
 
 actual val Art.artUrl: String
     get() = this.headerImage?.url ?: this.webImage.url
+
+actual val minGridSize: Int
+    get() = 325

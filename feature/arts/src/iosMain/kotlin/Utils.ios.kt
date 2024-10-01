@@ -2,10 +2,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
-import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
-import io.github.vinceglb.filekit.core.PlatformFile
-import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArrayOf
 import kotlinx.cinterop.memScoped
@@ -13,16 +10,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import okio.FileSystem
 import platform.Foundation.NSData
-import platform.Foundation.NSURL
 import platform.Foundation.create
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageWriteToSavedPhotosAlbum
 import kotlin.coroutines.coroutineContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -32,8 +25,7 @@ actual class FileUtil {
     actual fun filesystem(): FileSystem? = FileSystem.SYSTEM
 
     @OptIn(
-        ExperimentalForeignApi::class,
-        BetaInteropApi::class
+        ExperimentalForeignApi::class
     )
     actual suspend fun saveFile(
         bytes: ByteArray,
@@ -74,3 +66,6 @@ actual class FileUtil {
 
 actual val Art.artUrl: String
     get() = this.webImage.url
+
+actual val minGridSize: Int
+    get() = 175

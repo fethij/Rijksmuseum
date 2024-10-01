@@ -10,15 +10,14 @@ androidx-core-ktx = "1.13.1"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-coil = "3.0.0-alpha10"
-coilNetworkKtor = "3.0.0-alpha08"
+coil= "3.0.0-alpha10"
 compose-plugin = "1.6.11"
 filekit = "0.8.3"
 junit = "4.13.2"
 kotlin = "2.0.20"
 koin = "4.0.0"
 koinComposeMultiplatform = "4.0.0"
-ktor = "3.0.0-wasm2"
+ktor = "3.0.0-rc-1"
 lifecycle = "2.8.2"
 navigationCompose = "2.7.0-alpha07"
 kotlinx_serialization_json = "1.7.3"
@@ -32,7 +31,7 @@ kermit = "2.0.4"
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilNetworkKtor" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil_compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
 coil_compose_core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
@@ -86,5 +85,5 @@ buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig
 
 
 # Plugins defined by this project
-rijksmuseum-composeMultiplatform = { id = "com.tewelde.rijksmuseum.composeMultiplatform" }
-rijksmuseum-kotlinMultiplatform = { id = "com.tewelde.rijksmuseum.kotlinMultiplatform" }
+rijksmuseum-composeMultiplatform = { id = "com.tewelde.rijksmuseum.composeMultiplatform", version = "unspecified" }
+rijksmuseum-kotlinMultiplatform = { id = "com.tewelde.rijksmuseum.kotlinMultiplatform", version = "unspecified" }
