@@ -1,4 +1,5 @@
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
@@ -19,7 +20,17 @@ import kotlin.coroutines.coroutineContext
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun screenHeight(): Int = LocalWindowInfo.current.containerSize.height
+actual fun screenHeight(): Int {
+    val view = LocalWindowInfo.current
+    return remember { view.containerSize.height }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+actual fun screenWidth(): Int {
+    val view = LocalWindowInfo.current
+    return remember { view.containerSize.width }
+}
 
 actual class FileUtil {
     actual fun filesystem(): FileSystem? = FileSystem.SYSTEM

@@ -47,6 +47,7 @@ import com.tewelde.rijksmuseum.resources.saving_success
 import com.tewelde.rijksmuseum.resources.settings
 import org.jetbrains.compose.resources.getString
 import screenHeight
+import screenWidth
 
 @Composable
 fun DetailScreenRoute(
@@ -172,7 +173,7 @@ fun DetailScreen(
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         sheetTonalElevation = 0.dp,
-//        sheetMaxWidth = 100000.dp, // TODO get screen size per platform
+        sheetMaxWidth = screenWidth().dp,
         sheetContent = {
             when (uiState.state) {
                 is State.Loading,

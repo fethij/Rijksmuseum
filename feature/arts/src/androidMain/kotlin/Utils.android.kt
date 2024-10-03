@@ -6,7 +6,8 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalView
 import com.tewelde.rijksmuseum.core.model.Art
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,17 @@ import okio.FileSystem
 import kotlin.coroutines.coroutineContext
 
 @Composable
-actual fun screenHeight(): Int = LocalContext.current.resources.displayMetrics.heightPixels
+actual fun screenHeight(): Int {
+    val view = LocalView.current
+    return remember { view.resources.displayMetrics.heightPixels }
+}
+
+@Composable
+actual fun screenWidth(): Int {
+    val view = LocalView.current
+    return remember { view.resources.displayMetrics.widthPixels }
+}
+
 
 actual class FileUtil(private val context: Context) {
     actual fun filesystem(): FileSystem? = FileSystem.SYSTEM

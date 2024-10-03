@@ -1,6 +1,5 @@
 package com.tewelde.rijksmuseum.core.permissions.delegate
 
-import co.touchlab.kermit.Logger
 import com.tewelde.rijksmuseum.core.permissions.model.Permission
 import com.tewelde.rijksmuseum.core.permissions.model.PermissionState
 import com.tewelde.rijksmuseum.core.permissions.util.DeniedAlwaysException

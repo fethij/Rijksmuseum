@@ -13,8 +13,8 @@ import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.request.crossfade
 import coil3.util.DebugLogger
-import com.tewelde.rijksmuseum.navigation.RijksmuseumNavGraph
 import com.tewelde.rijksmuseum.core.designsystem.theme.RijksmuseumTheme
+import com.tewelde.rijksmuseum.navigation.RijksmuseumNavGraph
 import okio.FileSystem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext

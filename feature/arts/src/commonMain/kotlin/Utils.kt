@@ -6,6 +6,9 @@ import okio.FileSystem
 @Composable
 expect fun screenHeight(): Int
 
+@Composable
+expect fun screenWidth(): Int
+
 expect val Art.artUrl: String
 
 expect val minGridSize: Int
