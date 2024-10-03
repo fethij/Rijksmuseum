@@ -13,15 +13,10 @@ Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an
 
 
 ## Download
-
-<a href='https://play.google.com/store/apps/details?id=com.tewelde.rijksmuseum&utm_source=github'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200px"/></a>
-
-<table style="width:100%">
   <tr>
     <td><a href='https://play.google.com/store/apps/details?id=com.tewelde.rijksmuseum&utm_source=github'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=240/></a>
     <td><a href='https://apps.apple.com/ca/app/heirloom-gallery/id6504533291'><img alt='Download in the App Store' src='https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg' width=180/></a>
   </tr>
-</table>
 
 
 ## Design
