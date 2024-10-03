@@ -6,27 +6,23 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
 import com.tewelde.rijksmuseum.core.model.Art
+import com.tewelde.rijksmuseum.resources.Res
+import com.tewelde.rijksmuseum.resources.permission_denied
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okio.FileSystem
+import org.jetbrains.compose.resources.StringResource
 import kotlin.coroutines.coroutineContext
 
 @Composable
-actual fun screenHeight(): Int {
-    val view = LocalView.current
-    return remember { view.resources.displayMetrics.heightPixels }
-}
+actual fun screenHeight(): Int = LocalView.current.resources.displayMetrics.heightPixels
 
 @Composable
-actual fun screenWidth(): Int {
-    val view = LocalView.current
-    return remember { view.resources.displayMetrics.widthPixels }
-}
+actual fun screenWidth(): Int = LocalView.current.resources.displayMetrics.widthPixels
 
 
 actual class FileUtil(private val context: Context) {
@@ -78,3 +74,5 @@ actual val Art.artUrl: String
 
 actual val minGridSize: Int
     get() = 175
+
+actual val permissionDeniedMessage: StringResource = Res.string.permission_denied

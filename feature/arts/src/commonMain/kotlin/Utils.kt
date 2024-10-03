@@ -2,6 +2,7 @@ import androidx.compose.runtime.Composable
 import com.tewelde.rijksmuseum.core.model.Art
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import okio.FileSystem
+import org.jetbrains.compose.resources.StringResource
 
 @Composable
 expect fun screenHeight(): Int
@@ -10,6 +11,8 @@ expect fun screenHeight(): Int
 expect fun screenWidth(): Int
 
 expect val Art.artUrl: String
+
+expect val permissionDeniedMessage: StringResource
 
 expect val minGridSize: Int
 

@@ -1,25 +1,21 @@
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
+import com.tewelde.rijksmuseum.resources.Res
+import com.tewelde.rijksmuseum.resources.permission_denied
 import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import okio.FileSystem
+import org.jetbrains.compose.resources.StringResource
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun screenHeight(): Int {
-    val view = LocalWindowInfo.current
-    return remember { view.containerSize.height }
-}
+actual fun screenHeight(): Int = LocalWindowInfo.current.containerSize.height
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun screenWidth(): Int {
-    val view = LocalWindowInfo.current
-    return remember { view.containerSize.width }
-}
+actual fun screenWidth(): Int = LocalWindowInfo.current.containerSize.width
 
 
 actual class FileUtil {
@@ -55,3 +51,5 @@ actual val Art.artUrl: String
 
 actual val minGridSize: Int
     get() = 325
+
+actual val permissionDeniedMessage: StringResource = Res.string.permission_denied

@@ -1,8 +1,9 @@
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
+import com.tewelde.rijksmuseum.resources.Res
+import com.tewelde.rijksmuseum.resources.permission_denied_ios
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArrayOf
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import okio.FileSystem
+import org.jetbrains.compose.resources.StringResource
 import platform.Foundation.NSData
 import platform.Foundation.create
 import platform.UIKit.UIImage
@@ -20,17 +22,11 @@ import kotlin.coroutines.coroutineContext
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun screenHeight(): Int {
-    val view = LocalWindowInfo.current
-    return remember { view.containerSize.height }
-}
+actual fun screenHeight(): Int = LocalWindowInfo.current.containerSize.height
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun screenWidth(): Int {
-    val view = LocalWindowInfo.current
-    return remember { view.containerSize.width }
-}
+actual fun screenWidth(): Int = LocalWindowInfo.current.containerSize.width
 
 actual class FileUtil {
     actual fun filesystem(): FileSystem? = FileSystem.SYSTEM
@@ -80,3 +76,4 @@ actual val Art.artUrl: String
 
 actual val minGridSize: Int
     get() = 175
+actual val permissionDeniedMessage: StringResource = Res.string.permission_denied_ios

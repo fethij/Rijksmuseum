@@ -41,11 +41,11 @@ import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailState
 import com.tewelde.rijksmuseum.feature.arts.detail.model.State
 import com.tewelde.rijksmuseum.feature.arts.gallery.components.BackButton
 import com.tewelde.rijksmuseum.resources.Res
-import com.tewelde.rijksmuseum.resources.permission_denied
 import com.tewelde.rijksmuseum.resources.saving_failed
 import com.tewelde.rijksmuseum.resources.saving_success
 import com.tewelde.rijksmuseum.resources.settings
 import org.jetbrains.compose.resources.getString
+import permissionDeniedMessage
 import screenHeight
 import screenWidth
 
@@ -106,7 +106,7 @@ fun DetailScreen(
     LaunchedEffect(uiState.showPermissionError) {
         if (uiState.showPermissionError) {
             onShowSnackbar(
-                getString(Res.string.permission_denied),
+                getString(permissionDeniedMessage),
                 getString(Res.string.settings),
                 SnackbarDuration.Long
             ).run {
