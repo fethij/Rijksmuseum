@@ -5,7 +5,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import co.touchlab.kermit.Logger
-import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest.Builder
@@ -14,13 +13,13 @@ import coil3.size.Precision
 import com.github.panpf.zoomimage.CoilZoomAsyncImage
 
 /**
- * [RijksmuseumImage] displays an image from a URL.
+ * [RijksmuseumZoomableImage] displays a zoomable image from a URL.
  * @param modifier Modifier to be applied to the image.
  * @param imageUrl URL of the image to be displayed.
  * @param contentDescription Description of the image for accessibility.
  */
 @Composable
-fun RijksmuseumImage(
+fun RijksmuseumZoomableImage(
     modifier: Modifier = Modifier,
     imageUrl: String,
     contentDescription: String? = null,
@@ -34,12 +33,13 @@ fun RijksmuseumImage(
         memoryCacheKey(imageUrl)
         diskCacheKey(imageUrl)
     }.build()
-    AsyncImage(
+
+    CoilZoomAsyncImage(
         model = request,
+        modifier = modifier,
         contentDescription = contentDescription,
         contentScale = contentScale,
         alignment = alignment,
-        modifier = modifier,
         onState = { state ->
             when (state) {
                 is AsyncImagePainter.State.Loading -> {

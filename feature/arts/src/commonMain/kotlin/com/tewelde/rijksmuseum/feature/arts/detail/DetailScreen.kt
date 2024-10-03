@@ -1,6 +1,7 @@
 package com.tewelde.rijksmuseum.feature.arts.detail
 
 import androidx.annotation.ColorInt
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,6 @@ import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.buildAnnotatedString
@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.LocalPlatformContext
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumError
-import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
+import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumZoomableImage
 import com.tewelde.rijksmuseum.feature.arts.components.ArtDetail
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailEvent
 import com.tewelde.rijksmuseum.feature.arts.detail.model.DetailState
@@ -204,7 +204,9 @@ fun DetailScreen(
     ) {
         when (val state = uiState.state) {
             is State.Loading -> {
-                RijksmuseumLoading()
+                RijksmuseumLoading(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+                )
             }
 
             is State.Error -> {
@@ -225,11 +227,13 @@ fun DetailScreen(
                                     .let { if (it == 0f) 1f else it }
                             )
                     ) {
-                        RijksmuseumImage(
-                            imageUrl = state.art.url,
-                            modifier = modifier
-                                .fillMaxSize(),
-                            alignment = Alignment.TopCenter,
+                        RijksmuseumZoomableImage(
+                            modifier = Modifier.fillMaxSize()
+                                .background(
+                                    state.art.colors?.firstOrNull()?.color()
+                                        ?: Color.Transparent
+                                ),
+                            imageUrl = state.art.url
                         )
                     }
                 }

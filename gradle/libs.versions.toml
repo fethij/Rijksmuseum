@@ -10,7 +10,7 @@ androidx-core-ktx = "1.13.1"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-coil= "3.0.0-alpha10"
+coil = "3.0.0-alpha09"
 compose-plugin = "1.6.11"
 filekit = "0.8.3"
 junit = "4.13.2"
@@ -26,6 +26,7 @@ modulegraph = "0.10.1"
 buildConfig = "5.5.0"
 moko-permissions = "0.18.0"
 kermit = "2.0.4"
+zoomimageComposeCoil = "1.1.0-beta01"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -68,6 +69,7 @@ kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization_json" }
 moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko-permissions" }
 moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko-permissions" }
+zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil", version.ref = "zoomimageComposeCoil" }
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
