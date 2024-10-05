@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import web
 
 class DetailViewModel(
     val getArtDetail: GetArtDetailUseCase,
@@ -116,7 +117,7 @@ class DetailViewModel(
                     _uiState.update { detailsState ->
                         detailsState.copy(
                             isDownloading = false,
-                            showSavingSuccessMessage = true
+                            showSavingSuccessMessage = if (!web) true else false // TODO: check if image is saved or canceled before enabling this for all platforms
                         )
                     }
                 }
@@ -146,7 +147,7 @@ class DetailViewModel(
                             _uiState.update { detailsState ->
                                 detailsState.copy(
                                     isDownloading = false,
-                                    showSavingSuccessMessage = true
+                                    showSavingSuccessMessage = if (!web) true else false // TODO: check if image is saved or canceled before enabling this for all platforms
                                 )
                             }
                         }

@@ -1,9 +1,9 @@
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.core.model.Art
-import com.tewelde.rijksmuseum.resources.*
+import com.tewelde.rijksmuseum.resources.Res
+import com.tewelde.rijksmuseum.resources.permission_denied
 import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import okio.FileSystem
@@ -53,3 +53,6 @@ actual val minGridSize: Int
     get() = 325
 
 actual val permissionDeniedMessage: StringResource = Res.string.permission_denied
+
+actual val web: Boolean
+    get() = true

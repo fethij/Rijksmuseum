@@ -53,3 +53,6 @@ actual val minGridSize: Int
     get() = 325
 
 actual val permissionDeniedMessage: StringResource = Res.string.permission_denied
+
+actual val web: Boolean
+    get() = false

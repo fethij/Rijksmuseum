@@ -77,3 +77,6 @@ actual val Art.artUrl: String
 actual val minGridSize: Int
     get() = 175
 actual val permissionDeniedMessage: StringResource = Res.string.permission_denied_ios
+
+actual val web: Boolean
+    get() = false
