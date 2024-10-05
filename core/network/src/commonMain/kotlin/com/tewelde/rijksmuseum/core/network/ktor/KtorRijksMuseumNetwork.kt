@@ -22,22 +22,24 @@ const val PAGE = "p"
 const val HAS_IMAGE = "hasImage"
 
 class KtorRijksMuseumNetwork(
+    private val rijksmuseumClient: HttpClient,
     private val client: HttpClient,
 ) : RijksMuseumNetworkDataSource {
     override suspend fun getCollection(page: Int): List<NetworkArt> =
-        client.get("$COLLECTION?&$PAGE=$page&$PS=$PAGING_PAGE_SIZE")
+        rijksmuseumClient.get("$COLLECTION?&$PAGE=$page&$PS=$PAGING_PAGE_SIZE")
             .body<CollectionNetworkResponse>().networkArtObjects
 
 
     override suspend fun getDetail(objectId: String): NetworkArtObject =
-        client.get("$COLLECTION/$objectId")
+        rijksmuseumClient.get("$COLLECTION/$objectId")
             .body<DetailNetworkResponse>().networkArtObject
 
-    override suspend fun downloadImage(url: String, onDownload: (Long, Long?) -> Unit): ByteReadChannel {
-        return client.get("https://corsproxy.io/?$url") {
+    override suspend fun downloadImage(
+        url: String,
+        onDownload: (Long, Long?) -> Unit
+    ): ByteReadChannel = client.get(url) {
             onDownload { bytesSentTotal, contentLength ->
                 onDownload(bytesSentTotal, contentLength)
             }
         }.bodyAsChannel()
-    }
 }

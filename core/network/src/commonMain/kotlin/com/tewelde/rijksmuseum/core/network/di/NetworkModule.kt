@@ -19,14 +19,18 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 const val KEY = "key"
 
 val networkModule = module {
-    singleOf(::KtorRijksMuseumNetwork) { bind<RijksMuseumNetworkDataSource>() }
+    single<RijksMuseumNetworkDataSource> {
+        KtorRijksMuseumNetwork(
+            rijksmuseumClient = get(named(BuildConfig.APP_NAME)),
+            client = get()
+        )
+    }
     single {
         Json {
             ignoreUnknownKeys = true
@@ -35,7 +39,7 @@ val networkModule = module {
             prettyPrint = true
         }
     }
-    single {
+    single(named(BuildConfig.APP_NAME)) {
         HttpClient {
             install(ContentNegotiation) {
                 json(get())
@@ -55,5 +59,9 @@ val networkModule = module {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
         }
+    }
+
+    single {
+        HttpClient()
     }
 }

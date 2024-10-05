@@ -41,4 +41,9 @@ buildConfig {
         "RIJKSMUSEUM_API_KEY",
         "\"${secretKeyProperties["rijksmuseum.api.key"]}\""
     )
+    buildConfigField(
+        "String",
+        "APP_NAME",
+        "\"${rootProject.name}\""
+    )
 }
