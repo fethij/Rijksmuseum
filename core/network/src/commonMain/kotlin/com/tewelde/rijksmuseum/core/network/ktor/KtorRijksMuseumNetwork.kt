@@ -34,7 +34,7 @@ class KtorRijksMuseumNetwork(
             .body<DetailNetworkResponse>().networkArtObject
 
     override suspend fun downloadImage(url: String, onDownload: (Long, Long?) -> Unit): ByteReadChannel {
-        return client.get(url) {
+        return client.get("https://corsproxy.io/?$url") {
             onDownload { bytesSentTotal, contentLength ->
                 onDownload(bytesSentTotal, contentLength)
             }
