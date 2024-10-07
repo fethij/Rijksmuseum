@@ -88,7 +88,7 @@ class DetailViewModel(
         val imageLoader = SingletonImageLoader.get(context)
         val cache = imageLoader.diskCache?.openSnapshot(art.url)
         if (cache == null) {
-            logger.d { "#### image not found in cache, Downloading image" }
+            logger.d { "image not found in cache, Downloading image" }
             val bytes = downloadImageUseCase(art.url) { downloaded, total ->
                 total?.let {
                     _uiState.update { detailsState ->
@@ -123,7 +123,7 @@ class DetailViewModel(
                 }
             )
         } else {
-            logger.d { "#### image found in cache" }
+            logger.d { "image found in cache" }
             cache.use { snapshot ->
                 val data = snapshot.data
                 val content = fileUtil.filesystem()?.read(data) {
