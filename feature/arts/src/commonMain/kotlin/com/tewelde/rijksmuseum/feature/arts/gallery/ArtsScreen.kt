@@ -98,7 +98,7 @@ internal fun ArtsScreen(
                 ) {
                     HorizontalPager(
                         state = pagerState,
-                        beyondBoundsPageCount = 2,
+                        beyondViewportPageCount = 2,
                         modifier = Modifier.fillMaxSize()
                     ) {
                         RijksmuseumImage(

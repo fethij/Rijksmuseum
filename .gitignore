@@ -1,5 +1,5 @@
 .gradle
-.kotlin
+.kotlin/
 /local.properties
 .DS_Store
 build/
@@ -15,16 +15,7 @@ shared/shared.podspec
 androidApp/release
 
 # IntelliJ .idea folder
-.idea/workspace.xml
-.idea/misc.xml
-.idea/caches
-.idea/compiler.xml
-.idea/artifacts
-.idea/deploymentTargetDropDown.xml
-.idea/androidTestResultsUserPreferences.xml
-.idea/assetWizardSettings.xml
-.idea/modules.xml
-.idea/appInsightsSettings.xml
+/.idea/
 gradle.xml
 *.iml
 
