@@ -24,7 +24,6 @@ kotlinx_serialization_json = "1.7.3"
 coroutines = "1.9.0"
 modulegraph = "0.10.1"
 buildConfig = "5.5.0"
-moko-permissions = "0.18.0"
 kermit = "2.0.4"
 zoomimageComposeCoil = "1.1.0-beta01"
 
@@ -67,8 +66,6 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization_json" }
-moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko-permissions" }
-moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko-permissions" }
 zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil", version.ref = "zoomimageComposeCoil" }
 
 [bundles]
