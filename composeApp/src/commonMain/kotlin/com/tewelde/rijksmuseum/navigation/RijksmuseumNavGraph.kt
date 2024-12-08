@@ -4,17 +4,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.tewelde.rijksmuseum.core.designsystem.RijksmuseumDestination
-import com.tewelde.rijksmuseum.feature.arts.detail.DetailScreenRoute
-import com.tewelde.rijksmuseum.feature.arts.detail.DetailViewModel
+import com.tewelde.rijksmuseum.feature.arts.navigation.Gallery
 import com.tewelde.rijksmuseum.feature.arts.navigation.galleryGraph
-import org.koin.compose.currentKoinScope
+import com.tewelde.rijksmuseum.feature.detail.navigation.detailScreen
+import com.tewelde.rijksmuseum.feature.detail.navigation.navigateToDetail
 
 /**
  * Main navigation graph for the Art Gallery Viewer app.
@@ -26,43 +22,29 @@ import org.koin.compose.currentKoinScope
 fun RijksmuseumNavGraph(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
-    startDestination: RijksmuseumDestination = RijksmuseumDestination.Gallery,
+    startDestination: Any = Gallery,
     navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
         modifier = modifier,
-        startDestination = startDestination.route,
+        startDestination = startDestination,
         navController = navController,
     ) {
-        galleryGraph(navController)
-        composable(RijksmuseumDestination.DetailScreen.route) { entry ->
-            val id = entry.arguments
-                ?.getString("id")
-                ?.let(::requireNotNull)
-                .orEmpty()
-            val viewModel = koinViewModel<DetailViewModel>()
-
-            DetailScreenRoute(
-                objectId = id,
-                viewModel = viewModel,
-                onBackClick = navController::navigateUp,
-                snackbarHostState = snackbarHostState,
-                onShowSnackbar = { message, action, duration ->
-                    snackbarHostState.showSnackbar(
-                        message = message,
-                        actionLabel = action,
-                        duration = duration,
-                    ) == SnackbarResult.ActionPerformed
-                }
-            )
-        }
-    }
-}
-
-@Composable
-inline fun <reified T : ViewModel> koinViewModel(): T {
-    val scope = currentKoinScope()
-    return viewModel {
-        scope.get<T>()
+        galleryGraph(
+            navController = navController,
+            onBackClick = navController::navigateUp,
+            onArtClick = { id -> navController.navigateToDetail(id) }
+        )
+        detailScreen(
+            onBackClick = navController::navigateUp,
+            snackbarHostState = snackbarHostState,
+            onShowSnackbar = { message, action, duration ->
+                snackbarHostState.showSnackbar(
+                    message = message,
+                    actionLabel = action,
+                    duration = duration,
+                ) == SnackbarResult.ActionPerformed
+            }
+        )
     }
 }

@@ -9,38 +9,43 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.tewelde.rijksmuseum.core.designsystem.RijksmuseumDestination
 import com.tewelde.rijksmuseum.feature.arts.gallery.ArtsScreenRoute
 import com.tewelde.rijksmuseum.feature.arts.gallery.CollectionScreenRoute
 import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryViewModel
+import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
+
+@Serializable
+data object Gallery
+
+@Serializable
+internal data object ArtsScreen
+
+@Serializable
+internal data object CollectionScreen
 
 /**
  * Defines the navigation graph for the gallery feature.
  */
 fun NavGraphBuilder.galleryGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onBackClick: () -> Unit,
+    onArtClick: (String) -> Unit
 ) {
-    navigation(
-        route = RijksmuseumDestination.Gallery.route,
-        startDestination = RijksmuseumDestination.ArtsScreen.route
+    navigation<Gallery>(
+        startDestination = ArtsScreen
     ) {
-        composable(RijksmuseumDestination.ArtsScreen.route) { entry ->
+        composable<ArtsScreen> { entry ->
             val viewModel = entry.sharedViewModel<GalleryViewModel>(navController)
-            ArtsScreenRoute(viewModel) {
-                navController.navigate(RijksmuseumDestination.CollectionScreen.route)
-            }
+            ArtsScreenRoute(viewModel = viewModel) { navController.navigate(CollectionScreen) }
         }
 
-        composable(RijksmuseumDestination.CollectionScreen.route) { entry ->
+        composable<CollectionScreen> { entry ->
             val viewModel = entry.sharedViewModel<GalleryViewModel>(navController)
             CollectionScreenRoute(
                 viewModel = viewModel,
-                onBackClick = { navController.navigateUp() },
-                onArtClick = { id ->
-                    navController.navigate("detail/$id")
-                }
+                onBackClick = onBackClick,
+                onArtClick = onArtClick
             )
         }
     }
@@ -50,7 +55,6 @@ fun NavGraphBuilder.galleryGraph(
  * Returns a [ViewModel] scoped to the parent of the current [NavBackStackEntry].
  * This is useful when you want to share a ViewModel between multiple destinations in a navigation graph.
  */
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
     navController: NavHostController,

@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -60,8 +61,8 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(projects.core.designsystem)
             implementation(projects.feature.arts)
+            implementation(projects.feature.detail)
 
             implementation(compose.material3)
             implementation(compose.components.resources)
@@ -92,7 +93,10 @@ kotlin {
 }
 
 composeCompiler {
-    enableStrongSkippingMode = true
+    featureFlags = setOf(
+        ComposeFeatureFlag.StrongSkipping,
+        ComposeFeatureFlag.OptimizeNonSkippingGroups
+    )
 }
 
 android {

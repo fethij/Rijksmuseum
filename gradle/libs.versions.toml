@@ -1,8 +1,8 @@
 [versions]
-agp = "8.7.2"
-android-compileSdk = "34"
+agp = "8.7.3"
+android-compileSdk = "35"
 android-minSdk = "24"
-android-targetSdk = "34"
+android-targetSdk = "35"
 androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
@@ -10,22 +10,22 @@ androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-coil = "3.0.0-alpha09"
+coil = "3.0.4"
 compose-plugin = "1.7.1"
 filekit = "0.8.7"
 junit = "4.13.2"
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 koin = "4.0.0"
 koinComposeMultiplatform = "4.0.0"
-ktor = "3.0.1"
+ktor = "3.0.2"
 lifecycle = "2.8.4"
-navigationCompose = "2.7.0-alpha07"
+navigationCompose = "2.8.0-alpha11"
 kotlinx_serialization_json = "1.7.3"
 coroutines = "1.9.0"
 modulegraph = "0.10.1"
 buildConfig = "5.5.0"
 kermit = "2.0.4"
-zoomimageComposeCoil = "1.1.0-beta01"
+zoomimageComposeCoil = "1.1.0-rc03"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -66,7 +66,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization_json" }
-zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil", version.ref = "zoomimageComposeCoil" }
+zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil3", version.ref = "zoomimageComposeCoil" }
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]

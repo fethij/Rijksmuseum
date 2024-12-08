@@ -42,3 +42,4 @@ include(":core:network")
 include(":core:permissions")
 
 include(":feature:arts")
+include(":feature:detail")
