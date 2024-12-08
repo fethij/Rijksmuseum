@@ -94,19 +94,6 @@ rijksmuseum.key.password=#Add your key password
 }%%
 
 graph LR
-  subgraph :core
-    :core:network["network"]
-    :core:model["model"]
-    :core:data["data"]
-    :core:common["common"]
-    :core:domain["domain"]
-    :core:permissions["permissions"]
-    :core:designsystem["designsystem"]
-  end
-  subgraph :feature
-    :feature:arts["arts"]
-    :feature:detail["detail"]
-  end
   :composeApp --> :feature:arts
   :composeApp --> :feature:detail
   :core:network --> :core:model
