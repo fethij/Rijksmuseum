@@ -126,18 +126,4 @@ graph LR
   :feature:arts --> :core:domain
   :feature:arts --> :core:model
   :feature:arts --> :core:designsystem
-
-classDef android-application fill:#2C4162,stroke:#fff,stroke-width:2px,color:#fff;
-classDef kotlin-multiplatform fill:#C792EA,stroke:#fff,stroke-width:2px,color:#fff;
-class :composeApp android-application
-class :feature:arts kotlin-multiplatform
-class :feature:detail kotlin-multiplatform
-class :core:network kotlin-multiplatform
-class :core:model kotlin-multiplatform
-class :core:data kotlin-multiplatform
-class :core:common kotlin-multiplatform
-class :core:domain kotlin-multiplatform
-class :core:permissions kotlin-multiplatform
-class :core:designsystem kotlin-multiplatform
-
 ```

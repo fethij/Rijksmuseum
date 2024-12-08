@@ -16,9 +16,6 @@ plugins {
 moduleGraphConfig {
     readmePath.set("./README.md")
     heading = "### Module Graph"
-    showFullPath = false
-    setStyleByModuleType = true
-    ModuleType.AndroidApp("#3CD483")
 
 //    theme.set(
 //        Theme.BASE(
