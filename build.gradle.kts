@@ -17,6 +17,9 @@ moduleGraphConfig {
     readmePath.set("./README.md")
     heading = "### Module Graph"
     showFullPath = true
+    theme.set(
+        Theme.DARK
+    )
 
 //    theme.set(
 //        Theme.BASE(
