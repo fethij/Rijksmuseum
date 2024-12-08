@@ -24,7 +24,7 @@ kotlinx_serialization_json = "1.7.3"
 coroutines = "1.9.0"
 modulegraph = "0.10.1"
 buildConfig = "5.5.0"
-kermit = "2.0.4"
+kermit = "2.0.5"
 zoomimageComposeCoil = "1.1.0-rc03"
 
 [libraries]
