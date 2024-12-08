@@ -1,3 +1,6 @@
+import dev.iurysouza.modulegraph.ModuleType
+import dev.iurysouza.modulegraph.Theme
+
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false
@@ -14,4 +17,19 @@ moduleGraphConfig {
     readmePath.set("./README.md")
     heading = "### Module Graph"
     showFullPath = true
+    theme.set(
+        Theme.DARK
+    )
+
+//    theme.set(
+//        Theme.BASE(
+//            moduleTypes = listOf(
+//                ModuleType.Custom(id = "app.compose", color = "#0E0E0E"),
+//                ModuleType.AndroidApp("#3CD483"),
+//                ModuleType.AndroidLibrary("#292B2B"),
+//                ModuleType.KotlinMultiplatform("#b04ec7"),
+//                ModuleType.KotlinMultiplatform("#d2497f"),
+//            ),
+//        ),
+//    )
 }
