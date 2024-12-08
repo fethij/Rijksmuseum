@@ -89,55 +89,55 @@ rijksmuseum.key.password=#Add your key password
 ```mermaid
 %%{
   init: {
-    'theme': 'neutral'
+    'theme': 'base'
   }
 }%%
 
 graph LR
   subgraph :core
-    :core:network["network"]
-    :core:model["model"]
-    :core:data["data"]
+    :core:designsystem["designsystem"]
     :core:common["common"]
     :core:domain["domain"]
+    :core:model["model"]
+    :core:data["data"]
+    :core:network["network"]
     :core:permissions["permissions"]
-    :core:designsystem["designsystem"]
   end
   subgraph :feature
     :feature:arts["arts"]
     :feature:detail["detail"]
   end
-  :composeApp --> :feature:arts
-  :composeApp --> :feature:detail
-  :core:network --> :core:model
-  :core:data --> :core:common
-  :core:data --> :core:network
-  :core:data --> :core:model
-  :core:domain --> :core:common
-  :core:domain --> :core:data
-  :core:domain --> :core:model
-  :feature:detail --> :core:common
-  :feature:detail --> :core:model
-  :feature:detail --> :core:permissions
-  :feature:detail --> :core:domain
-  :feature:detail --> :core:designsystem
   :core:designsystem --> :core:common
   :feature:arts --> :core:common
   :feature:arts --> :core:domain
   :feature:arts --> :core:model
   :feature:arts --> :core:designsystem
+  :core:domain --> :core:common
+  :core:domain --> :core:data
+  :core:domain --> :core:model
+  :composeApp --> :feature:arts
+  :composeApp --> :feature:detail
+  :core:data --> :core:common
+  :core:data --> :core:network
+  :core:data --> :core:model
+  :core:network --> :core:model
+  :feature:detail --> :core:common
+  :feature:detail --> :core:model
+  :feature:detail --> :core:permissions
+  :feature:detail --> :core:domain
+  :feature:detail --> :core:designsystem
 
-classDef android-application fill:#2C4162,stroke:#fff,stroke-width:2px,color:#fff;
-classDef kotlin-multiplatform fill:#C792EA,stroke:#fff,stroke-width:2px,color:#fff;
-class :composeApp android-application
+classDef kotlin-multiplatform fill:#b04ec7,stroke:#fff,stroke-width:2px,color:#fff;
+classDef android-application fill:#3CD483,stroke:#fff,stroke-width:2px,color:#fff;
+class :core:designsystem kotlin-multiplatform
+class :core:common kotlin-multiplatform
 class :feature:arts kotlin-multiplatform
-class :feature:detail kotlin-multiplatform
-class :core:network kotlin-multiplatform
+class :core:domain kotlin-multiplatform
 class :core:model kotlin-multiplatform
 class :core:data kotlin-multiplatform
-class :core:common kotlin-multiplatform
-class :core:domain kotlin-multiplatform
+class :composeApp android-application
+class :feature:detail kotlin-multiplatform
+class :core:network kotlin-multiplatform
 class :core:permissions kotlin-multiplatform
-class :core:designsystem kotlin-multiplatform
 
 ```
