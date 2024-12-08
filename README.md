@@ -94,18 +94,23 @@ rijksmuseum.key.password=#Add your key password
 }%%
 
 graph LR
-  :composeApp --> :core:designsystem
   :composeApp --> :feature:arts
+  :composeApp --> :feature:detail
   :core:network --> :core:model
   :core:data --> :core:common
-  :core:data --> :core:model
   :core:data --> :core:network
+  :core:data --> :core:model
   :core:domain --> :core:common
-  :core:domain --> :core:model
   :core:domain --> :core:data
+  :core:domain --> :core:model
+  :feature:detail --> :core:common
+  :feature:detail --> :core:model
+  :feature:detail --> :core:permissions
+  :feature:detail --> :core:domain
+  :feature:detail --> :core:designsystem
   :core:designsystem --> :core:common
   :feature:arts --> :core:common
-  :feature:arts --> :core:model
   :feature:arts --> :core:domain
+  :feature:arts --> :core:model
   :feature:arts --> :core:designsystem
 ```
