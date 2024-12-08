@@ -46,7 +46,6 @@ fun ArtsScreenRoute(
 
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ArtsScreen(
     uiState: ArtsUiState,

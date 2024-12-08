@@ -24,7 +24,6 @@ private const val MULTIPLIER_SELECTED_PAGE = 4
 private val baseWidth = 8.dp
 private val height = 3.dp
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RijksmuseumPager(
     pagerState: PagerState,

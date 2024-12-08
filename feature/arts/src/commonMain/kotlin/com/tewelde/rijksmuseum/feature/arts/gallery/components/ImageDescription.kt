@@ -1,7 +1,6 @@
 package com.tewelde.rijksmuseum.feature.arts.gallery.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +29,6 @@ import com.tewelde.rijksmuseum.resources.lugrasimo_regular
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImageDescription(
     art: Art,
