@@ -13,5 +13,5 @@ plugins {
 moduleGraphConfig {
     readmePath.set("./README.md")
     heading = "### Module Graph"
-    showFullPath = true
+    showFullPath = false
 }
