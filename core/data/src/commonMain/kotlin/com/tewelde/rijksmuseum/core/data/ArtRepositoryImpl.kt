@@ -9,9 +9,9 @@ import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
 import com.tewelde.rijksmuseum.core.network.model.asArtObject
 import io.ktor.utils.io.ByteReadChannel
-import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.io.IOException
 
 /**
  * Network backed implementation of the [ArtRepository].

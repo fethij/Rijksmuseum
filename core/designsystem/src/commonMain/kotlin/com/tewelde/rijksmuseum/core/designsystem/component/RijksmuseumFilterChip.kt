@@ -3,7 +3,6 @@ package com.tewelde.rijksmuseum.core.designsystem.component
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -26,7 +25,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
  * clickable and will appear disabled to accessibility services.
  * @param label The text label content.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RijksmuseumFilterChip(
     selected: Boolean,

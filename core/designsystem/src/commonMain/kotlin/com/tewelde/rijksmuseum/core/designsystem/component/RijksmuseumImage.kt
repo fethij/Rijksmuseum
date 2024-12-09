@@ -11,7 +11,6 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest.Builder
 import coil3.request.crossfade
 import coil3.size.Precision
-import com.github.panpf.zoomimage.CoilZoomAsyncImage
 
 /**
  * [RijksmuseumImage] displays an image from a URL.

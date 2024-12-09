@@ -7,8 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.tewelde.rijksmuseum.feature.detail.detail.DetailViewModel
 import com.tewelde.rijksmuseum.feature.detail.detail.DetailScreenRoute
+import com.tewelde.rijksmuseum.feature.detail.detail.DetailViewModel
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 

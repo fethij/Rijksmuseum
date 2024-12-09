@@ -1,6 +1,5 @@
 package com.tewelde.rijksmuseum.feature.arts.gallery.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

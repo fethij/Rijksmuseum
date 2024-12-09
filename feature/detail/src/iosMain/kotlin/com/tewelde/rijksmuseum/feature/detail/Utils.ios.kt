@@ -6,7 +6,6 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied_ios
 import io.github.vinceglb.filekit.core.FileKitPlatformSettings
-import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArrayOf
 import kotlinx.cinterop.memScoped

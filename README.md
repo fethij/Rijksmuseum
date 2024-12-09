@@ -89,7 +89,7 @@ rijksmuseum.key.password=#Add your key password
 ```mermaid
 %%{
   init: {
-    'theme': 'dark'
+    'theme': 'neutral'
   }
 }%%
 

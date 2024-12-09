@@ -1,6 +1,5 @@
 package com.tewelde.rijksmuseum.feature.detail.detail
 
-import com.tewelde.rijksmuseum.feature.detail.FileUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
@@ -14,9 +13,11 @@ import com.tewelde.rijksmuseum.core.permissions.model.Permission
 import com.tewelde.rijksmuseum.core.permissions.service.PermissionsService
 import com.tewelde.rijksmuseum.core.permissions.util.DeniedAlwaysException
 import com.tewelde.rijksmuseum.core.permissions.util.DeniedException
+import com.tewelde.rijksmuseum.feature.detail.FileUtil
 import com.tewelde.rijksmuseum.feature.detail.detail.model.DetailEvent
 import com.tewelde.rijksmuseum.feature.detail.detail.model.DetailState
 import com.tewelde.rijksmuseum.feature.detail.detail.model.State
+import com.tewelde.rijksmuseum.feature.detail.web
 import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,7 +25,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import com.tewelde.rijksmuseum.feature.detail.web
 
 class DetailViewModel(
     val getArtDetail: GetArtDetailUseCase,
