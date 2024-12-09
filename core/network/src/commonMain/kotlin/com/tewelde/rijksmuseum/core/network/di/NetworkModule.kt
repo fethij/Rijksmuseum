@@ -31,6 +31,7 @@ val networkModule = module {
             client = get()
         )
     }
+
     single {
         Json {
             ignoreUnknownKeys = true
@@ -39,6 +40,7 @@ val networkModule = module {
             prettyPrint = true
         }
     }
+
     single(named(BuildConfig.APP_NAME)) {
         HttpClient {
             install(ContentNegotiation) {

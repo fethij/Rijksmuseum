@@ -14,17 +14,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class GalleryViewModel(
-    getArts: GetArtsUseCase,
-) : ViewModel() {
+class GalleryViewModel(getArts: GetArtsUseCase) : ViewModel() {
 
     private var _uiState = MutableStateFlow<ArtsUiState>(ArtsUiState.Loading)
     val uiState: StateFlow<ArtsUiState> = _uiState
         .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = ArtsUiState.Loading
-        )
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = ArtsUiState.Loading
+    )
 
     init {
         viewModelScope.launch {
