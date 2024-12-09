@@ -14,7 +14,6 @@ import io.ktor.utils.io.ByteReadChannel
 
 private const val PS = "ps"
 private const val PAGING_PAGE_SIZE = 100
-const val RIJKSMUSEUM_BASE_URL = "https://www.rijksmuseum.nl/api/en/"
 const val RIJKSMUSEUM_HOST = "www.rijksmuseum.nl"
 const val RIJKSMUSEUM_PATH = "api/en/"
 const val COLLECTION = "collection"
