@@ -25,7 +25,7 @@ coroutines = "1.9.0"
 modulegraph = "0.10.1"
 buildConfig = "5.5.1"
 kermit = "2.0.5"
-zoomimageComposeCoil = "1.1.0-rc03"
+zoomimageComposeCoil = "1.1.0"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
