@@ -17,17 +17,20 @@ import com.tewelde.rijksmuseum.theme.RijksmuseumTheme
 import okio.FileSystem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
+import org.jetbrains.compose.reload.DevelopmentEntryPoint
 
 @Composable
 @Preview
 fun App(disableDiskCache: Boolean = false) {
-    RijksmuseumTheme {
-        KoinContext {
-            setSingletonImageLoaderFactory { context ->
-                if (disableDiskCache) context.asyncImageLoader() else
-                    context.asyncImageLoader().enableDiskCache()
+    DevelopmentEntryPoint {
+        RijksmuseumTheme {
+            KoinContext {
+                setSingletonImageLoaderFactory { context ->
+                    if (disableDiskCache) context.asyncImageLoader() else
+                        context.asyncImageLoader().enableDiskCache()
+                }
+                RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
             }
-            RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
         }
     }
 }

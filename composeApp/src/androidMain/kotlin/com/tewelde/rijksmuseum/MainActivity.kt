@@ -2,6 +2,7 @@ package com.tewelde.rijksmuseum
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -25,6 +26,18 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+//private fun ComponentActivity.enableEdgeToEdgeForTheme(theme: TiviPreferences.Theme) {
+//    val style = when (theme) {
+//        TiviPreferences.Theme.LIGHT -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+//        TiviPreferences.Theme.DARK -> SystemBarStyle.dark(Color.TRANSPARENT)
+//        TiviPreferences.Theme.SYSTEM -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+//    }
+//    enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
+//    // Fix for three-button nav not properly going edge-to-edge.
+//    // TODO: https://issuetracker.google.com/issues/298296168
+//    window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_NO_LIMITS)
+//}
 
 @Preview
 @Composable

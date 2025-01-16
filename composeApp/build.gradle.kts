@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.composeHotReload)
 }
 
 val secretKeyProperties: Properties by lazy {

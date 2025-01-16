@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.buildConfig) apply false
     alias(libs.plugins.modulegraph)
+    alias(libs.plugins.composeHotReload) apply false
 }
 
 moduleGraphConfig {

@@ -11,6 +11,7 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
         with(pluginManager) {
             apply(libs.findPlugin("jetbrainsCompose").get().get().pluginId)
             apply(libs.findPlugin("compose.compiler").get().get().pluginId)
+            apply(libs.findPlugin("composeHotReload").get().get().pluginId)
         }
 
         val composeDeps = extensions.getByType<ComposeExtension>().dependencies

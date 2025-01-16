@@ -3,7 +3,7 @@ agp = "8.7.3"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
-androidx-activityCompose = "1.9.3"
+androidx-activityCompose = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
 androidx-core-ktx = "1.15.0"
@@ -14,7 +14,8 @@ coil = "3.0.4"
 compose-plugin = "1.7.3"
 filekit = "0.8.8"
 junit = "4.13.2"
-kotlin = "2.1.0"
+#kotlin = "2.1.0"
+kotlin = "2.1.10-firework.33"
 koin = "4.0.1"
 koinComposeMultiplatform = "4.0.1"
 ktor = "3.0.3"
@@ -26,6 +27,8 @@ modulegraph = "0.10.1"
 buildConfig = "5.5.1"
 kermit = "2.0.5"
 zoomimageComposeCoil = "1.1.0"
+
+compose-hot-reload = "1.0.0-dev.33.2"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -81,6 +84,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
+composeHotReload = { id = "org.jetbrains.compose-hot-reload", version.ref = "compose-hot-reload" }
 
 
 # Plugins defined by this project
