@@ -1,6 +1,8 @@
 package com.tewelde.rijksmuseum
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import coil3.ImageLoader
@@ -12,6 +14,13 @@ import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.request.crossfade
 import coil3.util.DebugLogger
+import com.slack.circuit.backstack.SaveableBackStack
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.overlay.ContentWithOverlays
+import com.slack.circuit.runtime.Navigator
+import com.slack.circuitx.gesturenavigation.GestureNavigationDecoration
 import com.tewelde.rijksmuseum.navigation.RijksmuseumNavGraph
 import com.tewelde.rijksmuseum.theme.RijksmuseumTheme
 import okio.FileSystem
@@ -21,15 +30,34 @@ import org.jetbrains.compose.reload.DevelopmentEntryPoint
 
 @Composable
 @Preview
-fun App(disableDiskCache: Boolean = false) {
+fun App(
+    circuit: Circuit,
+    backStack: SaveableBackStack,
+    navigator: Navigator,
+    onRootPop: () -> Unit,
+    disableDiskCache: Boolean = false,
+) {
     DevelopmentEntryPoint {
-        RijksmuseumTheme {
-            KoinContext {
-                setSingletonImageLoaderFactory { context ->
-                    if (disableDiskCache) context.asyncImageLoader() else
-                        context.asyncImageLoader().enableDiskCache()
+        CircuitCompositionLocals(circuit) {
+            RijksmuseumTheme {
+                Surface(color = MaterialTheme.colorScheme.background) {
+//                    val backStack = remember { RijksmuseumNavGraph.backStack }
+//                    val navigator = remember { RijksmuseumNavGraph.navigator(onRootPop) }
+//            KoinContext {
+//                setSingletonImageLoaderFactory { context ->
+//                    if (disableDiskCache) context.asyncImageLoader() else
+//                        context.asyncImageLoader().enableDiskCache()
+//                }
+//                RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
+//            }
+                    ContentWithOverlays {
+                        NavigableCircuitContent(
+                            navigator = navigator,
+                            backStack = backStack,
+                            decoration = GestureNavigationDecoration(onBackInvoked = navigator::pop),
+                        )
+                    }
                 }
-                RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
             }
         }
     }

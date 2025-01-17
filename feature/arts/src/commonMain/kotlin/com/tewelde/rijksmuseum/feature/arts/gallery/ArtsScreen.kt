@@ -18,6 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.runtime.CircuitUiState
+import com.slack.circuit.runtime.screen.Screen
+import com.tewelde.rijksmuseum.core.common.Parcelize
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.model.Art
@@ -31,6 +35,130 @@ import com.tewelde.rijksmuseum.resources.arts_screen
 import com.tewelde.rijksmuseum.resources.no_arts
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+
+
+@Parcelize
+data object GalleryScreen : Screen {
+    sealed interface State : CircuitUiState {
+        data object Empty : State
+        data class Error(val message: String) : State
+        data object Loading : State
+        data class Success(
+            val arts: List<Art>,
+            val filteredPlaces: List<String> = emptyList(),
+            val eventSink: (Event) -> Unit,
+        ) : State {
+            val productionPlaces: List<String> = arts
+                .flatMap { it.productionPlaces }
+                .filterNot { it.startsWith("?") }
+                .distinct()
+            val filteredArts: List<Art> = arts.filter { art ->
+                filteredPlaces.isEmpty() || art.productionPlaces.any { filteredPlaces.contains(it) }
+            }
+        }
+    }
+
+    sealed class Event {
+        data class ArtClicked(val art: Art) : Event()
+        data class PlaceFiltered(val place: String) : Event()
+    }
+}
+
+
+@CircuitInject(GalleryScreen::class, AppScope::class)
+@Composable
+fun GalleryScreenContent(
+    modifier: Modifier = Modifier,
+    state: GalleryScreen.State,
+) {
+    Scaffold(
+        modifier = modifier
+            .testTag(stringResource(Res.string.arts_screen)),
+    ) { contentPadding ->
+        when (state) {
+            is GalleryScreen.State.Loading -> {
+                RijksmuseumLoading(
+                    modifier = Modifier
+                        .testTag(stringResource(Res.string.arts_loading))
+                )
+            }
+
+            is GalleryScreen.State.Empty -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.no_arts),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                }
+            }
+
+            is GalleryScreen.State.Success -> {
+                val pagerState = rememberPagerState(
+                    pageCount = { state.arts.size },
+                    initialPage = 0,
+                )
+                val currentPage = pagerState.currentPage
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    HorizontalPager(
+                        state = pagerState,
+                        beyondViewportPageCount = 2,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        RijksmuseumImage(
+                            imageUrl = state.arts[it].webImage.url,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+
+                    ImageDescription(
+                        art = state.arts[currentPage],
+                        pagerState = pagerState,
+                        onNavigateToCollection = {
+//                            onNavigateToCollection
+                        },
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(horizontal = 20.dp)
+                            .padding(bottom = 60.dp)
+                            .navigationBarsPadding()
+                    )
+                }
+            }
+
+            is GalleryScreen.State.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = state.message,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun ArtsScreenRoute(
@@ -42,7 +170,6 @@ fun ArtsScreenRoute(
         uiState = uiState,
         onNavigateToCollection = onNavigateToCollection
     )
-
 }
 
 @Composable

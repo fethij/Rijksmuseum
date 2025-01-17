@@ -1,3 +1,4 @@
+import com.tewelde.rijksmuseum.addKspDependencyForAllTargets
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -10,8 +11,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.rijksmuseum.featureMultiplatform)
     alias(libs.plugins.composeHotReload)
 }
 
@@ -21,12 +21,9 @@ val secretKeyProperties: Properties by lazy {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    jvmToolchain(libs.versions.jvmTarget.get().toInt())
+
+    androidTarget {}
 
     jvm("desktop")
 
@@ -79,9 +76,13 @@ kotlin {
             implementation(libs.coil.network.ktor)
 
             implementation(libs.filekit.core)
+
+            implementation(libs.bundles.circuit)
+            implementation(libs.bundles.kotlinInjectAnvil)
         }
 
         desktopMain.dependencies {
+            implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.java)
@@ -99,6 +100,10 @@ composeCompiler {
         ComposeFeatureFlag.OptimizeNonSkippingGroups
     )
 }
+
+addKspDependencyForAllTargets(libs.circuit.codegen)
+addKspDependencyForAllTargets(libs.kotlinInject.compiler)
+addKspDependencyForAllTargets(libs.kotlinInject.anvil.compiler)
 
 android {
     namespace = "com.tewelde.rijksmuseum"
@@ -151,8 +156,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures {
         compose = true

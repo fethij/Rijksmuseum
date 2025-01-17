@@ -27,6 +27,12 @@ modulegraph = "0.10.1"
 buildConfig = "5.5.1"
 kermit = "2.0.5"
 zoomimageComposeCoil = "1.1.0"
+kotlin-inject = "0.7.2"
+kotlin-inject-anvil= "0.1.2"
+circuit = "0.25.0"
+ksp = "2.1.0-1.0.29"
+
+jvmTarget = "21"
 
 compose-hot-reload = "1.0.0-dev.33.2"
 
@@ -71,8 +77,37 @@ kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization_json" }
 zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil3", version.ref = "zoomimageComposeCoil" }
 
+# kotlin inject (anvil)
+kotlinInject-runtime = { module = "me.tatarka.inject:kotlin-inject-runtime", version.ref = "kotlin-inject" }
+kotlinInject-compiler = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlin-inject" }
+kotlinInject-anvil-compiler = { group = "software.amazon.lastmile.kotlin.inject.anvil", name = "compiler", version.ref = "kotlin-inject-anvil" }
+kotlinInject-anvil-runtime = { group = "software.amazon.lastmile.kotlin.inject.anvil", name = "runtime", version.ref = "kotlin-inject-anvil" }
+kotlinInject-anvil-runtime-optional = { group = "software.amazon.lastmile.kotlin.inject.anvil", name = "runtime-optional", version.ref = "kotlin-inject-anvil" }
+
+# Circuit
+circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
+circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "circuit" }
+circuitx-overlays = { module = "com.slack.circuit:circuitx-overlays", version.ref = "circuit" }
+circuitx-gestureNav = { module = "com.slack.circuit:circuitx-gesture-navigation", version.ref = "circuit" }
+circuit-codegen-annotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuit" }
+circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "circuit" }
+
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
+
+kotlinInjectAnvil = [
+    "kotlinInject-runtime",
+    "kotlinInject-anvil-runtime",
+    "kotlinInject-anvil-runtime-optional"
+]
+
+circuit = [
+    "circuit-foundation",
+    "circuit-overlay",
+    "circuitx-overlays",
+    "circuitx-gestureNav",
+    "circuit-codegen-annotations"
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -85,8 +120,10 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
 composeHotReload = { id = "org.jetbrains.compose-hot-reload", version.ref = "compose-hot-reload" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 
 # Plugins defined by this project
 rijksmuseum-composeMultiplatform = { id = "com.tewelde.rijksmuseum.composeMultiplatform", version = "unspecified" }
 rijksmuseum-kotlinMultiplatform = { id = "com.tewelde.rijksmuseum.kotlinMultiplatform", version = "unspecified" }
+rijksmuseum-featureMultiplatform = { id = "com.tewelde.rijksmuseum.featureMultiplatform", version = "featureMultiplatform" }

@@ -58,7 +58,7 @@ fun CollectionScreenRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class,)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CollectionScreen(
     uiState: ArtsUiState,

@@ -1,20 +1,33 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
+import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.tewelde.rijksmuseum.App
-import com.tewelde.rijksmuseum.di.appModule
+import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
+import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
+import di.WebAppComponent
+import di.create
 import okio.FileSystem
-import org.koin.core.context.startKoin
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    startKoin {
-        modules(appModule)
-    }
+    val appComponent: WebAppComponent = WebAppComponent::class.create()
+        .also { ComponentHolder.components += it }
+
     CanvasBasedWindow("Rijksmuseum") {
+
+        val backstack = rememberSaveableBackStack(root = GalleryScreen)
+        val navigator = rememberCircuitNavigator(backstack) { /* no-op */ }
         /**
          * Disable disk cache for wasm-js target to avoid UnsupportedOperationException.
          * @see [FileSystem.SYSTEM_TEMPORARY_DIRECTORY]
          */
-        App(disableDiskCache = true)
+        App(
+            circuit = appComponent.circuit,
+            backStack = backstack,
+            navigator = navigator,
+            onRootPop = { /* no op */ },
+            disableDiskCache = true
+        )
     }
 }

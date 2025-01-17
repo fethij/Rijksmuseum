@@ -24,6 +24,8 @@ kotlin {
             implementation(libs.filekit.core)
 
             implementation(libs.coil.compose)
+
+            implementation(libs.bundles.circuit)
         }
     }
 }

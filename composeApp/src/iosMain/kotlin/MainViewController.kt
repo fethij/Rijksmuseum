@@ -1,12 +1,23 @@
 import androidx.compose.ui.window.ComposeUIViewController
+import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.tewelde.rijksmuseum.App
-import com.tewelde.rijksmuseum.di.appModule
-import org.koin.core.context.startKoin
+import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
+import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
+import di.IosAppComponent
+
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
-        startKoin {
-            modules(appModule)
+        IosAppComponent.create().also {
+            ComponentHolder.components += it
         }
-    }
-) { App() }
+    }) {
+    val appComponent: IosAppComponent = ComponentHolder.component()
+    val backStack = rememberSaveableBackStack(GalleryScreen)
+    val navigator = rememberCircuitNavigator(backStack, onRootPop = { /* no-op */ })
+    App(circuit = appComponent.circuit,
+        backStack = backStack,
+        navigator = navigator,
+        onRootPop = { /* no-op */ })
+}

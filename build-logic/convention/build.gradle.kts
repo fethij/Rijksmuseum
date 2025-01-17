@@ -11,6 +11,7 @@ dependencies {
     compileOnly(libs.plugins.jetbrainsCompose.toDep())
     compileOnly(libs.plugins.kotlinMultiplatform.toDep())
     compileOnly(libs.plugins.compose.compiler.toDep())
+    compileOnly(libs.plugins.ksp.toDep())
 }
 
 fun Provider<PluginDependency>.toDep() = map {
@@ -33,6 +34,10 @@ gradlePlugin {
         register("composeMultiplatform"){
             id = "com.tewelde.rijksmuseum.composeMultiplatform"
             implementationClass = "ComposeMultiplatformConventionPlugin"
+        }
+        register("featureMultiplatform"){
+            id = "com.tewelde.rijksmuseum.featureMultiplatform"
+            implementationClass = "FutureMultiplatformConventionPlugin"
         }
     }
 }

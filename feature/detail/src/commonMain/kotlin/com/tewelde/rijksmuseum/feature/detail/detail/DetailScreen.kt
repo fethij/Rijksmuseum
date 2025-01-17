@@ -148,8 +148,7 @@ fun DetailScreen(
 
     BottomSheetScaffold(
         scaffoldState = sheetState,
-        sheetShape =
-        MaterialTheme.shapes.medium.copy(
+        sheetShape = MaterialTheme.shapes.medium.copy(
             topStart = CornerSize(4),
             topEnd = CornerSize(4),
             bottomEnd = CornerSize(0),

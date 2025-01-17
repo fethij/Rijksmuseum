@@ -2,17 +2,22 @@ package com.tewelde.rijksmuseum
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.tewelde.rijksmuseum.di.AndroidAppComponent
+import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
+import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
 import io.github.vinceglb.filekit.core.FileKit
 
 class MainActivity : ComponentActivity() {
+
+    private val appComponent: AndroidAppComponent = ComponentHolder.component()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
@@ -20,9 +25,12 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
         )
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        val circuit = appComponent.circuit
         FileKit.init(this)
         setContent {
-            App()
+            val backstack = rememberSaveableBackStack(GalleryScreen)
+            val navigator = rememberCircuitNavigator(backstack)
+            App(circuit, backstack, navigator, onRootPop = ::finish)
         }
     }
 }
@@ -38,9 +46,3 @@ class MainActivity : ComponentActivity() {
 //    // TODO: https://issuetracker.google.com/issues/298296168
 //    window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_NO_LIMITS)
 //}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
-}

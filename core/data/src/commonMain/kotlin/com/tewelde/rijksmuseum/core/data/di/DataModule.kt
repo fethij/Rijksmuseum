@@ -10,10 +10,10 @@ import org.koin.dsl.module
 
 val dataModule = module {
     includes(commonModule, networkModule)
-    single<ArtRepository> {
-        ArtRepositoryImpl(
-            rijksmuseumDataSource = get(),
-            ioSDispatcher = get(named(RijksmuseumDispatchers.IO))
-        )
-    }
+//    single<ArtRepository> {
+//        ArtRepositoryImpl(
+//            rijksmuseumDataSource = get(),
+//            ioSDispatcher = get(named(RijksmuseumDispatchers.IO))
+//        )
+//    }
 }

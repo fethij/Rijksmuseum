@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val detailModule = module {
     includes(domainModule, platformModule, permissionsModule)
-    viewModelOf(::DetailViewModel)
+//    viewModelOf(::DetailViewModel)
 }
 
 expect val platformModule: Module
