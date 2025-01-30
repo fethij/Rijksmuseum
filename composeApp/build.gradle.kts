@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.composeHotReload)
 }
 
 val secretKeyProperties: Properties by lazy {
@@ -171,4 +172,9 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+// Hot reload support
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }

@@ -15,19 +15,22 @@ import coil3.util.DebugLogger
 import com.tewelde.rijksmuseum.navigation.RijksmuseumNavGraph
 import com.tewelde.rijksmuseum.theme.RijksmuseumTheme
 import okio.FileSystem
+import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 
 @Composable
 @Preview
 fun App(disableDiskCache: Boolean = false) {
-    RijksmuseumTheme {
-        KoinContext {
-            setSingletonImageLoaderFactory { context ->
-                if (disableDiskCache) context.asyncImageLoader() else
-                    context.asyncImageLoader().enableDiskCache()
+    DevelopmentEntryPoint {
+        RijksmuseumTheme {
+            KoinContext {
+                setSingletonImageLoaderFactory { context ->
+                    if (disableDiskCache) context.asyncImageLoader() else
+                        context.asyncImageLoader().enableDiskCache()
+                }
+                RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
             }
-            RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
         }
     }
 }
