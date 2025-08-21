@@ -3,6 +3,7 @@ package com.tewelde.rijksmuseum.navigation
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,8 +24,9 @@ fun RijksmuseumNavGraph(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
     startDestination: Any = Gallery,
-    navController: NavHostController = rememberNavController(),
+    onNavHostReady: suspend (NavHostController) -> Unit,
 ) {
+    val navController: NavHostController = rememberNavController()
     NavHost(
         modifier = modifier,
         startDestination = startDestination,
@@ -46,5 +48,8 @@ fun RijksmuseumNavGraph(
                 ) == SnackbarResult.ActionPerformed
             }
         )
+    }
+    LaunchedEffect(Unit) {
+        onNavHostReady(navController)
     }
 }
