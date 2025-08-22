@@ -3,6 +3,7 @@ package com.tewelde.rijksmuseum
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavHostController
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
@@ -21,7 +22,10 @@ import org.koin.compose.KoinContext
 
 @Composable
 @Preview
-fun App(disableDiskCache: Boolean = false) {
+fun App(
+    disableDiskCache: Boolean = false,
+    onNavHostReady: suspend (NavHostController) -> Unit = {},
+) {
     DevelopmentEntryPoint {
         RijksmuseumTheme {
             KoinContext {
@@ -29,7 +33,10 @@ fun App(disableDiskCache: Boolean = false) {
                     if (disableDiskCache) context.asyncImageLoader() else
                         context.asyncImageLoader().enableDiskCache()
                 }
-                RijksmuseumNavGraph(snackbarHostState = remember { SnackbarHostState() })
+                RijksmuseumNavGraph(
+                    snackbarHostState = remember { SnackbarHostState() },
+                    onNavHostReady = onNavHostReady,
+                )
             }
         }
     }
