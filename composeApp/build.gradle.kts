@@ -28,7 +28,7 @@ kotlin {
         }
     }
 
-    jvm("desktop")
+    jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -48,8 +48,6 @@ kotlin {
     }
 
     sourceSets {
-        val desktopMain by getting
-
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -81,7 +79,7 @@ kotlin {
             implementation(libs.filekit.core)
         }
 
-        desktopMain.dependencies {
+        jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.java)
@@ -95,7 +93,6 @@ kotlin {
 
 composeCompiler {
     featureFlags = setOf(
-        ComposeFeatureFlag.StrongSkipping,
         ComposeFeatureFlag.OptimizeNonSkippingGroups
     )
 }
@@ -172,9 +169,4 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
-}
-
-// Hot reload support
-composeCompiler {
-    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }

@@ -13,8 +13,6 @@ val secretKeyProperties by lazy {
 
 kotlin {
     sourceSets {
-        val desktopMain by getting
-
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
         }
@@ -24,7 +22,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             api(libs.bundles.ktor.common)
         }
-        desktopMain.dependencies {
+        jvmMain.dependencies {
             implementation(libs.ktor.client.java)
         }
         iosMain.dependencies {

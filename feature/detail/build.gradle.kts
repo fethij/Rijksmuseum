@@ -22,6 +22,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.filekit.core)
+            implementation(libs.filekit.dialogs)
 
             implementation(libs.coil.compose)
         }

@@ -18,7 +18,6 @@ import com.tewelde.rijksmuseum.theme.RijksmuseumTheme
 import okio.FileSystem
 import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.KoinContext
 
 @Composable
 @Preview
@@ -28,16 +27,14 @@ fun App(
 ) {
     DevelopmentEntryPoint {
         RijksmuseumTheme {
-            KoinContext {
-                setSingletonImageLoaderFactory { context ->
-                    if (disableDiskCache) context.asyncImageLoader() else
-                        context.asyncImageLoader().enableDiskCache()
-                }
-                RijksmuseumNavGraph(
-                    snackbarHostState = remember { SnackbarHostState() },
-                    onNavHostReady = onNavHostReady,
-                )
+            setSingletonImageLoaderFactory { context ->
+                if (disableDiskCache) context.asyncImageLoader() else
+                    context.asyncImageLoader().enableDiskCache()
             }
+            RijksmuseumNavGraph(
+                snackbarHostState = remember { SnackbarHostState() },
+                onNavHostReady = onNavHostReady,
+            )
         }
     }
 }
@@ -46,22 +43,21 @@ fun App(
 /**
  * Create a new [ImageLoader] with the [PlatformContext].
  */
-fun PlatformContext.asyncImageLoader() =
-    ImageLoader
-        .Builder(this)
-        .components { add(KtorNetworkFetcherFactory()) }
-        .crossfade(true)
-        .networkCachePolicy(CachePolicy.ENABLED)
-        .diskCachePolicy(CachePolicy.ENABLED)
-        .memoryCachePolicy(CachePolicy.ENABLED)
-        .memoryCache {
-            MemoryCache.Builder()
-                .maxSizePercent(this, 0.25)
-                .strongReferencesEnabled(true)
-                .build()
-        }
-        .logger(DebugLogger())
-        .build()
+fun PlatformContext.asyncImageLoader() = ImageLoader
+    .Builder(this)
+    .components { add(KtorNetworkFetcherFactory()) }
+    .crossfade(true)
+    .networkCachePolicy(CachePolicy.ENABLED)
+    .diskCachePolicy(CachePolicy.ENABLED)
+    .memoryCachePolicy(CachePolicy.ENABLED)
+    .memoryCache {
+        MemoryCache.Builder()
+            .maxSizePercent(this, 0.25)
+            .strongReferencesEnabled(true)
+            .build()
+    }
+    .logger(DebugLogger())
+    .build()
 
 /**
  * Enable disk cache for the [ImageLoader].
