@@ -25,7 +25,7 @@ modulegraph = "0.12.1"
 buildConfig = "5.6.7"
 kermit = "2.0.8"
 zoomimageComposeCoil = "1.4.0"
-compose-hot-reload = "1.0.0-dev.34.1"
+compose-hot-reload = "1.0.0-dev-39"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
