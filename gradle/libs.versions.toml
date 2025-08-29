@@ -1,33 +1,31 @@
 [versions]
-agp = "8.10.1"
-android-compileSdk = "36"
+agp = "8.10.0"
+android-compileSdk = "35"
 android-minSdk = "24"
-#noinspection OldTargetApi
 android-targetSdk = "35"
 androidx-activityCompose = "1.10.1"
-androidx-appcompat = "1.7.1"
+androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.1"
-androidx-core-ktx = "1.16.0"
+androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-coil = "3.2.0"
-compose-plugin = "1.8.1"
+coil = "3.3.0"
+compose-plugin = "1.9.0-beta03"
 filekit = "0.8.8"
 junit = "4.13.2"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 koin = "4.1.0"
-koinComposeMultiplatform = "4.1.0"
-ktor = "3.1.3"
-lifecycle = "2.9.0"
-navigationCompose = "2.8.0-alpha13"
-kotlinx_serialization_json = "1.8.1"
-coroutines = "1.10.2"
+ktor = "3.2.3"
+lifecycle = "2.8.4"
+navigationCompose = "2.9.0-beta05"
+kotlinx_serialization_json = "1.8.0"
+coroutines = "1.10.1"
 modulegraph = "0.12.0"
-buildConfig = "5.6.5"
+buildConfig = "5.6.2"
 kermit = "2.0.5"
-zoomimageComposeCoil = "1.3.0"
-compose-hot-reload = "1.0.0-dev.34.3"
+zoomimageComposeCoil = "1.1.0"
+compose-hot-reload = "1.0.0-dev.34.1"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -51,8 +49,8 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
-koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }

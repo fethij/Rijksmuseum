@@ -12,16 +12,20 @@ import androidx.navigation.compose.navigation
 import com.tewelde.rijksmuseum.feature.arts.gallery.ArtsScreenRoute
 import com.tewelde.rijksmuseum.feature.arts.gallery.CollectionScreenRoute
 import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryViewModel
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
+@SerialName("gallery")
 data object Gallery
 
 @Serializable
+@SerialName("arts")
 internal data object ArtsScreen
 
 @Serializable
+@SerialName("collection")
 internal data object CollectionScreen
 
 /**
