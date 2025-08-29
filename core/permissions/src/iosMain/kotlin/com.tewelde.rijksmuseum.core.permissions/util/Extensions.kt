@@ -12,7 +12,11 @@ import platform.UIKit.UIApplicationOpenSettingsURLString
 fun openNSUrl(string: String) {
     val settingsUrl: NSURL = NSURL.URLWithString(string)!!
     if (UIApplication.sharedApplication.canOpenURL(settingsUrl)) {
-        UIApplication.sharedApplication.openURL(settingsUrl)
+        UIApplication.sharedApplication.openURL(
+            settingsUrl,
+            mapOf<Any?, Any>(),
+            null,
+        )
     } else throw CannotOpenSettingsException(string)
 }
 
