@@ -2,7 +2,7 @@ name: Deploy Compose Web App
 
 on:
   push:
-    branches: [main]
+    branches: [main, gitaction-wasm]
 
 permissions:
   contents: write
@@ -35,6 +35,21 @@ jobs:
       - name: Build
         run: |
           ./gradlew wasmJsBrowserDistribution --no-configuration-cache
+
+      - name: List output directory for debugging
+        run: |
+          ls -l composeApp/build/dist/wasmJs/productionExecutable
+
+      - name: Inject base href for GitHub Pages
+        run: |
+          DIST=composeApp/build/dist/wasmJs/productionExecutable
+          if ! grep -q '<base href="/Rijksmuseum/">' "$DIST/index.html"; then
+            sed -i 's#<head>#<head><base href="/Rijksmuseum/">#' "$DIST/index.html"
+          fi
+
+      - name: Add .nojekyll file
+        run: |
+          touch composeApp/build/dist/wasmJs/productionExecutable/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.7.3
