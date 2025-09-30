@@ -5,11 +5,16 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   test-and-build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
@@ -32,12 +37,15 @@ jobs:
         run: |
           echo $SECRETS_BASE64 | base64 --decode > secrets.properties
 
-      - name: Build
+      - name: Build Page
         run: |
           ./gradlew wasmJsBrowserDistribution --no-configuration-cache
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.7.3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          branch: gh-pages
-          folder: composeApp/build/dist/wasmJs/productionExecutable
+          path: 'composeApp/build/dist/wasmJs/productionExecutable'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
