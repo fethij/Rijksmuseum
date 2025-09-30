@@ -37,6 +37,7 @@ jobs:
           ./gradlew wasmJsBrowserDistribution --no-configuration-cache
 
       - name: Deploy
+        id: deployment
         uses: actions/deploy-pages@v4
         with:
           branch: gh-pages
