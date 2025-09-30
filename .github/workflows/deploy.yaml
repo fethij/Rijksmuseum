@@ -5,7 +5,9 @@ on:
     branches: [main, gitaction-wasm]
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   test-and-build-and-deploy:
