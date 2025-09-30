@@ -32,13 +32,15 @@ jobs:
         run: |
           echo $SECRETS_BASE64 | base64 --decode > secrets.properties
 
-      - name: Build
+      - name: Build Page
         run: |
           ./gradlew wasmJsBrowserDistribution --no-configuration-cache
 
-      - name: Deploy
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: 'composeApp/build/dist/wasmJs/productionExecutable'
+
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          branch: gh-pages
-          folder: ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable
