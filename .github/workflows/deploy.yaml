@@ -2,7 +2,7 @@ name: Deploy Compose Web App
 
 on:
   push:
-    branches: [main, gitaction-wasm]
+    branches: [main]
 
 permissions:
   contents: read
