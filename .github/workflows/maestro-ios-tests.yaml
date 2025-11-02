@@ -67,7 +67,7 @@ jobs:
             -scheme iosApp \
             -configuration Debug \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=17.5' \
             -derivedDataPath build \
             build
 
@@ -78,8 +78,11 @@ jobs:
 
       - name: Run Maestro Tests
         run: |
-          # Start the simulator
-          xcrun simctl boot "iPhone 15" || true
+          # Start the simulator (using device ID for iPhone 16 Pro iOS 18.2)
+          xcrun simctl boot "iPhone 16 Pro" || true
+
+          # Wait for simulator to be ready
+          xcrun simctl bootstatus "iPhone 16 Pro"
 
           # Install the app
           xcrun simctl install booted iosApp/build/Build/Products/Debug-iphonesimulator/iosApp.app
