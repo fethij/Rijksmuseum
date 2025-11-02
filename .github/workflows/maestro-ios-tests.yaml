@@ -67,7 +67,7 @@ jobs:
             -scheme iosApp \
             -configuration Debug \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=17.5' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
             -derivedDataPath build \
             build
 
