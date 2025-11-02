@@ -50,10 +50,6 @@ jobs:
             touch secrets.properties
           fi
 
-      - name: Build Kotlin Framework
-        run: |
-          ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
-
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
