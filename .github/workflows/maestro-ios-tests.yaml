@@ -81,7 +81,7 @@ jobs:
           xcrun simctl bootstatus "iPhone 16 Pro"
 
           # Install the app
-          xcrun simctl install booted iosApp/build/Build/Products/Debug-iphonesimulator/iosApp.app
+          xcrun simctl install booted iosApp/build/Build/Products/Debug-iphonesimulator/Heirloom.app
 
           # Run Maestro tests
           maestro test .maestro/
