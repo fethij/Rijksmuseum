@@ -1,10 +1,8 @@
 name: Maestro iOS Tests
 
 on:
-  push:
-    branches: [main, maestro]
   pull_request:
-    branches: [main, maestro]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
