@@ -1,0 +1,95 @@
+name: Maestro iOS Tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-ios:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Cache Kotlin Native
+        uses: actions/cache@v4
+        with:
+          path: ~/.konan
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
+
+      - name: Retrieve secrets
+        env:
+          SECRETS_BASE64: ${{ secrets.SECRETS_BASE64 }}
+        run: |
+          if [ -n "$SECRETS_BASE64" ]; then
+            echo $SECRETS_BASE64 | base64 --decode > secrets.properties
+          else
+            echo "No secrets found, creating empty secrets.properties"
+            touch secrets.properties
+          fi
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build iOS App
+        run: |
+          cd iosApp
+          xcodebuild \
+            -project iosApp.xcodeproj \
+            -scheme iosApp \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
+            -derivedDataPath build \
+            build
+
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Run Maestro Tests
+        run: |
+          # Start the simulator (using device ID for iPhone 16 Pro iOS 18.2)
+          xcrun simctl boot "iPhone 16 Pro" || true
+
+          # Wait for simulator to be ready
+          xcrun simctl bootstatus "iPhone 16 Pro"
+
+          # Install the app
+          xcrun simctl install booted iosApp/build/Build/Products/Debug-iphonesimulator/Heirloom.app
+
+          # Run Maestro tests
+          maestro test .maestro/
+
+      - name: Upload Maestro Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-results
+          path: |
+            ~/.maestro/tests/**/*
+            **/maestro-*.mp4
+          retention-days: 7
