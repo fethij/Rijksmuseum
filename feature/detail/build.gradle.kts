@@ -14,14 +14,12 @@ kotlin {
             implementation(projects.core.permissions)
             implementation(projects.core.designsystem)
 
-            implementation(libs.koin.compose)
-            implementation(libs.koin.composeVM)
-
             implementation(libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.filekit.core)
+            implementation(libs.filekit.dialogs)
 
             implementation(libs.coil.compose)
 

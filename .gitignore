@@ -21,3 +21,6 @@ gradle.xml
 
 *yarn.lock
 secrets.properties
+
+# keystore
+keystore

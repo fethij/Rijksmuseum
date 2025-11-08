@@ -16,7 +16,7 @@ internal fun Project.configureKotlinMultiplatform(
         }
     }
 
-    jvm("desktop")
+    jvm()
 
     wasmJs { browser() }
 
@@ -28,7 +28,6 @@ internal fun Project.configureKotlinMultiplatform(
         commonMain {
             dependencies {
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
-                api(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kermit").get())
                 implementation(libs.findBundle("kotlinInjectAnvil").get())
             }

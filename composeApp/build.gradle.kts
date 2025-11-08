@@ -12,7 +12,8 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.rijksmuseum.featureMultiplatform)
-    alias(libs.plugins.composeHotReload)
+//    alias(libs.plugins.kotlin.serialization)
+//    alias(libs.plugins.kotlin.parcelize)
 }
 
 val secretKeyProperties: Properties by lazy {
@@ -25,7 +26,7 @@ kotlin {
 
     androidTarget {}
 
-    jvm("desktop")
+    jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -45,13 +46,9 @@ kotlin {
     }
 
     sourceSets {
-        val desktopMain by getting
-
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
-            implementation(libs.koin.android)
 
             implementation(libs.ktor.client.android)
 
@@ -68,9 +65,6 @@ kotlin {
 
             implementation(libs.navigation.compose)
 
-            api(libs.koin.core)
-            implementation(libs.koin.compose)
-
             implementation(libs.ktor.client.core)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
@@ -81,8 +75,8 @@ kotlin {
             implementation(libs.bundles.kotlinInjectAnvil)
         }
 
-        desktopMain.dependencies {
-            implementation(compose.desktop.common)
+        jvmMain.dependencies {
+//            implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.java)
@@ -96,7 +90,6 @@ kotlin {
 
 composeCompiler {
     featureFlags = setOf(
-        ComposeFeatureFlag.StrongSkipping,
         ComposeFeatureFlag.OptimizeNonSkippingGroups
     )
 }
@@ -117,8 +110,8 @@ android {
         applicationId = "com.tewelde.rijksmuseum"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.5"
     }
     packaging {
         resources {

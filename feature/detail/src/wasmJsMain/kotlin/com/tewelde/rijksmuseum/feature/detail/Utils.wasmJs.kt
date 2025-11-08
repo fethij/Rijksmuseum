@@ -5,8 +5,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
-import io.github.vinceglb.filekit.core.FileKit
-import io.github.vinceglb.filekit.core.FileKitPlatformSettings
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.download
 import okio.FileSystem
 import org.jetbrains.compose.resources.StringResource
 
@@ -24,20 +24,15 @@ actual class FileUtil {
         bytes: ByteArray,
         baseName: String,
         extension: String,
-        initialDirectory: String?,
-        platformSettings: FileKitPlatformSettings?,
         onFailure: (Throwable) -> Unit,
         onSuccess: () -> Unit
     ) {
         try {
-            val file = FileKit.saveFile(
+            FileKit.download(
                 bytes = bytes,
-                baseName = baseName,
-                extension = extension,
-                initialDirectory = initialDirectory,
-                platformSettings = platformSettings
+                fileName = "$baseName.$extension"
             )
-            file?.let { onSuccess() } ?: onFailure(Exception("File not saved"))
+            onSuccess()
         } catch (e: Exception) {
             onFailure(e)
         }

@@ -9,10 +9,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.tewelde.rijksmuseum.feature.detail.detail.DetailScreenRoute
 import com.tewelde.rijksmuseum.feature.detail.detail.DetailViewModel
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
+@SerialName("detail")
 internal class DetailScreen(val id: String)
 
 fun NavController.navigateToDetail(

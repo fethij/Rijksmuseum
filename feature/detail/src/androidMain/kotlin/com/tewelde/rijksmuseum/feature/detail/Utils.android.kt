@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalView
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
-import io.github.vinceglb.filekit.core.FileKitPlatformSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,8 +32,6 @@ actual class FileUtil(private val context: Context) {
         bytes: ByteArray,
         baseName: String,
         extension: String,
-        initialDirectory: String?,
-        platformSettings: FileKitPlatformSettings?,
         onFailure: (Throwable) -> Unit,
         onSuccess: () -> Unit
     ) {

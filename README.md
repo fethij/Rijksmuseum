@@ -6,6 +6,8 @@
 ![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
 ![badge-js](http://img.shields.io/badge/platform-web-FDD835.svg?style=flat)
 
+Rijksmuseum is included as sample in the official [Kotlin Multiplatform Mobile docs](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-samples.html).
+
 # Rijksmuseum
 ![banner](./assets/ios/Rijksmuseum_banner_3.png)
 

@@ -117,7 +117,7 @@ class DetailViewModel(
                     _uiState.update { detailsState ->
                         detailsState.copy(
                             isDownloading = false,
-                            showSavingSuccessMessage = if (!web) true else false // TODO: check if image is saved or canceled before enabling this for all platforms
+                            showSavingSuccessMessage = !web // TODO: check if image is saved or canceled before enabling this for all platforms
                         )
                     }
                 }
@@ -129,30 +129,31 @@ class DetailViewModel(
                 val content = fileUtil.filesystem()?.read(data) {
                     readByteArray()
                 }
-                if (content != null) {
-                    saveFile(
-                        bytes = content,
-                        baseName = art.title ?: "image",
-                        extension = "jpg", // TODO get extension from file metadata
-                        onFailure = {
-                            _uiState.update { detailsState ->
-                                detailsState.copy(
-                                    isDownloading = false,
-                                    showSavingFailedMessage = true
-                                )
-                            }
 
-                        },
-                        onSuccess = {
-                            _uiState.update { detailsState ->
-                                detailsState.copy(
-                                    isDownloading = false,
-                                    showSavingSuccessMessage = if (!web) true else false // TODO: check if image is saved or canceled before enabling this for all platforms
-                                )
-                            }
+                if (content == null) return@use
+
+                saveFile(
+                    bytes = content,
+                    baseName = art.title ?: "image",
+                    extension = "jpg", // TODO get extension from file metadata
+                    onFailure = {
+                        _uiState.update { detailsState ->
+                            detailsState.copy(
+                                isDownloading = false,
+                                showSavingFailedMessage = true
+                            )
                         }
-                    )
-                }
+
+                    },
+                    onSuccess = {
+                        _uiState.update { detailsState ->
+                            detailsState.copy(
+                                isDownloading = false,
+                                showSavingSuccessMessage = !web // TODO: check if image is saved or canceled before enabling this for all platforms
+                            )
+                        }
+                    }
+                )
             }
         }
     }
@@ -164,11 +165,11 @@ class DetailViewModel(
                     permissionsService.providePermission(Permission.WRITE_STORAGE)
                 }
                 postPermissionGranted()
-            } catch (deniedAlways: DeniedAlwaysException) {
+            } catch (_: DeniedAlwaysException) {
                 _uiState.update { detailsState ->
                     detailsState.copy(isDownloading = false, showPermissionError = true)
                 }
-            } catch (denied: DeniedException) {
+            } catch (_: DeniedException) {
                 _uiState.update { detailsState ->
                     detailsState.copy(isDownloading = false, showPermissionError = true)
                 }

@@ -5,7 +5,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied_ios
-import io.github.vinceglb.filekit.core.FileKitPlatformSettings
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArrayOf
 import kotlinx.cinterop.memScoped
@@ -33,14 +33,13 @@ actual class FileUtil {
     actual fun filesystem(): FileSystem? = FileSystem.SYSTEM
 
     @OptIn(
-        ExperimentalForeignApi::class
+        ExperimentalForeignApi::class,
+        BetaInteropApi::class
     )
     actual suspend fun saveFile(
         bytes: ByteArray,
         baseName: String,
         extension: String,
-        initialDirectory: String?,
-        platformSettings: FileKitPlatformSettings?,
         onFailure: (Throwable) -> Unit,
         onSuccess: () -> Unit
     ) {

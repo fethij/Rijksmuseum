@@ -1,15 +1,8 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
-import com.tewelde.rijksmuseum.App
-import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
-import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
-import di.WebAppComponent
-import di.create
-import okio.FileSystem
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalBrowserHistoryApi::class)
 fun main() {
     val appComponent: WebAppComponent = WebAppComponent::class.create()
         .also { ComponentHolder.components += it }
@@ -27,7 +20,8 @@ fun main() {
             backStack = backstack,
             navigator = navigator,
             onRootPop = { /* no op */ },
-            disableDiskCache = true
+            disableDiskCache = true,
+            onNavHostReady = { it.bindToBrowserNavigation() }
         )
     }
 }
