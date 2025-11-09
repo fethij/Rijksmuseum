@@ -1,14 +1,13 @@
 package com.tewelde.rijksmuseum.feature.detail.model
 
+import androidx.compose.material3.SnackbarHostState
 import com.slack.circuit.runtime.CircuitUiState
 import com.tewelde.rijksmuseum.core.model.ArtObject
 
 data class DetailUiState(
     val isDownloading: Boolean = false,
     val downloadProgress: Int = 0,
-    val showPermissionError: Boolean = false,
-    val showSavingFailedMessage: Boolean = false,
-    val showSavingSuccessMessage: Boolean = false,
+    val snackbarHostState: SnackbarHostState,
     val state: State = State.Loading,
     val eventSink : (DetailEvent) -> Unit = {},
 ): CircuitUiState

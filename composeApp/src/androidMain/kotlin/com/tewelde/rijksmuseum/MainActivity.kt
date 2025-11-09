@@ -15,11 +15,14 @@ import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
 import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
+import com.tewelde.rijksmuseum.core.permissions.bind
 import com.tewelde.rijksmuseum.di.AndroidAppComponent
+import com.tewelde.rijksmuseum.di.AndroidUiComponent
 
 class MainActivity : ComponentActivity() {
 
     private val appComponent: AndroidAppComponent = ComponentHolder.component()
+    private lateinit var component: AndroidUiComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,15 @@ class MainActivity : ComponentActivity() {
         )
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        component = ComponentHolder
+            .component<AndroidUiComponent.Factory>()
+            .create(this)
+            .also {
+                ComponentHolder.components += it
+            }
+        component.permissionsController.bind(this)
+
         val circuit = appComponent.circuit
         setContent {
             val backstack = rememberSaveableBackStack(ArtsScreen)

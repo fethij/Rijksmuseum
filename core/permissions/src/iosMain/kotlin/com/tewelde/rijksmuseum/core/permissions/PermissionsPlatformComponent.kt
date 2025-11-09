@@ -10,6 +10,6 @@ actual interface PermissionsPlatformComponent {
     fun providePermissionController(): PermissionsController =
         MokoPermissionControllerWrapper(
             mokoPermissionController =
-                dev.icerock.moko.permissions.PermissionsController(),
+                dev.icerock.moko.permissions.ios.PermissionsController(),
         )
 }

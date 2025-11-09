@@ -1,5 +1,6 @@
 package com.tewelde.rijksmuseum.feature.detail
 
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,6 +13,7 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.tewelde.rijksmuseum.core.common.Either
+import com.tewelde.rijksmuseum.core.common.SnackBarState
 import com.tewelde.rijksmuseum.core.domain.DownloadImageUseCase
 import com.tewelde.rijksmuseum.core.domain.GetArtDetailUseCase
 import com.tewelde.rijksmuseum.core.model.ArtObject
@@ -23,11 +25,16 @@ import com.tewelde.rijksmuseum.core.permissions.performPermissionedAction
 import com.tewelde.rijksmuseum.feature.detail.model.DetailEvent
 import com.tewelde.rijksmuseum.feature.detail.model.DetailUiState
 import com.tewelde.rijksmuseum.feature.detail.model.State
+import com.tewelde.rijksmuseum.resources.Res
+import com.tewelde.rijksmuseum.resources.saving_failed
+import com.tewelde.rijksmuseum.resources.saving_success
+import com.tewelde.rijksmuseum.resources.settings
 import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import org.jetbrains.compose.resources.getString
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
 @CircuitInject(ArtDetailScreen::class, AppScope::class)
@@ -39,27 +46,31 @@ class DetailPresenter(
     val getArtDetail: GetArtDetailUseCase,
     private val fileUtil: FileUtil,
     private val permissionsController: PermissionsController,
-    private val downloadImageUseCase: DownloadImageUseCase
+    private val downloadImageUseCase: DownloadImageUseCase,
+    private val snackBarState: SnackBarState
 ) : Presenter<DetailUiState> {
     val logger = Logger.withTag(this::class.simpleName!!)
 
-    var showPermissionError by mutableStateOf(false)
-    var showSavingFailedMessage by mutableStateOf(false)
-    var showSavingSuccessMessage by mutableStateOf(false)
     var isDownloading by mutableStateOf(false)
     var downloadProgress: Int by mutableStateOf(0)
-    var state by mutableStateOf(DetailUiState())
+    var state by mutableStateOf(DetailUiState(snackbarHostState = snackBarState.snackbarHostState))
 
     @Composable
     override fun present(): DetailUiState {
         state = produceState(state) {
             value = when (val art = getArtDetail(screen.artId)) {
                 is Either.Left -> DetailUiState(
+                    snackbarHostState = snackBarState.snackbarHostState,
+                    isDownloading = isDownloading,
+                    downloadProgress = downloadProgress,
                     state = State.Error(art.value),
                     eventSink = ::onEvent
                 )
 
                 is Either.Right -> DetailUiState(
+                    snackbarHostState = snackBarState.snackbarHostState,
+                    isDownloading = isDownloading,
+                    downloadProgress = downloadProgress,
                     state = State.Success(art.value),
                     eventSink = ::onEvent
                 )
@@ -77,28 +88,15 @@ class DetailPresenter(
                             saveImage(event.context)
                         }
                     }.onFailure {
-                        isDownloading = false
-                        showPermissionError = true
                         logger.e { "Error saving image: ${it.message}" }
+                        isDownloading = false
+                        showPermissionErrorMessage()
                     }
                 }
             }
 
             is DetailEvent.NavigateToSettings -> {
                 permissionsController.openAppSettings()
-//                permissionsService.openSettingPage(Permission.WRITE_STORAGE)
-            }
-
-            is DetailEvent.PermissionErrorMessageConsumed -> {
-                showPermissionError = false
-            }
-
-            is DetailEvent.SaveFailureMessageConsumed -> {
-                showSavingFailedMessage = false
-            }
-
-            is DetailEvent.SaveSuccessMessageConsumed -> {
-                showSavingSuccessMessage = false
             }
 
             DetailEvent.OnBackClick -> navigator.pop()
@@ -114,7 +112,6 @@ class DetailPresenter(
             logger.d { "image not found in cache, Downloading image" }
             val bytes = downloadImageUseCase(art.url) { downloaded, total ->
                 total?.let {
-
                     downloadProgress = (downloaded * 100 / total).toInt().also {
                         Logger.d { "#### download progress: $it" }
 
@@ -127,13 +124,17 @@ class DetailPresenter(
                 extension = "jpg", // TODO get extension from file metadata
                 onFailure = {
                     isDownloading = false
-                    showSavingFailedMessage = true
-
+                    scope.launch {
+                        showSavingFailedMessage()
+                    }
                 },
                 onSuccess = {
                     isDownloading = false
-                    showSavingSuccessMessage =
-                        !web // TODO: check if image is saved or canceled before enabling this for all platforms
+                    if (!web) { // TODO: check if image is saved or canceled before enabling this for all platforms
+                        scope.launch {
+                            showSavingSuccessMessage()
+                        }
+                    }
                 }
             )
         } else {
@@ -152,12 +153,18 @@ class DetailPresenter(
                     extension = "jpg", // TODO get extension from file metadata
                     onFailure = {
                         isDownloading = false
-                        showSavingFailedMessage = true
+                        scope.launch {
+                            showSavingFailedMessage()
+                        }
                     },
                     onSuccess = {
                         isDownloading = false
-                        showSavingSuccessMessage =
-                            !web // TODO: check if image is saved or canceled before enabling this for all platforms
+
+                        if (!web) { // TODO: check if image is saved or canceled before enabling this for all platforms
+                            scope.launch {
+                                showSavingSuccessMessage()
+                            }
+                        }
                     }
                 )
             }
@@ -165,40 +172,24 @@ class DetailPresenter(
     }
 
     suspend fun ensureStoragePermissionAndExecute(block: suspend () -> Unit) {
+        if (!fileUtil.shouldAskStorageRuntimePermission()) {
+            block()
+            return
+        }
+
         if (!permissionsController.isPermissionGranted(Permission.STORAGE)) {
             permissionsController.performPermissionedAction(Permission.STORAGE) { state ->
                 if (state == PermissionState.Granted) {
                     block()
                 } else {
                     isDownloading = false
-                    showPermissionError = true
+                    showPermissionErrorMessage()
                 }
             }
         } else {
             block()
         }
     }
-
-//    private fun checkPermission(postPermissionGranted: () -> Unit) {
-//        scope.launch {
-//            try {
-//                if (fileUtil.shouldAskStorageRuntimePermission()) {
-//                    permissionsController.providePermission(Permission.STORAGE)
-//                }
-//                postPermissionGranted()
-//            } catch (_: Denied) {
-//                isDownloading = false
-//                showPermissionError = true
-//            } catch (_: DeniedException) {
-//                isDownloading = false
-//                showPermissionError = true
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                isDownloading = false
-//                showPermissionError = true
-//            }
-//        }
-//    }
 
     private val art: ArtObject
         get() = (state.state as State.Success).art
@@ -216,6 +207,30 @@ class DetailPresenter(
             extension = extension,
             onFailure = { onFailure(it) },
             onSuccess = { onSuccess() }
+        )
+    }
+
+    suspend fun showPermissionErrorMessage() {
+        snackBarState.showSnackbar(
+            getString(permissionDeniedMessage),
+            SnackbarDuration.Long,
+            getString(Res.string.settings),
+        ) {
+            onEvent(DetailEvent.NavigateToSettings)
+        }
+    }
+
+    suspend fun showSavingSuccessMessage() {
+        snackBarState.showSnackbar(
+            getString(Res.string.saving_success),
+            duration = SnackbarDuration.Short
+        )
+    }
+
+    suspend fun showSavingFailedMessage() {
+        snackBarState.showSnackbar(
+            getString(Res.string.saving_failed),
+            SnackbarDuration.Short
         )
     }
 }

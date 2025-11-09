@@ -9,6 +9,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.core.model)
+
             api(libs.kotlinx.serialization.json)
             api(compose.components.resources)
 

@@ -13,12 +13,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Inject
 import okio.FileSystem
 import org.jetbrains.compose.resources.StringResource
 import platform.Foundation.NSData
 import platform.Foundation.create
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageWriteToSavedPhotosAlbum
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import kotlin.coroutines.coroutineContext
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -29,14 +32,16 @@ actual fun screenHeight(): Int = LocalWindowInfo.current.containerSize.height
 @Composable
 actual fun screenWidth(): Int = LocalWindowInfo.current.containerSize.width
 
-actual class FileUtil {
-    actual fun filesystem(): FileSystem? = FileSystem.SYSTEM
+@Inject
+@ContributesBinding(AppScope::class)
+class iOSFileUtil: FileUtil {
+    override fun filesystem(): FileSystem? = FileSystem.SYSTEM
 
     @OptIn(
         ExperimentalForeignApi::class,
         BetaInteropApi::class
     )
-    actual suspend fun saveFile(
+    override suspend fun saveFile(
         bytes: ByteArray,
         baseName: String,
         extension: String,
@@ -68,7 +73,7 @@ actual class FileUtil {
         }
     }
 
-    actual suspend fun shouldAskStorageRuntimePermission(): Boolean = true
+    override suspend fun shouldAskStorageRuntimePermission(): Boolean = true
 }
 
 actual val permissionDeniedMessage: StringResource = Res.string.permission_denied_ios

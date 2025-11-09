@@ -34,8 +34,7 @@ fun App(
     onRootPop: () -> Unit,
     disableDiskCache: Boolean = false,
     onNavHostReady: suspend (NavHostController) -> Unit = {},
-
-    ) {
+) {
     setSingletonImageLoaderFactory { context ->
         if (disableDiskCache) context.asyncImageLoader() else
             context.asyncImageLoader().enableDiskCache()

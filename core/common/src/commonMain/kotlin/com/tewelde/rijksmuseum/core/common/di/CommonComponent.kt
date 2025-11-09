@@ -1,10 +1,10 @@
 package com.tewelde.rijksmuseum.core.common.di
 
+import com.tewelde.rijksmuseum.core.common.SnackBarState
 import com.tewelde.rijksmuseum.core.common.di.qualifier.Named
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import me.tatarka.inject.annotations.Provides
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -13,6 +13,8 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @ContributesTo(AppScope::class)
 interface CommonComponent {
+
+    val snackBarState: SnackBarState
 
     @Provides
     @SingleIn(AppScope::class)

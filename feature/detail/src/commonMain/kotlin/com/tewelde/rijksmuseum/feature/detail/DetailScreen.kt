@@ -18,13 +18,11 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -32,6 +30,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.tewelde.rijksmuseum.core.common.SnackBarStateEffect
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumError
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumZoomableImage
@@ -45,37 +44,6 @@ import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
 import org.jetbrains.compose.resources.stringResource
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-
-//@Composable
-//fun DetailContent(
-//    objectId: String,
-//    viewModel: DetailViewModel,
-//    onBackClick: () -> Unit,
-//    onShowSnackbar: suspend (String, String?, SnackbarDuration) -> Boolean,
-//    snackbarHostState: SnackbarHostState,
-//) {
-//    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-//    LaunchedEffect(Unit) {
-//        viewModel.onEvent(DetailEvent.LoadDetail(objectId))
-//    }
-//
-//    DetailContent(uiState, snackbarHostState, onShowSnackbar) {
-//        when (it) {
-//            is DetailEvent.OnSave,
-//            is DetailEvent.NavigateToSettings,
-//            is DetailEvent.PermissionErrorMessageConsumed,
-//            is DetailEvent.SaveFailureMessageConsumed,
-//            is DetailEvent.SaveSuccessMessageConsumed,
-//            is DetailEvent.LoadDetail -> {
-//                viewModel.onEvent(it)
-//            }
-//
-//            DetailEvent.OnBackClick -> {
-//                onBackClick()
-//            }
-//        }
-//    }
-//}
 
 @CircuitInject(ArtDetailScreen::class, AppScope::class)
 @Composable
@@ -93,8 +61,6 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
     uiState: DetailUiState,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }, // TODO share snackbar with other screens
-//    onShowSnackbar: suspend (String, String?, SnackbarDuration) -> Boolean,
     modifier: Modifier = Modifier,
 ) {
     val pfContext = LocalPlatformContext.current
@@ -106,43 +72,10 @@ fun DetailContent(
                 sheetValue != SheetValue.Hidden
             }
         ),
-        snackbarHostState = snackbarHostState
+        snackbarHostState = uiState.snackbarHostState
     )
 
-    LaunchedEffect(uiState.showPermissionError) {
-        if (uiState.showPermissionError) {
-//            onShowSnackbar( // TODO
-//                getString(permissionDeniedMessage),
-//                getString(Res.string.settings),
-//                SnackbarDuration.Long
-//            ).run {
-//                if (this) uiState.eventSink(DetailEvent.NavigateToSettings)
-//            }
-            uiState.eventSink(DetailEvent.PermissionErrorMessageConsumed)
-        }
-    }
-
-    LaunchedEffect(uiState.showSavingFailedMessage) {
-        if (uiState.showSavingFailedMessage) {
-//            onShowSnackbar(
-//                getString(Res.string.saving_failed),
-//                null,
-//                SnackbarDuration.Short
-//            )
-            uiState.eventSink(DetailEvent.SaveFailureMessageConsumed)
-        }
-    }
-
-    LaunchedEffect(uiState.showSavingSuccessMessage) {
-        if (uiState.showSavingSuccessMessage) {
-//            onShowSnackbar(
-//                getString(Res.string.saving_success),
-//                null,
-//                SnackbarDuration.Short
-//            )
-            uiState.eventSink(DetailEvent.SaveSuccessMessageConsumed)
-        }
-    }
+    SnackBarStateEffect()
 
     LaunchedEffect(uiState.state) {
         when (uiState.state) {

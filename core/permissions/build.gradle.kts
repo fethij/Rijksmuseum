@@ -5,9 +5,6 @@ plugins {
 
 kotlin {
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.androidx.activity.compose)
-        }
         val mokoImplMain by creating {
             dependsOn(commonMain.get())
 
@@ -18,6 +15,9 @@ kotlin {
         }
         androidMain {
             dependsOn(mokoImplMain)
+            dependencies {
+                implementation(libs.androidx.activity.compose)
+            }
         }
         iosMain {
             dependsOn(mokoImplMain)

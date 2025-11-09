@@ -5,12 +5,18 @@ import com.tewelde.rijksmuseum.App
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
 import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import di.IosAppComponent
+import di.IosUiComponent
+import platform.UIKit.UIViewController
 
+typealias RijksmuseumUiViewController = () -> UIViewController
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
-        IosAppComponent.create().also {
-            ComponentHolder.components += it
+        IosAppComponent.create().also { appComponent ->
+            ComponentHolder.components += appComponent
+            (appComponent as IosUiComponent.Factory).create().also { uiComponent ->
+                ComponentHolder.components += uiComponent
+            }
         }
     }) {
     val appComponent: IosAppComponent = ComponentHolder.component()

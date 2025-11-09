@@ -27,31 +27,26 @@ class CollectionPresenter(
     @Composable
     override fun present(): CollectionUiState {
         var filteredPlaces: List<String> by rememberRetained { mutableStateOf(emptyList()) }
-        var state by rememberRetained {
-            mutableStateOf(
-                CollectionUiState(
-                    arts = stateHolder.arts,
-                    filteredPlaces = filteredPlaces,
-                    eventSink = { event ->
-                        when (event) {
-                            is CollectionEvent.OnNavigateToArtDetail -> {
-                                navigator.goTo(ArtDetailScreen(event.artId))
-                            }
+        return CollectionUiState(
+            arts = stateHolder.arts,
+            filteredPlaces = filteredPlaces,
+            eventSink = { event ->
+                when (event) {
+                    is CollectionEvent.OnNavigateToArtDetail -> {
+                        navigator.goTo(ArtDetailScreen(event.artId))
+                    }
 
-                            is CollectionEvent.PlaceFiltered -> {
-                                // TODO fix
-                                filteredPlaces = if (filteredPlaces.contains(event.place)) {
-                                    filteredPlaces - event.place
-                                } else {
-                                    filteredPlaces + event.place
-                                }
-                            }
-
-                            CollectionEvent.OnBackClicked -> navigator.pop()
+                    is CollectionEvent.PlaceFiltered -> {
+                        filteredPlaces = if (filteredPlaces.contains(event.place)) {
+                            filteredPlaces - event.place
+                        } else {
+                            filteredPlaces + event.place
                         }
                     }
-                ))
-        }
-        return state
+
+                    CollectionEvent.OnBackClicked -> navigator.pop()
+                }
+            }
+        )
     }
 }
