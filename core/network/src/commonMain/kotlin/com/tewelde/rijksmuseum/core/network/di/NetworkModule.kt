@@ -20,8 +20,6 @@ import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Provides
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
 
@@ -65,7 +63,7 @@ interface NetworkModule {
 //    fun provideHttpClient(): HttpClient
 }
 
-val networkModule = module {
+//val networkModule = module {
 //    single<RijksMuseumNetworkDataSource> {
 //        KtorRijksMuseumNetwork(
 //            rijksmuseumClient = get(named(BuildConfig.APP_NAME)),
@@ -107,4 +105,4 @@ val networkModule = module {
 //    single {
 //        HttpClient()
 //    }
-}
+//}

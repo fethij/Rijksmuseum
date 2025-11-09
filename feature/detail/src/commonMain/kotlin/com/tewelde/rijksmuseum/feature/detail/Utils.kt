@@ -14,7 +14,8 @@ expect val web: Boolean
 
 expect val permissionDeniedMessage: StringResource
 
-expect class FileUtil {
+
+interface FileUtil {
 
     // TODO shouldn't this be the FileSystem.SYSTEM_TEMPORARY_DIRECTORY / "image_cache"?, cause now it's Filesystem.SYSTEM
     // we are caching in in Filesystem.SYSTEM_TEMPORARY_DIRECTORY / "image_cache", see App.

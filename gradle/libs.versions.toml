@@ -1,6 +1,6 @@
 [versions]
 
-agp = "8.12.3"
+agp = "8.13.0"
 
 jvmTarget = "21"
 
@@ -32,8 +32,9 @@ zoomimageComposeCoil = "1.4.0"
 
 kotlin-inject = "0.8.0"
 kotlin-inject-anvil= "0.1.6"
-circuit = "0.31.0"
+circuit = "0.30.0"
 ksp = "2.3.2"
+moko-permissions = "0.20.1"
 
 [libraries]
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -72,6 +73,8 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization_json" }
 zoomimage-compose-coil = { module = "io.github.panpf.zoomimage:zoomimage-compose-coil3", version.ref = "zoomimageComposeCoil" }
+moko-permissions-core = { module = "dev.icerock.moko:permissions", version.ref = "moko-permissions" }
+moko-permissions-storage = { module = "dev.icerock.moko:permissions-storage", version.ref = "moko-permissions" }
 
 # kotlin inject (anvil)
 kotlinInject-runtime = { module = "me.tatarka.inject:kotlin-inject-runtime", version.ref = "kotlin-inject" }
@@ -87,6 +90,8 @@ circuitx-overlays = { module = "com.slack.circuit:circuitx-overlays", version.re
 circuitx-gestureNav = { module = "com.slack.circuit:circuitx-gesture-navigation", version.ref = "circuit" }
 circuit-codegen-annotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuit" }
 circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "circuit" }
+circuitx-navigation = { module = "com.slack.circuit:circuitx-navigation", version.ref = "circuit" }
+circuitx-effects = { module = "com.slack.circuit:circuitx-effects", version.ref = "circuit" }
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
@@ -102,6 +107,8 @@ circuit = [
     "circuit-overlay",
     "circuitx-overlays",
     "circuitx-gestureNav",
+    "circuitx-navigation",
+    "circuitx-effects",
     "circuit-codegen-annotations"
 ]
 

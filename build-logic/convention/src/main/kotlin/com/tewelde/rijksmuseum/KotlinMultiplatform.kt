@@ -34,7 +34,6 @@ internal fun Project.configureKotlinMultiplatform(
 
             androidMain {
                 dependencies {
-                    implementation(libs.findLibrary("koin.android").get())
                     implementation(libs.findLibrary("kotlinx.coroutines.android").get())
                 }
 

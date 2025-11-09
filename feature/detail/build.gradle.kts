@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.rijksmuseum.kotlinMultiplatform)
     alias(libs.plugins.rijksmuseum.composeMultiplatform)
+    alias(libs.plugins.rijksmuseum.featureMultiplatform)
 }
 
 
@@ -11,8 +12,9 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.permissions)
             implementation(projects.core.domain)
-            implementation(projects.core.permissions)
             implementation(projects.core.designsystem)
+            implementation(projects.core.navigation)
+            implementation(projects.core.permissions)
 
             implementation(libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)

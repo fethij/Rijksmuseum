@@ -4,15 +4,18 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.core.view.WindowCompat
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
-import com.tewelde.rijksmuseum.di.AndroidAppComponent
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
-import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
-import io.github.vinceglb.filekit.core.FileKit
+import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
+import com.tewelde.rijksmuseum.di.AndroidAppComponent
 
 class MainActivity : ComponentActivity() {
 
@@ -20,29 +23,67 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
         )
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val circuit = appComponent.circuit
-        FileKit.init(this)
         setContent {
-            val backstack = rememberSaveableBackStack(GalleryScreen)
+            val backstack = rememberSaveableBackStack(ArtsScreen)
             val navigator = rememberCircuitNavigator(backstack)
-            App(circuit, backstack, navigator, onRootPop = ::finish)
+            App(
+                circuit = circuit,
+                backStack = backstack,
+                navigator = navigator,
+                onRootPop = ::finish
+            )
+
+            EdgeToEdgeSideEffect(
+                isStatusBarLight = !isSystemInDarkTheme(),
+                isNavigationBarLight = !isSystemInDarkTheme()
+            )
         }
     }
 }
 
-//private fun ComponentActivity.enableEdgeToEdgeForTheme(theme: TiviPreferences.Theme) {
-//    val style = when (theme) {
-//        TiviPreferences.Theme.LIGHT -> SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-//        TiviPreferences.Theme.DARK -> SystemBarStyle.dark(Color.TRANSPARENT)
-//        TiviPreferences.Theme.SYSTEM -> SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-//    }
-//    enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
-//    // Fix for three-button nav not properly going edge-to-edge.
-//    // TODO: https://issuetracker.google.com/issues/298296168
-//    window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_NO_LIMITS)
-//}
+@Composable
+fun EdgeToEdgeSideEffect(
+    isStatusBarLight: Boolean,
+    isNavigationBarLight: Boolean,
+) {
+    val activity = LocalActivity.current as ComponentActivity
+
+    DisposableEffect(
+        isStatusBarLight,
+        isNavigationBarLight
+    ) {
+        activity.enableEdgeToEdge(
+            statusBarStyle =
+                if (isStatusBarLight) {
+                    SystemBarStyle.light(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
+                    )
+                } else {
+                    SystemBarStyle.dark(
+                        Color.TRANSPARENT
+                    )
+                },
+            navigationBarStyle =
+                if (isNavigationBarLight) {
+                    SystemBarStyle.light(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
+                    )
+                } else {
+                    SystemBarStyle.dark(
+                        Color.TRANSPARENT
+                    )
+                }
+        )
+        onDispose { }
+    }
+}

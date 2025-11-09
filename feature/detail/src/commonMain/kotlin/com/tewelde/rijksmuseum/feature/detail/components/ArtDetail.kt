@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tewelde.rijksmuseum.core.model.ArtObject
-import com.tewelde.rijksmuseum.feature.detail.detail.initials
+import com.tewelde.rijksmuseum.feature.detail.initials
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.color
 import com.tewelde.rijksmuseum.resources.description

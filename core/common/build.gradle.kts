@@ -12,9 +12,6 @@ kotlin {
             api(libs.kotlinx.serialization.json)
             api(compose.components.resources)
 
-            implementation(libs.koin.compose)
-            implementation(libs.koin.composeVM)
-
             implementation(libs.navigation.compose)
 
             implementation(libs.bundles.kotlinInjectAnvil)

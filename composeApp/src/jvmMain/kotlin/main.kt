@@ -4,7 +4,7 @@ import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.tewelde.rijksmuseum.App
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
-import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
+import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import di.DesktopAppComponent
 import di.create
 
@@ -18,7 +18,7 @@ fun main() {
             onCloseRequest = ::exitApplication,
             title = "Rijksmuseum",
         ) {
-            val backstack = rememberSaveableBackStack(root = GalleryScreen)
+            val backstack = rememberSaveableBackStack(root = ArtsScreen)
             val navigator = rememberCircuitNavigator(backstack) { /* no-op */ }
             App(
                 circuit = appComponent.circuit,

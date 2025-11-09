@@ -3,7 +3,7 @@ import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.tewelde.rijksmuseum.App
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
-import com.tewelde.rijksmuseum.feature.arts.gallery.GalleryScreen
+import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import di.IosAppComponent
 
 
@@ -14,10 +14,12 @@ fun MainViewController() = ComposeUIViewController(
         }
     }) {
     val appComponent: IosAppComponent = ComponentHolder.component()
-    val backStack = rememberSaveableBackStack(GalleryScreen)
+    val backStack = rememberSaveableBackStack(ArtsScreen)
     val navigator = rememberCircuitNavigator(backStack, onRootPop = { /* no-op */ })
-    App(circuit = appComponent.circuit,
+    App(
+        circuit = appComponent.circuit,
         backStack = backStack,
         navigator = navigator,
-        onRootPop = { /* no-op */ })
+        onRootPop = { /* no-op */ }
+    )
 }

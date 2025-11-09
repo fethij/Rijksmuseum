@@ -1,0 +1,3 @@
+package com.tewelde.rijksmuseum.core.permissions
+
+actual interface PermissionsPlatformComponent

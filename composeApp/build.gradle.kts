@@ -1,9 +1,7 @@
 import com.tewelde.rijksmuseum.addKspDependencyForAllTargets
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
@@ -12,8 +10,6 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.rijksmuseum.featureMultiplatform)
-//    alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.kotlin.parcelize)
 }
 
 val secretKeyProperties: Properties by lazy {
@@ -58,6 +54,8 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.feature.arts)
             implementation(projects.feature.detail)
+            implementation(projects.core.navigation)
+            implementation(projects.core.permissions)
 
             implementation(compose.material3)
             implementation(compose.components.resources)
