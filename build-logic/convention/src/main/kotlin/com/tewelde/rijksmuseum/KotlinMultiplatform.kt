@@ -18,7 +18,12 @@ internal fun Project.configureKotlinMultiplatform(
 
     jvm()
 
-    wasmJs { browser() }
+    wasmJs {
+        browser()
+        compilerOptions {
+            freeCompilerArgs.add("-Xwasm-kclass-fqn")
+        }
+    }
 
     listOf(iosArm64(), iosSimulatorArm64())
 

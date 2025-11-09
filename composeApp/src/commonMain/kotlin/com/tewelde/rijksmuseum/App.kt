@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavHostController
+import androidx.compose.ui.Modifier
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
@@ -32,8 +32,8 @@ fun App(
     backStack: SaveableBackStack,
     navigator: Navigator,
     onRootPop: () -> Unit,
+    modifier: Modifier = Modifier,
     disableDiskCache: Boolean = false,
-    onNavHostReady: suspend (NavHostController) -> Unit = {},
 ) {
     setSingletonImageLoaderFactory { context ->
         if (disableDiskCache) context.asyncImageLoader() else
@@ -45,6 +45,7 @@ fun App(
             Surface(color = MaterialTheme.colorScheme.background) {
                 ContentWithOverlays {
                     NavigableCircuitContent(
+                        modifier = modifier,
                         navigator = navigator,
                         backStack = backStack,
                         decoratorFactory = remember(navigator) {
