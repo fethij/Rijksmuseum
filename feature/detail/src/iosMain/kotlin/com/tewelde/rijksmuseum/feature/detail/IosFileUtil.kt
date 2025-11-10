@@ -1,12 +1,13 @@
 package com.tewelde.rijksmuseum.feature.detail
 
+import com.tewelde.rijksmuseum.core.common.di.RijksmuseumDispatchers
+import com.tewelde.rijksmuseum.core.common.di.qualifier.Named
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.allocArrayOf
 import kotlinx.cinterop.memScoped
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import okio.FileSystem
@@ -16,12 +17,15 @@ import platform.UIKit.UIImage
 import platform.UIKit.UIImageWriteToSavedPhotosAlbum
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
-import kotlin.coroutines.coroutineContext
 
 @Inject
 @ContributesBinding(AppScope::class)
-class iOSFileUtil: FileUtil {
-    override fun filesystem(): FileSystem? = FileSystem.SYSTEM
+class IosFileUtil(
+    private val scope: CoroutineScope,
+    @Named(RijksmuseumDispatchers.IO)
+    private val ioDispatcher: CoroutineDispatcher
+) : FileUtil {
+    override fun filesystem(): FileSystem = FileSystem.SYSTEM
 
     @OptIn(
         ExperimentalForeignApi::class,
@@ -34,7 +38,7 @@ class iOSFileUtil: FileUtil {
         onFailure: (Throwable) -> Unit,
         onSuccess: () -> Unit
     ) {
-        CoroutineScope(coroutineContext).launch(Dispatchers.IO) {
+        scope.launch(ioDispatcher) {
             runCatching {
                 val nsData: NSData = memScoped {
                     NSData.create(bytes = allocArrayOf(bytes), length = bytes.size.toULong())

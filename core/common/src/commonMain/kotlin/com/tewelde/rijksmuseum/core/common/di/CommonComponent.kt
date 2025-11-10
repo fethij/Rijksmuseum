@@ -15,7 +15,7 @@ interface CommonComponent {
     @Provides
     @SingleIn(AppScope::class)
     fun provideIoDispatcher(): @Named(RijksmuseumDispatchers.IO) CoroutineDispatcher =
-        Dispatchers.Default // TODO Change to Dispatchers.IO import issues
+        providePlatformIoDispatcher()
 
     @Provides
     @SingleIn(AppScope::class)

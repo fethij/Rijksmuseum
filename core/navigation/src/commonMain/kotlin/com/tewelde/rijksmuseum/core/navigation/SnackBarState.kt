@@ -6,7 +6,6 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import com.tewelde.rijksmuseum.core.common.di.CommonComponent
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
 import com.tewelde.rijksmuseum.core.common.di.UiScope
 import kotlinx.coroutines.flow.MutableSharedFlow

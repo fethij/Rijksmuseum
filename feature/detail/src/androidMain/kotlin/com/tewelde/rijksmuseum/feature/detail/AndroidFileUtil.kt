@@ -7,19 +7,25 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import com.tewelde.rijksmuseum.core.common.di.RijksmuseumDispatchers
+import com.tewelde.rijksmuseum.core.common.di.qualifier.Named
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import okio.FileSystem
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
-import kotlin.coroutines.coroutineContext
 
 @Inject
 @ContributesBinding(AppScope::class)
-class AndroidFileUtil(private val application: Application): FileUtil {
-    override fun filesystem(): FileSystem? = FileSystem.SYSTEM
+class AndroidFileUtil(
+    private val application: Application,
+    private val scope: CoroutineScope,
+    @Named(RijksmuseumDispatchers.IO)
+    private val ioDispatcher: CoroutineDispatcher
+) : FileUtil {
+    override fun filesystem(): FileSystem = FileSystem.SYSTEM
 
     override suspend fun saveFile(
         bytes: ByteArray,
@@ -28,7 +34,7 @@ class AndroidFileUtil(private val application: Application): FileUtil {
         onFailure: (Throwable) -> Unit,
         onSuccess: () -> Unit
     ) {
-        CoroutineScope(coroutineContext).launch(Dispatchers.IO) {
+        scope.launch(ioDispatcher) {
             runCatching {
                 val imageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 val mContentValues =

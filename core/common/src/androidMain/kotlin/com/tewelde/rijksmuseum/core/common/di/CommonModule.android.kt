@@ -2,4 +2,4 @@ package com.tewelde.rijksmuseum.core.common.di
 
 import kotlinx.coroutines.Dispatchers
 
-actual fun provideIoDispatcher() = Dispatchers.IO
+actual fun providePlatformIoDispatcher() = Dispatchers.IO

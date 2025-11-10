@@ -30,12 +30,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
 import com.slack.circuit.codegen.annotations.CircuitInject
-import com.tewelde.rijksmuseum.core.navigation.SnackBarStateEffect
 import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumError
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumZoomableImage
 import com.tewelde.rijksmuseum.core.navigation.ArtDetailScreen
+import com.tewelde.rijksmuseum.core.navigation.SnackBarStateEffect
 import com.tewelde.rijksmuseum.feature.detail.components.ArtDetail
 import com.tewelde.rijksmuseum.feature.detail.components.BackButton
 import com.tewelde.rijksmuseum.feature.detail.model.DetailEvent
@@ -53,7 +53,7 @@ fun DetailScreen(
 ) {
     DetailContent(
         uiState = state,
-        modifier = Modifier.testTag(stringResource(Res.string.arts_screen)),
+        modifier = modifier.testTag(stringResource(Res.string.arts_screen)),
     )
 }
 
