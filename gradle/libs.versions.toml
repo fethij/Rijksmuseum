@@ -31,7 +31,7 @@ kermit = "2.0.8"
 zoomimageComposeCoil = "1.4.0"
 
 kotlin-inject = "0.8.0"
-kotlin-inject-anvil= "0.1.6"
+kotlin-inject-anvil = "0.1.6"
 circuit = "0.30.0"
 ksp = "2.3.2"
 moko-permissions = "0.20.1"
