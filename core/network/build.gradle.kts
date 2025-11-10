@@ -2,8 +2,10 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.rijksmuseum.kotlinMultiplatform)
+    alias(libs.plugins.rijksmuseum.featureMultiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.ksp)
 }
 
 val secretKeyProperties by lazy {
@@ -14,7 +16,7 @@ val secretKeyProperties by lazy {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
             implementation(projects.core.model)
@@ -44,4 +46,9 @@ buildConfig {
         "APP_NAME",
         "\"${rootProject.name}\""
     )
+}
+
+dependencies {
+    ksp(libs.kotlinInject.compiler)
+    ksp(libs.kotlinInject.anvil.compiler)
 }

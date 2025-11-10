@@ -1,22 +1,30 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
-import androidx.navigation.ExperimentalBrowserHistoryApi
-import androidx.navigation.bindToBrowserNavigation
-import com.tewelde.rijksmuseum.App
-import com.tewelde.rijksmuseum.di.appModule
+import androidx.compose.ui.window.ComposeViewport
+import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
+import di.WebAppComponent
+import di.WebUiComponent
+import di.create
+import kotlinx.browser.document
 import okio.FileSystem
-import org.koin.core.context.startKoin
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalBrowserHistoryApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    startKoin {
-        modules(appModule)
-    }
-    CanvasBasedWindow("Rijksmuseum") {
+    WebAppComponent::class.create().also { ComponentHolder.components += it }
+
+    val uiComponent = ComponentHolder
+        .component<WebUiComponent.Factory>()
+        .create().also {
+            ComponentHolder.components += it
+        }
+
+    ComposeViewport(document.body!!) {
         /**
          * Disable disk cache for wasm-js target to avoid UnsupportedOperationException.
          * @see [FileSystem.SYSTEM_TEMPORARY_DIRECTORY]
          */
-        App(disableDiskCache = true) { it.bindToBrowserNavigation() }
+        uiComponent.appUi.Content(
+            onRootPop = { /* no op */ },
+            disableDiskCache = true,
+        )
     }
 }

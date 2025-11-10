@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tewelde.rijksmuseum.core.model.ArtObject
-import com.tewelde.rijksmuseum.feature.detail.detail.initials
+import com.tewelde.rijksmuseum.feature.detail.initials
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.color
 import com.tewelde.rijksmuseum.resources.description
@@ -146,10 +146,13 @@ fun SheetActionRow(
             )
         ) {
             AnimatedVisibility(visible = isDownloading && downloadProgress > 0) {
-                CircularProgressIndicator(modifier = Modifier.size(16.dp),
+                CircularProgressIndicator(
+                    modifier = Modifier.size(16.dp),
                     color = MaterialTheme.colorScheme.onSurface,
                     strokeWidth = 2.dp,
-                    progress = { downloadProgress / 100f })
+                    progress = {
+                        downloadProgress / 100f
+                    })
             }
             Spacer(modifier = Modifier.size(8.dp))
             Text(

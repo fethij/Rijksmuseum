@@ -1,6 +1,8 @@
 package com.tewelde.rijksmuseum.core.network.ktor
 
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
+import com.tewelde.rijksmuseum.core.network.di.qualifier.Named
+import com.tewelde.rijksmuseum.core.network.di.qualifier.RijksmuseumClients
 import com.tewelde.rijksmuseum.core.network.model.CollectionNetworkResponse
 import com.tewelde.rijksmuseum.core.network.model.DetailNetworkResponse
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
@@ -11,6 +13,10 @@ import io.ktor.client.plugins.onDownload
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.ByteReadChannel
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 private const val PS = "ps"
 private const val PAGING_PAGE_SIZE = 100
@@ -20,9 +26,14 @@ const val COLLECTION = "collection"
 const val PAGE = "p"
 const val HAS_IMAGE = "hasImage"
 
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class KtorRijksMuseumNetwork(
+    @Named(RijksmuseumClients.AUTHORIZED)
     private val rijksmuseumClient: HttpClient,
-    private val client: HttpClient,
+    @Named(RijksmuseumClients.UNAUTHORIZED)
+    private val client: HttpClient
 ) : RijksMuseumNetworkDataSource {
     override suspend fun getCollection(page: Int): List<NetworkArt> =
         rijksmuseumClient.get("$COLLECTION?&$PAGE=$page&$PS=$PAGING_PAGE_SIZE")
@@ -37,8 +48,8 @@ class KtorRijksMuseumNetwork(
         url: String,
         onDownload: (Long, Long?) -> Unit
     ): ByteReadChannel = client.get(url) {
-            onDownload { bytesSentTotal, contentLength ->
-                onDownload(bytesSentTotal, contentLength)
-            }
-        }.bodyAsChannel()
+        onDownload { bytesSentTotal, contentLength ->
+            onDownload(bytesSentTotal, contentLength)
+        }
+    }.bodyAsChannel()
 }

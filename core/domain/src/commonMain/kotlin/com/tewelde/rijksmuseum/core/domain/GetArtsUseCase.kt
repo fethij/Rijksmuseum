@@ -4,10 +4,12 @@ import com.tewelde.rijksmuseum.core.common.ApiResponse
 import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.data.ArtRepository
 import com.tewelde.rijksmuseum.core.model.Art
+import me.tatarka.inject.annotations.Inject
 
 /**
  * Use case which gets [Art]s
  */
+@Inject
 class GetArtsUseCase(
     private val artRepository: ArtRepository
 ) {

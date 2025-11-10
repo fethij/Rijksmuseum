@@ -1,6 +1,7 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -16,6 +17,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -40,6 +42,7 @@ include(":core:data")
 include(":core:designsystem")
 include(":core:domain")
 include(":core:model")
+include(":core:navigation")
 include(":core:network")
 include(":core:permissions")
 

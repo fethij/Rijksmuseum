@@ -18,7 +18,12 @@ internal fun Project.configureKotlinMultiplatform(
 
     jvm()
 
-    wasmJs { browser() }
+    wasmJs {
+        browser()
+        compilerOptions {
+            freeCompilerArgs.add("-Xwasm-kclass-fqn")
+        }
+    }
 
     listOf(iosArm64(), iosSimulatorArm64())
 
@@ -28,13 +33,12 @@ internal fun Project.configureKotlinMultiplatform(
         commonMain {
             dependencies {
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
-                api(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kermit").get())
+                implementation(libs.findBundle("kotlinInjectAnvil").get())
             }
 
             androidMain {
                 dependencies {
-                    implementation(libs.findLibrary("koin.android").get())
                     implementation(libs.findLibrary("kotlinx.coroutines.android").get())
                 }
 

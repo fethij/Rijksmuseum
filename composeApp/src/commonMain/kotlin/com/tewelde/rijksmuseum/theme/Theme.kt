@@ -275,6 +275,15 @@ val unspecified_scheme = ColorFamily(
 fun RijksmuseumTheme(
     content: @Composable () -> Unit
 ) {
+
+//    val view = LocalView.current
+//    if (!view.isInEditMode) {
+//        SideEffect {
+//            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
+//            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
+//        }
+//    }
+
     MaterialTheme(
         colorScheme = if (isSystemInDarkTheme()) darkScheme else lightScheme,
         typography = RijksmuseumTypography,
