@@ -15,7 +15,6 @@ kotlin {
             implementation(projects.core.navigation)
             implementation(projects.core.permissions)
 
-            implementation(libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 

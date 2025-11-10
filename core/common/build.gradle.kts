@@ -14,8 +14,6 @@ kotlin {
             api(libs.kotlinx.serialization.json)
             api(compose.components.resources)
 
-            implementation(libs.navigation.compose)
-
             implementation(libs.bundles.kotlinInjectAnvil)
             implementation(libs.bundles.circuit)
         }

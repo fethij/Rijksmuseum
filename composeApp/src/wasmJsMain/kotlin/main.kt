@@ -1,16 +1,13 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
-import androidx.navigation.ExperimentalBrowserHistoryApi
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
 import di.WebAppComponent
 import di.WebUiComponent
 import di.create
 import kotlinx.browser.document
+import okio.FileSystem
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalBrowserHistoryApi::class
-)
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     WebAppComponent::class.create().also { ComponentHolder.components += it }
 

@@ -14,7 +14,6 @@ kotlin {
             api(projects.core.domain)
             implementation(projects.core.designsystem)
 
-            implementation(libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
