@@ -128,4 +128,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 # Plugins defined by this project
 rijksmuseum-composeMultiplatform = { id = "com.tewelde.rijksmuseum.composeMultiplatform", version = "unspecified" }
 rijksmuseum-kotlinMultiplatform = { id = "com.tewelde.rijksmuseum.kotlinMultiplatform", version = "unspecified" }
-rijksmuseum-featureMultiplatform = { id = "com.tewelde.rijksmuseum.featureMultiplatform", version = "featureMultiplatform" }
+rijksmuseum-featureMultiplatform = { id = "com.tewelde.rijksmuseum.featureMultiplatform", version = "unspecified" }
