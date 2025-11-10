@@ -50,19 +50,12 @@ class DetailPresenter(
     private val snackBarState: SnackBarState
 ) : Presenter<DetailUiState> {
     val logger = Logger.withTag(this::class.simpleName!!)
-
-    var isDownloading by mutableStateOf(false)
-    var downloadProgress: Int by mutableStateOf(0)
-
     var state by mutableStateOf(
         DetailUiState(
             snackbarHostState = snackBarState.snackbarHostState,
-            isDownloading = isDownloading,
-            downloadProgress = downloadProgress,
             eventSink = ::onEvent
         )
     )
-
 
     @Composable
     override fun present(): DetailUiState {
@@ -99,32 +92,29 @@ class DetailPresenter(
     }
 
     private fun saveImage(context: PlatformContext) = scope.launch {
-        isDownloading = true
+        state = state.copy(isDownloading = true)
 
         val imageLoader = SingletonImageLoader.get(context)
         val cache = imageLoader.diskCache?.openSnapshot(art.url)
-        if (true) {
-//        if (cache == null) {
+        if (cache == null) {
             logger.d { "image not found in cache, Downloading image" }
             val bytes = downloadImageUseCase(art.url) { downloaded, total ->
                 total?.let {
-                    downloadProgress = (downloaded * 100 / total).toInt().also {
-                        Logger.d { "#### download progress: $it" }
-                    }
+                    val progress = (downloaded * 100 / total).toInt()
+                    state = state.copy(downloadProgress = progress)
                 }
             }.toByteArray()
             saveFile(
                 bytes = bytes,
                 baseName = art.title ?: "image",
-                extension = "jpg", // TODO get extension from file metadata
                 onFailure = {
-                    isDownloading = false
+                    state = state.copy(isDownloading = false)
                     scope.launch {
                         showSavingFailedMessage()
                     }
                 },
                 onSuccess = {
-                    isDownloading = false
+                    state = state.copy(isDownloading = false)
                     if (!web) { // TODO: check if image is saved or canceled before enabling this for all platforms
                         scope.launch {
                             showSavingSuccessMessage()
@@ -135,7 +125,7 @@ class DetailPresenter(
         } else {
             logger.d { "image found in cache" }
             cache.use { snapshot ->
-                val data = snapshot!!.data
+                val data = snapshot.data
                 val content = fileUtil.filesystem()?.read(data) {
                     readByteArray()
                 }
@@ -145,16 +135,14 @@ class DetailPresenter(
                 saveFile(
                     bytes = content,
                     baseName = art.title ?: "image",
-                    extension = "jpg", // TODO get extension from file metadata
                     onFailure = {
-                        isDownloading = false
+                        state = state.copy(isDownloading = false)
                         scope.launch {
                             showSavingFailedMessage()
                         }
                     },
                     onSuccess = {
-                        isDownloading = false
-
+                        state = state.copy(isDownloading = false)
                         if (!web) { // TODO: check if image is saved or canceled before enabling this for all platforms
                             scope.launch {
                                 showSavingSuccessMessage()
@@ -173,11 +161,11 @@ class DetailPresenter(
         }
 
         if (!permissionsController.isPermissionGranted(Permission.STORAGE)) {
-            permissionsController.performPermissionedAction(Permission.STORAGE) { state ->
-                if (state == PermissionState.Granted) {
+            permissionsController.performPermissionedAction(Permission.STORAGE) { pState ->
+                if (pState == PermissionState.Granted) {
                     block()
                 } else {
-                    isDownloading = false
+                    state = state.copy(isDownloading = false)
                     showPermissionErrorMessage()
                 }
             }
@@ -192,7 +180,7 @@ class DetailPresenter(
     private fun saveFile(
         bytes: ByteArray,
         baseName: String,
-        extension: String,
+        extension: String = "jpg", // TODO get extension from file metadata
         onFailure: (Throwable) -> Unit = {},
         onSuccess: () -> Unit = { }
     ) = scope.launch {
