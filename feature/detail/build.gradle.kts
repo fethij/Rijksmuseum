@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.rijksmuseum.kotlinMultiplatform)
     alias(libs.plugins.rijksmuseum.composeMultiplatform)
+    alias(libs.plugins.rijksmuseum.featureMultiplatform)
 }
-
 
 kotlin {
     sourceSets {
@@ -11,11 +11,9 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.permissions)
             implementation(projects.core.domain)
-            implementation(projects.core.permissions)
             implementation(projects.core.designsystem)
-
-            implementation(libs.koin.compose)
-            implementation(libs.koin.composeVM)
+            implementation(projects.core.navigation)
+            implementation(projects.core.permissions)
 
             implementation(libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
@@ -25,6 +23,8 @@ kotlin {
             implementation(libs.filekit.dialogs)
 
             implementation(libs.coil.compose)
+
+            implementation(libs.bundles.circuit)
         }
     }
 }

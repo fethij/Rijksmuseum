@@ -4,10 +4,12 @@ import com.tewelde.rijksmuseum.core.common.ApiResponse
 import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.data.ArtRepository
 import com.tewelde.rijksmuseum.core.model.ArtObject
+import dev.zacsweers.metro.Inject
 
 /**
  * Use case to get art detail.
  */
+@Inject
 class GetArtDetailUseCase(
     private val artRepository: ArtRepository
 ) {

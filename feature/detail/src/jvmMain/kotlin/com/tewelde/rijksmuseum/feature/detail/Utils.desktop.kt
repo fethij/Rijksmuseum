@@ -5,6 +5,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.openFileSaver
 import io.github.vinceglb.filekit.write
@@ -20,9 +23,11 @@ actual fun screenHeight(): Int = LocalWindowInfo.current.containerSize.height
 actual fun screenWidth(): Int = LocalWindowInfo.current.containerSize.width
 
 
-actual class FileUtil {
-    actual fun filesystem(): FileSystem? = FileSystem.SYSTEM
-    actual suspend fun saveFile(
+@Inject
+@ContributesBinding(AppScope::class)
+class JvmFileUtil: FileUtil {
+    override fun filesystem(): FileSystem? = FileSystem.SYSTEM
+    override suspend fun saveFile(
         bytes: ByteArray,
         baseName: String,
         extension: String,
@@ -44,7 +49,7 @@ actual class FileUtil {
         }
     }
 
-    actual suspend fun shouldAskStorageRuntimePermission(): Boolean = false
+    override suspend fun shouldAskStorageRuntimePermission(): Boolean = false
 }
 
 actual val permissionDeniedMessage: StringResource = Res.string.permission_denied

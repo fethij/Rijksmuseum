@@ -1,7 +1,7 @@
 package com.tewelde.rijksmuseum.feature.detail
 
+import android.app.Application
 import android.content.ContentValues
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalView
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,10 +28,12 @@ actual fun screenHeight(): Int = LocalView.current.resources.displayMetrics.heig
 actual fun screenWidth(): Int = LocalView.current.resources.displayMetrics.widthPixels
 
 
-actual class FileUtil(private val context: Context) {
-    actual fun filesystem(): FileSystem? = FileSystem.SYSTEM
+@Inject
+@ContributesBinding(AppScope::class)
+class AndroidFileUtil(private val application: Application) : FileUtil {
+    override fun filesystem(): FileSystem? = FileSystem.SYSTEM
 
-    actual suspend fun saveFile(
+    override suspend fun saveFile(
         bytes: ByteArray,
         baseName: String,
         extension: String,
@@ -46,11 +51,11 @@ actual class FileUtil(private val context: Context) {
                         put(MediaStore.Images.Media.DISPLAY_NAME, baseName)
                     }
 
-                context.contentResolver
+                application.contentResolver
                     .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, mContentValues)
                     .apply {
                         this?.let {
-                            context.contentResolver.openOutputStream(it)?.let { outStream ->
+                            application.contentResolver.openOutputStream(it)?.let { outStream ->
                                 imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream)
                             }
                         }
@@ -63,7 +68,7 @@ actual class FileUtil(private val context: Context) {
         }
     }
 
-    actual suspend fun shouldAskStorageRuntimePermission(): Boolean =
+    override suspend fun shouldAskStorageRuntimePermission(): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
 }
 

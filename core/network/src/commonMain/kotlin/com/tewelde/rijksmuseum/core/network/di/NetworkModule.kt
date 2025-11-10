@@ -1,11 +1,15 @@
 package com.tewelde.rijksmuseum.core.network.di
 
 import com.tewelde.rijksmuseum.BuildConfig
-import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
+import com.tewelde.rijksmuseum.core.network.di.qualifier.Named
+import com.tewelde.rijksmuseum.core.network.di.qualifier.RijksmuseumClients
 import com.tewelde.rijksmuseum.core.network.ktor.HAS_IMAGE
-import com.tewelde.rijksmuseum.core.network.ktor.KtorRijksMuseumNetwork
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_HOST
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_PATH
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.cache.HttpCache
@@ -19,51 +23,51 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
 
 const val KEY = "key"
 
-val networkModule = module {
-    single<RijksMuseumNetworkDataSource> {
-        KtorRijksMuseumNetwork(
-            rijksmuseumClient = get(named(BuildConfig.APP_NAME)),
-            client = get()
-        )
+
+@ContributesTo(AppScope::class)
+interface NetworkModule {
+
+    @Provides
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+        explicitNulls = false
+        prettyPrint = true
     }
 
-    single {
-        Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-            explicitNulls = false
-            prettyPrint = true
+    @Provides
+    @Named(RijksmuseumClients.AUTHORIZED)
+    @SingleIn(AppScope::class)
+    fun provideAuthorizedHttpClient(json: Json): HttpClient = HttpClient {
+        install(ContentNegotiation) {
+            json(json)
+        }
+        install(HttpCache)
+        install(Logging) {
+            level = LogLevel.ALL
+        }
+        install(DefaultRequest) {
+            url {
+                protocol = URLProtocol.HTTPS
+                host = RIJKSMUSEUM_HOST
+                path(RIJKSMUSEUM_PATH)
+                parameters.append(KEY, BuildConfig.RIJKSMUSEUM_API_KEY)
+                parameters.append(HAS_IMAGE, true.toString())
+            }
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
     }
 
-    single(named(BuildConfig.APP_NAME)) {
-        HttpClient {
-            install(ContentNegotiation) {
-                json(get())
-            }
-            install(HttpCache)
-            install(Logging) {
-                level = LogLevel.ALL
-            }
-            install(DefaultRequest) {
-                url {
-                    protocol = URLProtocol.HTTPS
-                    host = RIJKSMUSEUM_HOST
-                    path(RIJKSMUSEUM_PATH)
-                    parameters.append(KEY, BuildConfig.RIJKSMUSEUM_API_KEY)
-                    parameters.append(HAS_IMAGE, true.toString())
-                }
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-            }
+    @Provides
+    @Named(RijksmuseumClients.UNAUTHORIZED)
+    @SingleIn(AppScope::class)
+    fun provideUnauthorizedHttpClient(): HttpClient = HttpClient {
+        install(HttpCache)
+        install(Logging) {
+            level = LogLevel.ALL
         }
-    }
-
-    single {
-        HttpClient()
     }
 }

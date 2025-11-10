@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.rijksmuseum.kotlinMultiplatform)
+    alias(libs.plugins.rijksmuseum.featureMultiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildConfig)
 }

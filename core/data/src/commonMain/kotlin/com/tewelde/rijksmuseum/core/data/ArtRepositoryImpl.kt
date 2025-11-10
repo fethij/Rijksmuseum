@@ -3,11 +3,17 @@ package com.tewelde.rijksmuseum.core.data
 import co.touchlab.kermit.Logger
 import com.tewelde.rijksmuseum.core.common.ApiResponse
 import com.tewelde.rijksmuseum.core.common.Either
+import com.tewelde.rijksmuseum.core.common.di.RijksmuseumDispatchers
+import com.tewelde.rijksmuseum.core.common.di.qualifier.Named
 import com.tewelde.rijksmuseum.core.model.Art
 import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
 import com.tewelde.rijksmuseum.core.network.model.asArtObject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -18,8 +24,12 @@ import kotlinx.io.IOException
  * @param rijksmuseumDataSource The data source for the arts.
  * @param ioSDispatcher The dispatcher for the IO operations.
  */
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class ArtRepositoryImpl(
     private val rijksmuseumDataSource: RijksMuseumNetworkDataSource,
+    @Named(RijksmuseumDispatchers.IO)
     private val ioSDispatcher: CoroutineDispatcher
 ) : ArtRepository {
     val log = Logger.withTag(this::class.simpleName!!)

@@ -1,8 +1,7 @@
+import com.tewelde.rijksmuseum.addKspDependencyForAllTargets
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
@@ -10,9 +9,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.rijksmuseum.featureMultiplatform)
+    alias(libs.plugins.metro)
 }
 
 val secretKeyProperties: Properties by lazy {
@@ -21,12 +19,9 @@ val secretKeyProperties: Properties by lazy {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    jvmToolchain(libs.versions.jvmTarget.get().toInt())
+
+    androidTarget {}
 
     jvm()
 
@@ -52,16 +47,16 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
-            implementation(libs.koin.android)
-
             implementation(libs.ktor.client.android)
 
             implementation(libs.kotlinx.coroutines.android)
         }
 
         commonMain.dependencies {
-            implementation(projects.feature.arts)
-            implementation(projects.feature.detail)
+            api(projects.feature.arts)
+            api(projects.feature.detail)
+            implementation(projects.core.navigation)
+            api(projects.core.permissions)
 
             implementation(compose.material3)
             implementation(compose.components.resources)
@@ -69,17 +64,17 @@ kotlin {
 
             implementation(libs.navigation.compose)
 
-            api(libs.koin.core)
-            implementation(libs.koin.compose)
-
             implementation(libs.ktor.client.core)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
             implementation(libs.filekit.core)
+
+            implementation(libs.bundles.circuit)
         }
 
         jvmMain.dependencies {
+//            implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.java)
@@ -148,8 +143,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures {
         compose = true
