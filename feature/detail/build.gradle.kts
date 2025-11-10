@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.rijksmuseum.featureMultiplatform)
 }
 
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

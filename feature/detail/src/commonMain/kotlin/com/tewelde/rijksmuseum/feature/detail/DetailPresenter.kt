@@ -2,9 +2,9 @@ package com.tewelde.rijksmuseum.feature.detail
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.setValue
 import co.touchlab.kermit.Logger
 import coil3.PlatformContext
@@ -13,11 +13,12 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.tewelde.rijksmuseum.core.common.Either
-import com.tewelde.rijksmuseum.core.common.SnackBarState
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.domain.DownloadImageUseCase
 import com.tewelde.rijksmuseum.core.domain.GetArtDetailUseCase
 import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.core.navigation.ArtDetailScreen
+import com.tewelde.rijksmuseum.core.navigation.SnackBarState
 import com.tewelde.rijksmuseum.core.permissions.Permission
 import com.tewelde.rijksmuseum.core.permissions.PermissionState
 import com.tewelde.rijksmuseum.core.permissions.PermissionsController
@@ -35,9 +36,8 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import org.jetbrains.compose.resources.getString
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
-@CircuitInject(ArtDetailScreen::class, AppScope::class)
+@CircuitInject(ArtDetailScreen::class, UiScope::class)
 @Inject
 class DetailPresenter(
     @Assisted val navigator: Navigator,
@@ -53,29 +53,30 @@ class DetailPresenter(
 
     var isDownloading by mutableStateOf(false)
     var downloadProgress: Int by mutableStateOf(0)
-    var state by mutableStateOf(DetailUiState(snackbarHostState = snackBarState.snackbarHostState))
+
+    var state by mutableStateOf(
+        DetailUiState(
+            snackbarHostState = snackBarState.snackbarHostState,
+            isDownloading = isDownloading,
+            downloadProgress = downloadProgress,
+            eventSink = ::onEvent
+        )
+    )
+
 
     @Composable
     override fun present(): DetailUiState {
-        state = produceState(state) {
-            value = when (val art = getArtDetail(screen.artId)) {
-                is Either.Left -> DetailUiState(
-                    snackbarHostState = snackBarState.snackbarHostState,
-                    isDownloading = isDownloading,
-                    downloadProgress = downloadProgress,
-                    state = State.Error(art.value),
-                    eventSink = ::onEvent
+        LaunchedEffect(Unit) {
+            state = when (val art = getArtDetail(screen.artId)) {
+                is Either.Left -> state.copy(
+                    state = State.Error(art.value)
                 )
 
-                is Either.Right -> DetailUiState(
-                    snackbarHostState = snackBarState.snackbarHostState,
-                    isDownloading = isDownloading,
-                    downloadProgress = downloadProgress,
+                is Either.Right -> state.copy(
                     state = State.Success(art.value),
-                    eventSink = ::onEvent
                 )
             }
-        }.value
+        }
         return state
     }
 
@@ -83,14 +84,8 @@ class DetailPresenter(
         when (event) {
             is DetailEvent.OnSave -> {
                 scope.launch {
-                    runCatching {
-                        ensureStoragePermissionAndExecute {
-                            saveImage(event.context)
-                        }
-                    }.onFailure {
-                        logger.e { "Error saving image: ${it.message}" }
-                        isDownloading = false
-                        showPermissionErrorMessage()
+                    ensureStoragePermissionAndExecute {
+                        saveImage(event.context)
                     }
                 }
             }
@@ -108,13 +103,13 @@ class DetailPresenter(
 
         val imageLoader = SingletonImageLoader.get(context)
         val cache = imageLoader.diskCache?.openSnapshot(art.url)
-        if (cache == null) {
+        if (true) {
+//        if (cache == null) {
             logger.d { "image not found in cache, Downloading image" }
             val bytes = downloadImageUseCase(art.url) { downloaded, total ->
                 total?.let {
                     downloadProgress = (downloaded * 100 / total).toInt().also {
                         Logger.d { "#### download progress: $it" }
-
                     }
                 }
             }.toByteArray()
@@ -140,7 +135,7 @@ class DetailPresenter(
         } else {
             logger.d { "image found in cache" }
             cache.use { snapshot ->
-                val data = snapshot.data
+                val data = snapshot!!.data
                 val content = fileUtil.filesystem()?.read(data) {
                     readByteArray()
                 }

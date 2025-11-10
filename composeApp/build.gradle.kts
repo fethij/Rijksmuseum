@@ -86,12 +86,6 @@ kotlin {
     }
 }
 
-composeCompiler {
-    featureFlags = setOf(
-        ComposeFeatureFlag.OptimizeNonSkippingGroups
-    )
-}
-
 addKspDependencyForAllTargets(libs.circuit.codegen)
 addKspDependencyForAllTargets(libs.kotlinInject.compiler)
 addKspDependencyForAllTargets(libs.kotlinInject.anvil.compiler)

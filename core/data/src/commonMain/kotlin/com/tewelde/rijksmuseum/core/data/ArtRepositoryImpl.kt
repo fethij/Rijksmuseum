@@ -22,7 +22,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 /**
  * Network backed implementation of the [ArtRepository].
  * @param rijksmuseumDataSource The data source for the arts.
- * @param ioSDispatcher The dispatcher for the IO operations.
+ * @param ioDispatcher The dispatcher for the IO operations.
  */
 @Inject
 @SingleIn(AppScope::class)
@@ -30,12 +30,12 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 class ArtRepositoryImpl(
     private val rijksmuseumDataSource: RijksMuseumNetworkDataSource,
     @Named(RijksmuseumDispatchers.IO)
-    private val ioSDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher
 ) : ArtRepository {
     val log = Logger.withTag(this::class.simpleName!!)
 
     override suspend fun getCollection(page: Int): Either<ApiResponse, List<Art>> =
-        withContext(ioSDispatcher) {
+        withContext(ioDispatcher) {
             try {
                 val collection = rijksmuseumDataSource.getCollection(page)
                 Either.Right(
@@ -53,7 +53,7 @@ class ArtRepositoryImpl(
         }
 
     override suspend fun getArt(objectId: String): Either<ApiResponse, ArtObject> =
-        withContext(ioSDispatcher) {
+        withContext(ioDispatcher) {
             try {
                 val art = rijksmuseumDataSource.getDetail(objectId)
                 Either.Right(art.asArtObject())
@@ -69,7 +69,7 @@ class ArtRepositoryImpl(
     override suspend fun downloadImage(
         url: String,
         onDownload: (Long, Long?) -> Unit
-    ): ByteReadChannel = withContext(ioSDispatcher) {
+    ): ByteReadChannel = withContext(ioDispatcher) {
         rijksmuseumDataSource.downloadImage(url, onDownload)
     }
 }

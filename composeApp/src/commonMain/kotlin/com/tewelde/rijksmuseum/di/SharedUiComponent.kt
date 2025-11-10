@@ -1,7 +1,7 @@
 package com.tewelde.rijksmuseum.di
 
-import com.tewelde.rijksmuseum.core.permissions.PermissionsController
+import com.tewelde.rijksmuseum.AppUi
 
-interface SharedUiComponent {
-    val permissionsController: PermissionsController
+interface SharedUiComponent{
+    val appUi: AppUi
 }

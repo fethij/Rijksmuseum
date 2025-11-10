@@ -14,44 +14,64 @@ import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.request.crossfade
 import coil3.util.DebugLogger
-import com.slack.circuit.backstack.SaveableBackStack
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.ContentWithOverlays
-import com.slack.circuit.runtime.Navigator
 import com.slack.circuitx.gesturenavigation.GestureNavigationDecorationFactory
+import com.tewelde.rijksmuseum.core.common.di.UiScope
+import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import com.tewelde.rijksmuseum.theme.RijksmuseumTheme
+import me.tatarka.inject.annotations.Inject
 import okio.FileSystem
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Composable
-@Preview
-fun App(
-    circuit: Circuit,
-    backStack: SaveableBackStack,
-    navigator: Navigator,
-    onRootPop: () -> Unit,
-    modifier: Modifier = Modifier,
-    disableDiskCache: Boolean = false,
-) {
-    setSingletonImageLoaderFactory { context ->
-        if (disableDiskCache) context.asyncImageLoader() else
-            context.asyncImageLoader().enableDiskCache()
-    }
 
-    CircuitCompositionLocals(circuit) {
-        RijksmuseumTheme {
-            Surface(color = MaterialTheme.colorScheme.background) {
-                ContentWithOverlays {
-                    NavigableCircuitContent(
-                        modifier = modifier,
-                        navigator = navigator,
-                        backStack = backStack,
-                        decoratorFactory = remember(navigator) {
-                            GestureNavigationDecorationFactory(onBackInvoked = navigator::pop)
-                        }
-                    )
+interface AppUi {
+    @Composable
+    fun Content(
+        onRootPop: () -> Unit,
+        modifier: Modifier = Modifier,
+        disableDiskCache: Boolean = false,
+    )
+}
+
+@Inject
+@SingleIn(UiScope::class)
+@ContributesBinding(UiScope::class)
+class RijksmuseumApp(
+    private val circuit: Circuit,
+) : AppUi {
+
+    @Composable
+    override fun Content(
+        onRootPop: () -> Unit,
+        modifier: Modifier,
+        disableDiskCache: Boolean,
+    ) {
+        setSingletonImageLoaderFactory { context ->
+            if (disableDiskCache) context.asyncImageLoader() else
+                context.asyncImageLoader().enableDiskCache()
+        }
+
+        val backStack = rememberSaveableBackStack(root = ArtsScreen)
+        val navigator = rememberCircuitNavigator(backStack) { onRootPop() }
+        CircuitCompositionLocals(circuit) {
+            RijksmuseumTheme {
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    ContentWithOverlays {
+                        NavigableCircuitContent(
+                            modifier = modifier,
+                            navigator = navigator,
+                            backStack = backStack,
+                            decoratorFactory = remember(navigator) {
+                                GestureNavigationDecorationFactory(onBackInvoked = navigator::pop)
+                            }
+                        )
+                    }
                 }
             }
         }

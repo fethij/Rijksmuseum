@@ -8,10 +8,10 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @SingleIn(UiScope::class)
 @ContributesSubcomponent(UiScope::class)
-interface IosUiComponent : SharedUiComponent {
+interface DesktopUiComponent : SharedUiComponent {
 
     @ContributesSubcomponent.Factory(AppScope::class)
     interface Factory {
-        fun create(): IosUiComponent
+        fun create(): DesktopUiComponent
     }
 }

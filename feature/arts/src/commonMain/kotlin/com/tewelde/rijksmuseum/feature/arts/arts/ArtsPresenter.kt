@@ -10,6 +10,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuitx.effects.LaunchedImpressionEffect
 import com.tewelde.rijksmuseum.core.common.Either
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.domain.GetArtsUseCase
 import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import com.tewelde.rijksmuseum.core.navigation.CollectionScreen
@@ -18,10 +19,9 @@ import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsEvent
 import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsUiState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import kotlin.random.Random
 
-@CircuitInject(ArtsScreen::class, AppScope::class)
+@CircuitInject(ArtsScreen::class, UiScope::class)
 @Inject
 class ArtsPresenter(
     @Assisted val navigator: Navigator,

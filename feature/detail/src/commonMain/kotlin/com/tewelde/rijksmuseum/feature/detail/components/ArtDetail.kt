@@ -146,10 +146,13 @@ fun SheetActionRow(
             )
         ) {
             AnimatedVisibility(visible = isDownloading && downloadProgress > 0) {
-                CircularProgressIndicator(modifier = Modifier.size(16.dp),
+                CircularProgressIndicator(
+                    modifier = Modifier.size(16.dp),
                     color = MaterialTheme.colorScheme.onSurface,
                     strokeWidth = 2.dp,
-                    progress = { downloadProgress / 100f })
+                    progress = {
+                        downloadProgress / 100f
+                    })
             }
             Spacer(modifier = Modifier.size(8.dp))
             Text(

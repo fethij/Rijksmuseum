@@ -17,24 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.model.Art
 import com.tewelde.rijksmuseum.core.model.HeaderImage
 import com.tewelde.rijksmuseum.core.model.WebImage
 import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
-import com.tewelde.rijksmuseum.feature.arts.components.ImageDescription
-import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsUiState
 import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsEvent
+import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsUiState
+import com.tewelde.rijksmuseum.feature.arts.components.ImageDescription
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_loading
 import com.tewelde.rijksmuseum.resources.arts_screen
 import com.tewelde.rijksmuseum.resources.no_arts
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
-@CircuitInject(ArtsScreen::class, AppScope::class)
+@CircuitInject(ArtsScreen::class, UiScope::class)
 @Composable
 fun ArtsScreen(
     uiState: ArtsUiState,

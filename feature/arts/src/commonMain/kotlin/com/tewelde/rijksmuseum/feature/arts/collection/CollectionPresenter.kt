@@ -8,6 +8,7 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.navigation.ArtDetailScreen
 import com.tewelde.rijksmuseum.core.navigation.CollectionScreen
 import com.tewelde.rijksmuseum.feature.arts.GalleryStateHolder
@@ -15,9 +16,8 @@ import com.tewelde.rijksmuseum.feature.arts.collection.model.CollectionEvent
 import com.tewelde.rijksmuseum.feature.arts.collection.model.CollectionUiState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
-@CircuitInject(CollectionScreen::class, AppScope::class)
+@CircuitInject(CollectionScreen::class, UiScope::class)
 @Inject
 class CollectionPresenter(
     @Assisted val navigator: Navigator,

@@ -65,9 +65,9 @@ interface NetworkModule {
     @Named(RijksmuseumClients.UNAUTHORIZED)
     @SingleIn(AppScope::class)
     fun provideUnauthorizedHttpClient(): HttpClient = HttpClient {
-//        install(HttpCache)
-//        install(Logging) {
-//            level = LogLevel.ALL
-//        }
+        install(HttpCache)
+        install(Logging) {
+            level = LogLevel.ALL
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.tewelde.rijksmuseum.core.common
+package com.tewelde.rijksmuseum.core.navigation
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -8,10 +8,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import com.tewelde.rijksmuseum.core.common.di.CommonComponent
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 data class SnackbarMessage(
@@ -22,7 +22,7 @@ data class SnackbarMessage(
 )
 
 @Inject
-@SingleIn(AppScope::class)
+@SingleIn(UiScope::class)
 class SnackBarState {
 
     val snackbarHostState: SnackbarHostState = SnackbarHostState()
@@ -49,7 +49,7 @@ class SnackBarState {
 
 @Composable
 fun SnackBarStateEffect() {
-    val snackBarState = remember { ComponentHolder.component<CommonComponent>().snackBarState }
+    val snackBarState = remember { ComponentHolder.component<NavigationComponent>().snackBarState }
     LaunchedEffect(
         snackBarState
     ) {
