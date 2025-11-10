@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.rijksmuseum.featureMultiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildConfig)
-    alias(libs.plugins.ksp)
 }
 
 val secretKeyProperties by lazy {
@@ -46,9 +45,4 @@ buildConfig {
         "APP_NAME",
         "\"${rootProject.name}\""
     )
-}
-
-dependencies {
-    ksp(libs.kotlinInject.compiler)
-    ksp(libs.kotlinInject.anvil.compiler)
 }

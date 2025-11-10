@@ -18,27 +18,18 @@ class FutureMultiplatformConventionPlugin : Plugin<Project> {
             configureParcelize()
             sourceSets.apply {
                 commonMain {
-                    dependencies {
-                        implementation(libs.findBundle("kotlinInjectAnvil").get())
-                        implementation(libs.findBundle("circuit").get())
-                    }
+                    dependencies { }
                 }
             }
         }
 
-        extensions.configure<KotlinMultiplatformExtension> {
-            addKspDependencyForAllTargets(libs.findLibrary("circuit.codegen").get())
-            addKspDependencyForAllTargets(libs.findLibrary("kotlinInject.compiler").get())
-            addKspDependencyForAllTargets(libs.findLibrary("kotlinInject.anvil.compiler").get())
-        }
-
         extensions.configure<KspExtension> {
             arg("circuit.codegen.lenient", "true")
-            arg("circuit.codegen.mode", "kotlin_inject_anvil")
-            arg(
-                "kotlin-inject-anvil-contributing-annotations",
-                "com.slack.circuit.codegen.annotations.CircuitInject"
-            )
+            arg("circuit.codegen.mode", "metro")
+        }
+
+        extensions.configure<KotlinMultiplatformExtension> {
+            addKspDependencyForAllTargets(libs.findLibrary("circuit.codegen").get())
         }
     }
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import artUrl
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumFilterChip
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
 import com.tewelde.rijksmuseum.core.model.Art
@@ -41,10 +42,9 @@ import com.tewelde.rijksmuseum.resources.arts_screen
 import minGridSize
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
 
-@CircuitInject(CollectionScreen::class, AppScope::class)
+@CircuitInject(CollectionScreen::class, UiScope::class)
 @Composable
 fun CollectionScreen(
     uiState: CollectionUiState,

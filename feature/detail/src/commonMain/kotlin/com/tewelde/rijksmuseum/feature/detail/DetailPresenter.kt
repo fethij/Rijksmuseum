@@ -14,6 +14,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.common.SnackBarState
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.domain.DownloadImageUseCase
 import com.tewelde.rijksmuseum.core.domain.GetArtDetailUseCase
 import com.tewelde.rijksmuseum.core.model.ArtObject
@@ -29,16 +30,15 @@ import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.saving_failed
 import com.tewelde.rijksmuseum.resources.saving_success
 import com.tewelde.rijksmuseum.resources.settings
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.tatarka.inject.annotations.Assisted
-import me.tatarka.inject.annotations.Inject
 import org.jetbrains.compose.resources.getString
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
-@CircuitInject(ArtDetailScreen::class, AppScope::class)
-@Inject
+@AssistedInject
 class DetailPresenter(
     @Assisted val navigator: Navigator,
     @Assisted val screen: ArtDetailScreen,
@@ -49,6 +49,13 @@ class DetailPresenter(
     private val downloadImageUseCase: DownloadImageUseCase,
     private val snackBarState: SnackBarState
 ) : Presenter<DetailUiState> {
+
+    @CircuitInject(ArtDetailScreen::class, UiScope::class)
+    @AssistedFactory
+    interface Factory {
+        fun create(navigator: Navigator, screen: ArtDetailScreen): DetailPresenter
+    }
+
     val logger = Logger.withTag(this::class.simpleName!!)
 
     var isDownloading by mutableStateOf(false)

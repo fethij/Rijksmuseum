@@ -34,7 +34,6 @@ internal fun Project.configureKotlinMultiplatform(
             dependencies {
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("kermit").get())
-                implementation(libs.findBundle("kotlinInjectAnvil").get())
             }
 
             androidMain {

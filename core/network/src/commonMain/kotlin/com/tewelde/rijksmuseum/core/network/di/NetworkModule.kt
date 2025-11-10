@@ -6,6 +6,10 @@ import com.tewelde.rijksmuseum.core.network.di.qualifier.RijksmuseumClients
 import com.tewelde.rijksmuseum.core.network.ktor.HAS_IMAGE
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_HOST
 import com.tewelde.rijksmuseum.core.network.ktor.RIJKSMUSEUM_PATH
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.cache.HttpCache
@@ -19,10 +23,6 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import me.tatarka.inject.annotations.Provides
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 const val KEY = "key"
 
@@ -65,9 +65,9 @@ interface NetworkModule {
     @Named(RijksmuseumClients.UNAUTHORIZED)
     @SingleIn(AppScope::class)
     fun provideUnauthorizedHttpClient(): HttpClient = HttpClient {
-//        install(HttpCache)
-//        install(Logging) {
-//            level = LogLevel.ALL
-//        }
+        install(HttpCache)
+        install(Logging) {
+            level = LogLevel.ALL
+        }
     }
 }

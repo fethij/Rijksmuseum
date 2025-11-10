@@ -1,7 +1,7 @@
 package com.tewelde.rijksmuseum.core.common.di.qualifier
 
 import com.tewelde.rijksmuseum.core.common.di.RijksmuseumDispatchers
-import me.tatarka.inject.annotations.Qualifier
+import dev.zacsweers.metro.Qualifier
 
 @Qualifier
 @Target(

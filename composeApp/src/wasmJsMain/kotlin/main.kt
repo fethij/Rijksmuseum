@@ -1,16 +1,10 @@
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.window.CanvasBasedWindow
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.ExperimentalBrowserHistoryApi
-import com.slack.circuit.backstack.rememberSaveableBackStack
-import com.slack.circuit.foundation.rememberCircuitNavigator
-import com.tewelde.rijksmuseum.App
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
-import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
+import dev.zacsweers.metro.createGraph
 import di.WebAppComponent
-import di.create
+import di.WebUiComponent
 import kotlinx.browser.document
 
 @OptIn(
@@ -18,21 +12,22 @@ import kotlinx.browser.document
     ExperimentalBrowserHistoryApi::class
 )
 fun main() {
-    val appComponent: WebAppComponent = WebAppComponent::class.create()
-        .also { ComponentHolder.components += it }
+    createGraph<WebAppComponent>().also {
+        ComponentHolder.components += it
+    }
+
+    val uiComponent = ComponentHolder
+        .component<WebUiComponent.Factory>()
+        .create().also {
+            ComponentHolder.components += it
+        }
 
     ComposeViewport(document.body!!) {
-        val backstack = rememberSaveableBackStack(root = ArtsScreen)
-        val navigator = rememberCircuitNavigator(backstack) { /* no-op */ }
         /**
          * Disable disk cache for wasm-js target to avoid UnsupportedOperationException.
          * @see [FileSystem.SYSTEM_TEMPORARY_DIRECTORY]
          */
-        App(
-            modifier = Modifier.fillMaxSize(),
-            circuit = appComponent.circuit,
-            backStack = backstack,
-            navigator = navigator,
+        uiComponent.appUi.Content(
             onRootPop = { /* no op */ },
             disableDiskCache = true,
         )

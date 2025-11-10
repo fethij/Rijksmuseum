@@ -2,14 +2,14 @@ package com.tewelde.rijksmuseum.core.common.di
 
 import com.tewelde.rijksmuseum.core.common.SnackBarState
 import com.tewelde.rijksmuseum.core.common.di.qualifier.Named
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import me.tatarka.inject.annotations.Provides
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @ContributesTo(AppScope::class)
 interface CommonComponent {
@@ -18,17 +18,20 @@ interface CommonComponent {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideIoDispatcher(): @Named(RijksmuseumDispatchers.IO) CoroutineDispatcher =
+    @Named(RijksmuseumDispatchers.IO)
+    fun provideIoDispatcher(): CoroutineDispatcher =
         Dispatchers.Default // TODO Change to Dispatchers.IO import issues
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideDefaultDispatcher(): @Named(RijksmuseumDispatchers.Default) CoroutineDispatcher =
+    @Named(RijksmuseumDispatchers.Default)
+    fun provideDefaultDispatcher(): CoroutineDispatcher =
         Dispatchers.Default
 
     @Provides
     @SingleIn(AppScope::class)
     fun provideApplicationScope(
-        @Named(RijksmuseumDispatchers.Default) dispatcher: CoroutineDispatcher
+        @Named(RijksmuseumDispatchers.Default)
+        dispatcher: CoroutineDispatcher
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 }

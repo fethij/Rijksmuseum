@@ -11,14 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalView
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.tatarka.inject.annotations.Inject
 import okio.FileSystem
 import org.jetbrains.compose.resources.StringResource
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import kotlin.coroutines.coroutineContext
 
 @Composable
@@ -30,7 +30,7 @@ actual fun screenWidth(): Int = LocalView.current.resources.displayMetrics.width
 
 @Inject
 @ContributesBinding(AppScope::class)
-class AndroidFileUtil(private val application: Application): FileUtil {
+class AndroidFileUtil(private val application: Application) : FileUtil {
     override fun filesystem(): FileSystem? = FileSystem.SYSTEM
 
     override suspend fun saveFile(

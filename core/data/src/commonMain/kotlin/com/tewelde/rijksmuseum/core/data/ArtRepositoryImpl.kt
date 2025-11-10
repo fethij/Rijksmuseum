@@ -10,14 +10,14 @@ import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.core.network.RijksMuseumNetworkDataSource
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
 import com.tewelde.rijksmuseum.core.network.model.asArtObject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
-import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 /**
  * Network backed implementation of the [ArtRepository].

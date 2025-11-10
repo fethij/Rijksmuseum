@@ -1,8 +1,8 @@
 package com.tewelde.rijksmuseum.core.permissions
 
-import me.tatarka.inject.annotations.Provides
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 
 actual interface PermissionsPlatformComponent {
     @Provides

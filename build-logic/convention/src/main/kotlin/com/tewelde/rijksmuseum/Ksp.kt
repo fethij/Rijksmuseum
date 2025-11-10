@@ -1,32 +1,33 @@
 package com.tewelde.rijksmuseum
 
+import java.util.Locale
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import java.util.Locale
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 
-fun Project.addKspDependencyForAllTargets(dependencyNotation: Any) =
-    addKspDependencyForAllTargets("", dependencyNotation)
-
-private fun Project.addKspDependencyForAllTargets(
-    configurationNameSuffix: String,
+fun Project.addKspDependencyForAllTargets(
     dependencyNotation: Any,
+    includeCommonMainMetadata: Boolean = true,
 ) {
     val kmpExtension = extensions.getByType<KotlinMultiplatformExtension>()
-    val kspTargets = kmpExtension.targets.names.map { targetName ->
-        targetName.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(Locale.US) else it.toString()
-        }
-    }
     dependencies {
-        kspTargets
+        kmpExtension.targets
             .asSequence()
-            .map { target ->
-                if (target == "Metadata") "CommonMainMetadata" else target
+            .filter { target ->
+                // Don't add KSP for common target, only final platforms
+                target.platformType != KotlinPlatformType.common
             }
-            .forEach { targetConfigSuffix ->
-                add("ksp${targetConfigSuffix}$configurationNameSuffix", dependencyNotation)
+            .forEach { target -> add("ksp${target.targetName.capitalized()}", dependencyNotation) }
+            .also {
+                if (includeCommonMainMetadata) {
+                    add("kspCommonMainMetadata", dependencyNotation)
+                }
             }
     }
+}
+
+fun String.capitalized() = replaceFirstChar {
+    if (it.isLowerCase()) it.titlecase(Locale.US) else it.toString()
 }

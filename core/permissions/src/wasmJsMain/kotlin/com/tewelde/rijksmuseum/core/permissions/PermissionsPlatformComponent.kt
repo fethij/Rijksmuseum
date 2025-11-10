@@ -1,6 +1,6 @@
 package com.tewelde.rijksmuseum.core.permissions
 
-import me.tatarka.inject.annotations.Provides
+import dev.zacsweers.metro.Provides
 
 actual interface PermissionsPlatformComponent {
     @Provides

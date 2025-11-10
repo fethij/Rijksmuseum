@@ -8,21 +8,27 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.navigation.ArtDetailScreen
 import com.tewelde.rijksmuseum.core.navigation.CollectionScreen
 import com.tewelde.rijksmuseum.feature.arts.GalleryStateHolder
 import com.tewelde.rijksmuseum.feature.arts.collection.model.CollectionEvent
 import com.tewelde.rijksmuseum.feature.arts.collection.model.CollectionUiState
-import me.tatarka.inject.annotations.Assisted
-import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 
-@CircuitInject(CollectionScreen::class, AppScope::class)
-@Inject
+@AssistedInject
 class CollectionPresenter(
     @Assisted val navigator: Navigator,
     private val stateHolder: GalleryStateHolder
 ) : Presenter<CollectionUiState> {
+
+    @CircuitInject(CollectionScreen::class, UiScope::class)
+    @AssistedFactory
+    interface Factory {
+        fun create(navigator: Navigator): CollectionPresenter
+    }
 
     @Composable
     override fun present(): CollectionUiState {

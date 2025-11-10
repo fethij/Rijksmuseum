@@ -4,15 +4,12 @@ import com.tewelde.rijksmuseum.core.common.ApiResponse
 import com.tewelde.rijksmuseum.core.common.Either
 import com.tewelde.rijksmuseum.core.data.ArtRepository
 import com.tewelde.rijksmuseum.core.model.ArtObject
-import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import dev.zacsweers.metro.Inject
 
 /**
  * Use case to get art detail.
  */
 @Inject
-@ContributesBinding(AppScope::class)
 class GetArtDetailUseCase(
     private val artRepository: ArtRepository
 ) {

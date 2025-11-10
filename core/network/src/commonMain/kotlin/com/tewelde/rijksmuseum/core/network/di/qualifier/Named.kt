@@ -1,6 +1,6 @@
 package com.tewelde.rijksmuseum.core.network.di.qualifier
 
-import me.tatarka.inject.annotations.Qualifier
+import dev.zacsweers.metro.Qualifier
 
 @Qualifier
 @Target(

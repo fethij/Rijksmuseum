@@ -1,18 +1,17 @@
-package com.tewelde.rijksmuseum.di
+package di
 
-import android.app.Activity
 import com.tewelde.rijksmuseum.core.common.di.UiScope
+import com.tewelde.rijksmuseum.di.SharedUiComponent
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.GraphExtension
-import dev.zacsweers.metro.Provides
 
 @GraphExtension(UiScope::class)
-interface AndroidUiComponent: SharedUiComponent {
+interface WebUiComponent : SharedUiComponent {
 
     @GraphExtension.Factory
     @ContributesTo(AppScope::class)
     interface Factory {
-        fun create(@Provides activity: Activity): AndroidUiComponent
+        fun create(): WebUiComponent
     }
 }

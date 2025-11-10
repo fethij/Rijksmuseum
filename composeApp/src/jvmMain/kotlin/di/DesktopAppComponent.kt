@@ -1,11 +1,7 @@
 package di
 
-import com.tewelde.rijksmuseum.di.AppComponent
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.MergeComponent
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.DependencyGraph
 
-@MergeComponent(AppScope::class)
-@SingleIn(AppScope::class)
-abstract class DesktopAppComponent :
-  AppComponent
+@DependencyGraph(AppScope::class)
+abstract class DesktopAppComponent

@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.rijksmuseum.featureMultiplatform)
+    alias(libs.plugins.metro)
 }
 
 val secretKeyProperties: Properties by lazy {
@@ -52,10 +53,10 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(projects.feature.arts)
-            implementation(projects.feature.detail)
+            api(projects.feature.arts)
+            api(projects.feature.detail)
             implementation(projects.core.navigation)
-            implementation(projects.core.permissions)
+            api(projects.core.permissions)
 
             implementation(compose.material3)
             implementation(compose.components.resources)
@@ -70,7 +71,6 @@ kotlin {
             implementation(libs.filekit.core)
 
             implementation(libs.bundles.circuit)
-            implementation(libs.bundles.kotlinInjectAnvil)
         }
 
         jvmMain.dependencies {
@@ -91,10 +91,6 @@ composeCompiler {
         ComposeFeatureFlag.OptimizeNonSkippingGroups
     )
 }
-
-addKspDependencyForAllTargets(libs.circuit.codegen)
-addKspDependencyForAllTargets(libs.kotlinInject.compiler)
-addKspDependencyForAllTargets(libs.kotlinInject.anvil.compiler)
 
 android {
     namespace = "com.tewelde.rijksmuseum"

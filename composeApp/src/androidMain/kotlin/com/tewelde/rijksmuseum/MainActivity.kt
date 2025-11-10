@@ -5,24 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.view.WindowCompat
-import com.slack.circuit.backstack.rememberSaveableBackStack
-import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.tewelde.rijksmuseum.core.common.di.ComponentHolder
-import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import com.tewelde.rijksmuseum.core.permissions.bind
-import com.tewelde.rijksmuseum.di.AndroidAppComponent
 import com.tewelde.rijksmuseum.di.AndroidUiComponent
 
 class MainActivity : ComponentActivity() {
-
-    private val appComponent: AndroidAppComponent = ComponentHolder.component()
-    private lateinit var component: AndroidUiComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,23 +28,17 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        component = ComponentHolder
+        val uiComponent = ComponentHolder
             .component<AndroidUiComponent.Factory>()
             .create(this)
             .also {
                 ComponentHolder.components += it
             }
-        component.permissionsController.bind(this)
+        uiComponent.permissionsController.bind(this)
 
-        val circuit = appComponent.circuit
         setContent {
-            val backstack = rememberSaveableBackStack(ArtsScreen)
-            val navigator = rememberCircuitNavigator(backstack)
-            App(
-                circuit = circuit,
-                backStack = backstack,
-                navigator = navigator,
-                onRootPop = ::finish
+            uiComponent.appUi.Content(
+                onRootPop = backDispatcherRootPop()
             )
 
             EdgeToEdgeSideEffect(
@@ -59,6 +47,17 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
+}
+
+/**
+ * https://github.com/slackhq/circuit/blob/158d07b703778816a69f3cb13b63ef456a8c42e9/circuit-foundation/src/androidMain/kotlin/com/slack/circuit/foundation/Navigator.android.kt#L34
+ */
+@Composable
+private fun backDispatcherRootPop(): () -> Unit {
+    val onBackPressedDispatcher =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+            ?: error("No OnBackPressedDispatcherOwner found, unable to handle root navigation pops.")
+    return { onBackPressedDispatcher.onBackPressed() }
 }
 
 @Composable

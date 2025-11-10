@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.tewelde.rijksmuseum.core.common.SnackBarStateEffect
+import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumError
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumZoomableImage
@@ -43,9 +44,8 @@ import com.tewelde.rijksmuseum.feature.detail.model.State
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
 import org.jetbrains.compose.resources.stringResource
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 
-@CircuitInject(ArtDetailScreen::class, AppScope::class)
+@CircuitInject(ArtDetailScreen::class, UiScope::class)
 @Composable
 fun DetailScreen(
     state: DetailUiState,

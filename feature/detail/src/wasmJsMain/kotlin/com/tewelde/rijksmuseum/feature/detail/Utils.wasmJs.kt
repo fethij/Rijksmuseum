@@ -5,13 +5,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.permission_denied
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.download
-import me.tatarka.inject.annotations.Inject
 import okio.FileSystem
 import org.jetbrains.compose.resources.StringResource
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

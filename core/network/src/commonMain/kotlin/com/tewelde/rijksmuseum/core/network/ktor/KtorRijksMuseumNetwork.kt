@@ -7,16 +7,17 @@ import com.tewelde.rijksmuseum.core.network.model.CollectionNetworkResponse
 import com.tewelde.rijksmuseum.core.network.model.DetailNetworkResponse
 import com.tewelde.rijksmuseum.core.network.model.NetworkArt
 import com.tewelde.rijksmuseum.core.network.model.NetworkArtObject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.onDownload
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.ByteReadChannel
-import me.tatarka.inject.annotations.Inject
-import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
+
 
 private const val PS = "ps"
 private const val PAGING_PAGE_SIZE = 100
