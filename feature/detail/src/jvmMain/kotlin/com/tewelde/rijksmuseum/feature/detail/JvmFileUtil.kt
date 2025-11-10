@@ -25,7 +25,6 @@ class JvmFileUtil: FileUtil {
                 suggestedName = baseName,
                 extension = extension,
             )
-            file?.write(bytes)
             file?.let {
                 it.write(bytes)
                 onSuccess()
