@@ -11,7 +11,7 @@ Rijksmuseum is included as sample in the official [Kotlin Multiplatform Mobile d
 # Rijksmuseum
 ![banner](./assets/ios/Rijksmuseum_banner_3.png)
 
-Rijksmuseum is multi-modular Kotlin and Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
+Rijksmuseum is multi-modular Compose Multiplatform app that offers an immersive way to explore the art collection of the renowned Rijksmuseum in Amsterdam.
 
 
 ## Download
@@ -63,14 +63,10 @@ Design is inspired by [Mari Andrianova](https://dribbble.com/shots/20446337-Gall
 ## Tech Stack 📚
 - [Kotlin Multiplatform](https://kotlinlang.org/lp/multiplatform/)
 - [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
-- [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
-- [Koin](https://insert-koin.io/)
+- [kotlin-inject-anvil](https://github.com/amzn/kotlin-inject-anvil)
+- [Circuit](https://github.com/slackhq/circuit/)
 - [Coil](https://coil-kt.github.io/coil/)
 - [Ktor](https://ktor.io/)
-- [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation)
-- [Jetpack Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle)
-- [Jetpack ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
-
 
 ## Development :gear:
 
