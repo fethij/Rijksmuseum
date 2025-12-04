@@ -91,7 +91,7 @@ rijksmuseum.key.password=#Add your key password
   }
 }%%
 
-graph LR
+graph TD
   :composeApp --> :feature:arts
   :composeApp --> :feature:detail
   :core:network --> :core:model
