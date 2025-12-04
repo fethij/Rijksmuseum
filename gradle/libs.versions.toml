@@ -24,7 +24,7 @@ kotlin-inject-anvil = "0.1.6"
 circuit = "0.30.0"
 ksp = "2.3.2"
 moko-permissions = "0.20.1"
-androidx-activityCompose = "1.11.0"
+androidx-activityCompose = "1.12.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
