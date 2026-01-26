@@ -114,4 +114,4 @@ metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 # Plugins defined by this project
 rijksmuseum-composeMultiplatform = { id = "com.tewelde.rijksmuseum.composeMultiplatform", version = "unspecified" }
 rijksmuseum-kotlinMultiplatform = { id = "com.tewelde.rijksmuseum.kotlinMultiplatform", version = "unspecified" }
-rijksmuseum-featureMultiplatform = { id = "com.tewelde.rijksmuseum.featureMultiplatform", version = "featureMultiplatform" }
+rijksmuseum-featureMultiplatform = { id = "com.tewelde.rijksmuseum.featureMultiplatform", version = "unspecified" }
