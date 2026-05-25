@@ -17,7 +17,6 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
@@ -86,18 +85,9 @@ fun DetailContent(
         }
     }
 
-    val peekHeight = if (uiState.state is State.Success) 190.dp else 0.dp
     BottomSheetScaffold(
         modifier = modifier,
         scaffoldState = sheetState,
-        snackbarHost = {
-            // Default snackbar host is anchored to the scaffold's bottom edge, which sits
-            // behind the bottom sheet's peek area. Push it above the peek so it stays visible.
-            SnackbarHost(
-                hostState = uiState.snackbarHostState,
-                modifier = Modifier.padding(bottom = peekHeight),
-            )
-        },
         sheetShape = MaterialTheme.shapes.medium.copy(
             topStart = CornerSize(4),
             topEnd = CornerSize(4),
@@ -116,7 +106,7 @@ fun DetailContent(
                 Box(modifier = Modifier.size(height = 4.dp, width = 32.dp))
             }
         },
-        sheetPeekHeight = peekHeight,
+        sheetPeekHeight = if (uiState.state is State.Success) 190.dp else 0.dp,
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         sheetTonalElevation = 0.dp,
