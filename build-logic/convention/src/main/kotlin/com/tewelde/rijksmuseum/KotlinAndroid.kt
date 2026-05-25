@@ -1,29 +1,25 @@
 package com.tewelde.rijksmuseum
 
-import com.android.build.api.dsl.LibraryExtension
-import org.gradle.api.JavaVersion
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
 import org.gradle.api.Project
 
-internal fun Project.configureKotlinAndroid(
-    extension: LibraryExtension
-) = extension.apply {
+/**
+ * AGP 9 / KMP library plugin config. Replaces the old top-level `android {}` block.
+ *
+ * Namespace is derived from the module path: e.g. `:core:network` → `com.tewelde.rijksmuseum.core.network`.
+ * `androidResources` is enabled because Compose Multiplatform resources are routed through it.
+ */
+internal fun KotlinMultiplatformAndroidLibraryExtension.configureKotlinMultiplatformAndroid(
+    project: Project,
+) {
+    // Build a unique per-module namespace from the gradle path: ":core:network" →
+    // "com.tewelde.rijksmuseum.core.network", ":shared" → "com.tewelde.rijksmuseum.shared".
+    // AGP 9 enforces android.uniquePackageNames=true so the old fallback to the base
+    // namespace would clash with androidApp's `com.tewelde.rijksmuseum`.
+    val moduleName = project.path.split(":").filter { it.isNotEmpty() }.joinToString(".")
+    namespace = "com.tewelde.rijksmuseum.$moduleName"
+    compileSdk = project.libs.findVersion("android.compileSdk").get().requiredVersion.toInt()
+    minSdk = project.libs.findVersion("android.minSdk").get().requiredVersion.toInt()
 
-    //get module name from module path
-    val moduleName = path.split(":").drop(2).joinToString(".")
-    namespace = if(moduleName.isNotEmpty()) "com.tewelde.rijksmuseum.$moduleName" else "com.tewelde.rijksmuseum"
-
-    compileSdk = libs.findVersion("android.compileSdk").get().requiredVersion.toInt()
-    defaultConfig {
-        minSdk = libs.findVersion("android.minSdk").get().requiredVersion.toInt()
-        consumerProguardFiles("consumer-proguard-rules.pro")
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+    androidResources { enable = true }
 }

@@ -1,20 +1,20 @@
 package com.tewelde.rijksmuseum
 
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
+/**
+ * Base KMP config shared by every kotlin-multiplatform module in this project.
+ *
+ * Notably does NOT call `androidTarget {}`. Under AGP 9, the
+ * `com.android.kotlin.multiplatform.library` plugin auto-registers the android
+ * target when its DSL is configured — see [configureKotlinMultiplatformAndroid].
+ */
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
-internal fun Project.configureKotlinMultiplatform(
-    extension: KotlinMultiplatformExtension
+internal fun Project.configureKotlinMultiplatformBase(
+    extension: KotlinMultiplatformExtension,
 ) = extension.apply {
     jvmToolchain(17)
-
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
 
     jvm()
 
@@ -36,15 +36,15 @@ internal fun Project.configureKotlinMultiplatform(
                 implementation(libs.findLibrary("kermit").get())
                 implementation(libs.findBundle("kotlinInjectAnvil").get())
             }
-
-            androidMain {
-                dependencies {
-                    implementation(libs.findLibrary("kotlinx.coroutines.android").get())
-                }
-
-                jvmMain.dependencies {
-                    implementation(libs.findLibrary("kotlinx.coroutines.swing").get())
-                }
+        }
+        androidMain {
+            dependencies {
+                implementation(libs.findLibrary("kotlinx.coroutines.android").get())
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.findLibrary("kotlinx.coroutines.swing").get())
             }
         }
     }
