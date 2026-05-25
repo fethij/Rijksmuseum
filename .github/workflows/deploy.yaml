@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Retrieve the secret and decode it to a file
         env:
@@ -39,12 +39,12 @@ jobs:
 
       - name: Build Page
         run: |
-          ./gradlew wasmJsBrowserDistribution --no-configuration-cache
+          ./gradlew :webApp:wasmJsBrowserDistribution --no-configuration-cache
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: 'composeApp/build/dist/wasmJs/productionExecutable'
+          path: 'webApp/build/dist/wasmJs/productionExecutable'
 
       - name: Deploy to GitHub Pages
         id: deployment
