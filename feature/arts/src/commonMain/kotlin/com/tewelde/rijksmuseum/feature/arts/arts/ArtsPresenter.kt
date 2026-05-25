@@ -19,7 +19,6 @@ import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsEvent
 import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsUiState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import kotlin.random.Random
 
 @CircuitInject(ArtsScreen::class, UiScope::class)
 @Inject
@@ -34,13 +33,19 @@ class ArtsPresenter(
         var state by rememberRetained { mutableStateOf<ArtsUiState>(ArtsUiState.Loading) }
 
         LaunchedImpressionEffect(Unit) {
-            state = when (val arts = getArts(Random.nextInt(1, 10))) {
-                is Either.Left -> ArtsUiState.Error(arts.value)
-                is Either.Right -> ArtsUiState.Success(arts.value) { event ->
-                    stateHolder.arts = arts.value
-                    when (event) {
-                        ArtsEvent.OnNavigateToCollection -> {
-                            navigator.goTo(CollectionScreen)
+            state = when (val result = getArts()) {
+                is Either.Left -> ArtsUiState.Error(result.value)
+                is Either.Right -> {
+                    if (result.value.arts.isEmpty()) {
+                        ArtsUiState.Empty
+                    } else {
+                        stateHolder.setInitialPage(result.value.arts, result.value.nextPageToken)
+                        ArtsUiState.Success(result.value.arts) { event ->
+                            when (event) {
+                                ArtsEvent.OnNavigateToCollection -> {
+                                    navigator.goTo(CollectionScreen)
+                                }
+                            }
                         }
                     }
                 }

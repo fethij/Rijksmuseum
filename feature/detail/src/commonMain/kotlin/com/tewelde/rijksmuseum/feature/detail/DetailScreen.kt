@@ -1,6 +1,5 @@
 package com.tewelde.rijksmuseum.feature.detail
 
-import androidx.annotation.ColorInt
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,7 +23,6 @@ import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
@@ -127,8 +125,6 @@ fun DetailContent(
                     ) {
                         ArtDetail(
                             art = uiState.state.art,
-                            color = uiState.state.art.colors?.firstOrNull()?.color()
-                                ?: MaterialTheme.colorScheme.primary,
                             isDownloading = uiState.isDownloading,
                             downloadProgress = uiState.downloadProgress,
                             onSave = {
@@ -167,12 +163,8 @@ fun DetailContent(
                             )
                     ) {
                         RijksmuseumZoomableImage(
-                            modifier = Modifier.fillMaxSize()
-                                .background(
-                                    state.art.colors?.firstOrNull()?.color()
-                                        ?: Color.Transparent
-                                ),
-                            imageUrl = state.art.url
+                            modifier = Modifier.fillMaxSize(),
+                            imageUrl = state.art.imageUrl
                         )
                     }
                 }
@@ -200,22 +192,3 @@ fun String.getFirstAndLast() = buildAnnotatedString {
         append(this@getFirstAndLast.last())
     }
 }.toString()
-
-/**
- * convert hex color [String] #000000 to [Color]
- */
-@ColorInt
-fun String.color(): Color {
-    if ((this.length != 7 && this.length != 9) || !this.startsWith("#")) {
-        return Color.Transparent // Handle invalid format
-    }
-
-    val hexValue = this.substring(1).toLongOrNull(16) ?: return Color.Transparent
-
-    val alpha = if (this.length == 9) (hexValue shr 24 and 0xFF).toInt() else 255
-    val red = (hexValue shr 16 and 0xFF).toInt()
-    val green = (hexValue shr 8 and 0xFF).toInt()
-    val blue = (hexValue and 0xFF).toInt()
-
-    return Color(red, green, blue, alpha)
-}

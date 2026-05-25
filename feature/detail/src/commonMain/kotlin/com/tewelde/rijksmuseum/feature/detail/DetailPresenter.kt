@@ -95,10 +95,10 @@ class DetailPresenter(
         state = state.copy(isDownloading = true)
 
         val imageLoader = SingletonImageLoader.get(context)
-        val cache = imageLoader.diskCache?.openSnapshot(art.url)
+        val cache = imageLoader.diskCache?.openSnapshot(art.imageUrl)
         if (cache == null) {
             logger.d { "image not found in cache, Downloading image" }
-            val bytes = downloadImageUseCase(art.url) { downloaded, total ->
+            val bytes = downloadImageUseCase(art.imageUrl) { downloaded, total ->
                 total?.let {
                     val progress = (downloaded * 100 / total).toInt()
                     state = state.copy(downloadProgress = progress)

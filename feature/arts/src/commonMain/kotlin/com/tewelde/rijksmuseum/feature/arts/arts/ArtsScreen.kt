@@ -21,8 +21,6 @@ import com.tewelde.rijksmuseum.core.common.di.UiScope
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumImage
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumLoading
 import com.tewelde.rijksmuseum.core.model.Art
-import com.tewelde.rijksmuseum.core.model.HeaderImage
-import com.tewelde.rijksmuseum.core.model.WebImage
 import com.tewelde.rijksmuseum.core.navigation.ArtsScreen
 import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsEvent
 import com.tewelde.rijksmuseum.feature.arts.arts.model.ArtsUiState
@@ -82,7 +80,9 @@ internal fun ArtsContent(
                 pageCount = { uiState.arts.size },
                 initialPage = 0,
             )
-            val currentPage = pagerState.currentPage
+            val currentPage = pagerState.currentPage.coerceIn(0, (uiState.arts.size - 1).coerceAtLeast(0))
+
+            if (uiState.arts.isEmpty()) return
 
             Box(
                 modifier = Modifier
@@ -95,7 +95,7 @@ internal fun ArtsContent(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     RijksmuseumImage(
-                        imageUrl = uiState.arts[it].webImage.url,
+                        imageUrl = uiState.arts[it].imageUrl,
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
@@ -138,26 +138,10 @@ fun PreviewArtsScreen() {
     val success = ArtsUiState.Success(
         listOf(
             Art(
-                title = "Title",
-                webImage = WebImage(
-                    url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
-                    width = 100,
-                    height = 100,
-                    offsetPercentageX = 0,
-                    offsetPercentageY = 0,
-                    guid = "1"
-                ),
-                headerImage = HeaderImage(
-                    url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
-                    width = 100,
-                    height = 100,
-                    offsetPercentageX = 0,
-                    offsetPercentageY = 0,
-                    guid = "1"
-                ),
-                productionPlaces = emptyList(),
-                objectNumber = "1",
-                longTitle = "Long Title"
+                objectNumber = "SK-C-5",
+                title = "The Night Watch",
+                imageUrl = "https://iiif.micr.io/RFwqO/full/max/0/default.jpg",
+                maker = "Rembrandt van Rijn",
             )
         ),
         {}
