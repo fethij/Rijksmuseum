@@ -1,45 +1,42 @@
 package com.tewelde.rijksmuseum.feature.arts.collection
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBackIos
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import artUrl
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.tewelde.rijksmuseum.core.common.di.UiScope
-import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumFilterChip
 import com.tewelde.rijksmuseum.core.designsystem.component.RijksmuseumTopBar
 import com.tewelde.rijksmuseum.core.model.Art
-import com.tewelde.rijksmuseum.core.model.HeaderImage
-import com.tewelde.rijksmuseum.core.model.WebImage
 import com.tewelde.rijksmuseum.core.navigation.CollectionScreen
 import com.tewelde.rijksmuseum.feature.arts.collection.model.CollectionEvent
 import com.tewelde.rijksmuseum.feature.arts.collection.model.CollectionUiState
 import com.tewelde.rijksmuseum.feature.arts.components.ArtItem
 import com.tewelde.rijksmuseum.resources.Res
 import com.tewelde.rijksmuseum.resources.arts_screen
-import minGridSize
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -64,6 +61,24 @@ internal fun CollectionContent(
     uiState: CollectionUiState,
     modifier: Modifier = Modifier,
 ) {
+    val gridState = rememberLazyStaggeredGridState()
+
+    // Trigger LoadMore when near the bottom
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            val layoutInfo = gridState.layoutInfo
+            val lastVisibleIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            val totalItems = layoutInfo.totalItemsCount
+            lastVisibleIndex >= totalItems - 6
+        }
+    }
+
+    LaunchedEffect(shouldLoadMore.value) {
+        if (shouldLoadMore.value && uiState.hasMore && !uiState.isLoadingMore) {
+            uiState.eventSink(CollectionEvent.LoadMore)
+        }
+    }
+
     Scaffold(
         modifier = modifier
             .testTag(stringResource(Res.string.arts_screen)),
@@ -89,42 +104,18 @@ internal fun CollectionContent(
                 .padding(contentPadding)
                 .fillMaxSize(),
         ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                items(
-                    items = uiState.productionPlaces,
-                    key = { place -> "key-$place" }
-                ) { place ->
-                    RijksmuseumFilterChip(
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        selected = uiState.filteredPlaces.contains(place),
-                        onSelectedChange = {
-                            uiState.eventSink(CollectionEvent.PlaceFiltered(place))
-                        },
-                        label = {
-                            Text(
-                                text = place,
-                                fontSize = MaterialTheme.typography.labelMedium.fontSize
-                            )
-                        },
-                    )
-                }
-            }
-
             LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Adaptive(minGridSize.dp)
+                state = gridState,
+                columns = StaggeredGridCells.Adaptive(150.dp),
+                modifier = Modifier.weight(1f)
             ) {
                 items(
-                    items = uiState.filteredArts,
+                    items = uiState.arts,
                     key = { it.objectNumber }
                 ) { art ->
                     val height = remember { heights.random().dp }
                     ArtItem(
-                        url = art.artUrl,
+                        url = art.imageUrl,
                         onArtClick = {
                             uiState.eventSink(
                                 CollectionEvent.OnNavigateToArtDetail(art.objectNumber)
@@ -138,6 +129,20 @@ internal fun CollectionContent(
                     )
                 }
             }
+
+            if (uiState.isLoadingMore) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(32.dp),
+                        strokeWidth = 3.dp
+                    )
+                }
+            }
         }
     }
 }
@@ -148,30 +153,13 @@ fun PreviewCollectionScreen() {
     val state = CollectionUiState(
         listOf(
             Art(
-                title = "Title",
-                webImage = WebImage(
-                    url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
-                    width = 100,
-                    height = 100,
-                    offsetPercentageX = 0,
-                    offsetPercentageY = 0,
-                    guid = "1"
-                ),
-                headerImage = HeaderImage(
-                    url = "https://lh3.googleusercontent.com/SsEIJWka3_cYRXXSE8VD3XNOgtOxoZhqW1uB6UFj78eg8gq3G4jAqL4Z_5KwA12aD7Leqp27F653aBkYkRBkEQyeKxfaZPyDx0O8CzWg=s0",
-                    width = 100,
-                    height = 100,
-                    offsetPercentageX = 0,
-                    offsetPercentageY = 0,
-                    guid = "1"
-                ),
-                productionPlaces = emptyList(),
-                objectNumber = "1",
-                longTitle = "Long Title"
+                objectNumber = "SK-C-5",
+                title = "The Night Watch",
+                imageUrl = "https://iiif.micr.io/RFwqO/full/max/0/default.jpg",
+                maker = "Rembrandt van Rijn",
             )
         ),
-        emptyList(),
-        {}
+        eventSink = {}
     )
     CollectionContent(uiState = state)
 }

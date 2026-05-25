@@ -57,7 +57,7 @@ fun ImageDescription(
         )
 
         Text(
-            text = art.longTitle,
+            text = art.maker,
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Start

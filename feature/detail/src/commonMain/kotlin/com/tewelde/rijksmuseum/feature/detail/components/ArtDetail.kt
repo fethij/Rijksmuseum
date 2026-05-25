@@ -1,12 +1,9 @@
 package com.tewelde.rijksmuseum.feature.detail.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,34 +18,26 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tewelde.rijksmuseum.core.model.ArtObject
 import com.tewelde.rijksmuseum.feature.detail.initials
 import com.tewelde.rijksmuseum.resources.Res
-import com.tewelde.rijksmuseum.resources.color
 import com.tewelde.rijksmuseum.resources.description
 import com.tewelde.rijksmuseum.resources.details
-import com.tewelde.rijksmuseum.resources.production_places
 import com.tewelde.rijksmuseum.resources.save_to_photos
-import com.tewelde.rijksmuseum.resources.size
 import com.tewelde.rijksmuseum.resources.title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ArtDetail(
     art: ArtObject,
-    color: Color,
     isDownloading: Boolean = false,
     downloadProgress: Int = 0,
     onSave: () -> Unit,
@@ -68,40 +57,7 @@ fun ArtDetail(
             downloadProgress = downloadProgress,
             onSave = onSave,
         )
-        SheetPhotoDetails(art, color)
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun ProductionPlaceDetailItem(places: List<String>) {
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        places.forEach {
-            SuggestionChip(
-                label = {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
-                        maxLines = 1,
-                        softWrap = true,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                onClick = {},
-                shape = CircleShape,
-                colors = SuggestionChipDefaults.suggestionChipColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    labelColor = MaterialTheme.colorScheme.onBackground
-                ),
-                border = SuggestionChipDefaults.suggestionChipBorder(
-                    enabled = true,
-                    borderColor = MaterialTheme.colorScheme.onBackground,
-                )
-            )
-        }
+        SheetPhotoDetails(art)
     }
 }
 
@@ -181,7 +137,6 @@ fun SheetProfileRow(
                 .shadow(
                     elevation = 8.dp, shape = CircleShape
                 ),
-//                    .clickable { onMaker() },
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -197,7 +152,7 @@ fun SheetProfileRow(
 }
 
 @Composable
-fun SheetPhotoDetails(art: ArtObject, color: Color) {
+fun SheetPhotoDetails(art: ArtObject) {
     Column(modifier = Modifier.padding(top = 16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
@@ -234,29 +189,6 @@ fun SheetPhotoDetails(art: ArtObject, color: Color) {
                     )
                 }
             }
-
-            PhotoDetailItem(stringResource(Res.string.size)) {
-                Text(
-                    "${art.webImage?.width} x ${art.webImage?.height}",
-                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp)
-                )
-            }
-
-            PhotoDetailItem(stringResource(Res.string.color)) {
-                Box(
-                    modifier = Modifier.size(18.dp).background(color = color, shape = CircleShape)
-                )
-            }
-
-            if (art.productionPlaces?.isNotEmpty() == true) {
-                PhotoDetailItem(
-                    stringResource(Res.string.production_places),
-                    alignment = Alignment.CenterVertically
-                ) {
-                    ProductionPlaceDetailItem(art.productionPlaces?.distinct()!!)
-                }
-            }
         }
-
     }
 }
