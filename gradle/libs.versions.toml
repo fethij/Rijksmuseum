@@ -3,10 +3,9 @@ agp = "9.2.1"
 
 jvmTarget = "21"
 
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "24"
-android-targetSdk = "36"
-
+android-targetSdk = "37"
 coil = "3.4.0"
 compose-plugin = "1.11.0"
 filekit = "0.14.1"
@@ -22,7 +21,7 @@ zoomimageComposeCoil = "1.4.0"
 kotlin-inject = "0.9.0"
 kotlin-inject-anvil = "0.1.7"
 circuit = "0.33.1"
-ksp = "2.3.6"
+ksp = "2.3.8"
 moko-permissions = "0.20.1"
 androidx-activityCompose = "1.13.0"
 
@@ -98,6 +97,7 @@ circuit = [
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
