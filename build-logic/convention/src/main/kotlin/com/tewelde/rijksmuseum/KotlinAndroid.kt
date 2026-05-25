@@ -12,12 +12,12 @@ import org.gradle.api.Project
 internal fun KotlinMultiplatformAndroidLibraryExtension.configureKotlinMultiplatformAndroid(
     project: Project,
 ) {
-    val moduleName = project.path.split(":").drop(2).joinToString(".")
-    namespace = if (moduleName.isNotEmpty()) {
-        "com.tewelde.rijksmuseum.$moduleName"
-    } else {
-        "com.tewelde.rijksmuseum"
-    }
+    // Build a unique per-module namespace from the gradle path: ":core:network" →
+    // "com.tewelde.rijksmuseum.core.network", ":shared" → "com.tewelde.rijksmuseum.shared".
+    // AGP 9 enforces android.uniquePackageNames=true so the old fallback to the base
+    // namespace would clash with androidApp's `com.tewelde.rijksmuseum`.
+    val moduleName = project.path.split(":").filter { it.isNotEmpty() }.joinToString(".")
+    namespace = "com.tewelde.rijksmuseum.$moduleName"
     compileSdk = project.libs.findVersion("android.compileSdk").get().requiredVersion.toInt()
     minSdk = project.libs.findVersion("android.minSdk").get().requiredVersion.toInt()
 

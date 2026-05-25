@@ -6,6 +6,7 @@ jvmTarget = "21"
 android-compileSdk = "37"
 android-minSdk = "24"
 android-targetSdk = "37"
+
 coil = "3.4.0"
 compose-plugin = "1.11.0"
 filekit = "0.14.1"
@@ -101,6 +102,7 @@ androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.r
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }

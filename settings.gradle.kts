@@ -35,7 +35,10 @@ dependencyResolutionManagement {
 rootProject.name = "Rijksmuseum"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include(":composeApp")
+include(":shared")
+include(":androidApp")
+include(":desktopApp")
+include(":webApp")
 
 include(":core:common")
 include(":core:data")
