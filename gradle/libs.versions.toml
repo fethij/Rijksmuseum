@@ -9,7 +9,7 @@ android-targetSdk = "37"
 
 coil = "3.4.0"
 compose-plugin = "1.11.0"
-filekit = "0.14.1"
+filekit = "0.15.0"
 kotlin = "2.3.21"
 ktor = "3.5.0"
 lifecycle = "2.10.0"
