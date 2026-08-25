@@ -8,7 +8,7 @@ android-minSdk = "24"
 android-targetSdk = "37"
 
 coil = "3.4.0"
-compose-plugin = "1.11.0"
+compose-plugin = "1.12.0"
 filekit = "0.14.1"
 kotlin = "2.3.21"
 ktor = "3.5.0"
