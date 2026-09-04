@@ -7,7 +7,7 @@ android-compileSdk = "37"
 android-minSdk = "24"
 android-targetSdk = "37"
 
-coil = "3.4.0"
+coil = "3.6.2"
 compose-plugin = "1.11.0"
 filekit = "0.14.1"
 kotlin = "2.3.21"
